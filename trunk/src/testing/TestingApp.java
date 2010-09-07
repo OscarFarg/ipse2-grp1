@@ -10,7 +10,7 @@ public class TestingApp extends JFrame
 	}
 
 	public static void main(String[] args) 
-	{
+	{qwfljhfadslkjhfkmjahads/..m b,jhfalkjhadskjbhasjlfdhgfa
 		new TestingApp();
 	}
 
