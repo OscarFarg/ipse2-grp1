@@ -1,0 +1,5 @@
+SQL Client voor Derby zodat we kunnen testen:
+http://db.apache.org/derby/integrate/SQuirreL_Derby.html
+
+Voorbeeld code om gebruik te maken van Derby in Java:
+http://www.oracle.com/technetwork/articles/javase/javadb-141163.html
