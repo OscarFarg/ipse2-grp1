@@ -6,11 +6,11 @@ public class TestingApp extends JFrame
 {
 	public TestingApp()
 	{
-		
+		System.out.println("Hello World");
 	}
 
 	public static void main(String[] args) 
-	{qwfljhfadslkjhfkmjahads/..m b,jhfalkjhadskjbhasjlfdhgfa
+	{
 		new TestingApp();
 	}
 
