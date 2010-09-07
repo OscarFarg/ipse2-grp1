@@ -32,7 +32,7 @@ Klik op _File -> Import.._<br>
 In het nieuwe venster ga je naar _SVN_ en kies je voor _Checkout project from SVN_<br>
 Kies 'Create a new repository location"<br>
 Vul de locatie van dit project in.<br>
-_https://ipse2-grp1.googlecode.com/svn/trunk/ ipse2-grp1_<br>
+_https://ipse2-grp1.googlecode.com/svn/trunk/_<br>
 
 == Commit ==
 Als je gewijzigde code wil toevoegen aan het project rechter muisklik je op het gewijzigde bestand of map en kies je voor _Team -> Commit..._<br>
