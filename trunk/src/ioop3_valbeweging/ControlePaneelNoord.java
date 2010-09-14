@@ -5,10 +5,10 @@ import java.awt.*;
 
 public class ControlePaneelNoord extends JPanel
 {
-   //private JTextField bereikXveld;
+   private JTextField bereikXveld;
    private JTextField bereikYveld;
    private JTextField dtVeld;
-   private int hoogte, tijdverschil;
+   private int breedte, hoogte, tijdverschil;
 
    // geef de velden bereikXveld en bereikYveld default de 
    // waarden 100 (meter)
@@ -19,13 +19,17 @@ public class ControlePaneelNoord extends JPanel
    public ControlePaneelNoord()
    {
       resetInvoer();
-	   
-	  bereikYveld = new JTextField("" + hoogte,5);
+	  
+      bereikXveld = new JTextField("" + breedte, 5);
+	  bereikYveld = new JTextField("" + hoogte, 5);
       dtVeld = new JTextField("" + tijdverschil, 4);
       
+      Label x = new Label("Breedte(m)");
       Label y = new Label("Hoogte(m)");
       Label dt = new Label("dt(ms)");
       
+      add(x);
+      add(bereikXveld);      
       add(y);
       add(bereikYveld);
       add(dt);
@@ -34,6 +38,7 @@ public class ControlePaneelNoord extends JPanel
    
    public void resetInvoer()
    {
+	   breedte = 100;
 	   hoogte = 100;
 	   tijdverschil = 20;
    }
@@ -43,10 +48,10 @@ public class ControlePaneelNoord extends JPanel
      return hoogte;
    }
 
-   //public double getXbereik()
-   //{
-   //  return 
-   //}
+   public double getXbereik()
+   {
+     return breedte;
+   }
 
    public int getDt()
    {
@@ -59,11 +64,13 @@ public class ControlePaneelNoord extends JPanel
    {
 	   if (running)
 	   {
+		   bereikXveld.setEditable(false);
 		   bereikYveld.setEditable(false);
 		   dtVeld.setEditable(false);
 	   }
 	   else
 	   {
+		   bereikXveld.setEditable(true);
 		   bereikYveld.setEditable(true);
 		   dtVeld.setEditable(true);
 	   }
