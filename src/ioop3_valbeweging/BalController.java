@@ -32,16 +32,26 @@ public class BalController implements Runnable, MouseWheelListener
       // het BalController (dit) object de events afhandelen 
       // zet de thread uit en
       // zet 'het verplaatsen van de bal mbv het wieltje' uit
+	   
+	   this.bal = valpaneel.getBal();
+	   this.balview = valpaneel.getBalView();
+	   noordpaneel = this.noordpaneel;
+	   valpaneel.addMouseWheelListener( this );
+	   doorgaan_thread = false;
+	   doorgaan_wheel = false;
       
       // initialiseer this.dt mbv het noordpaneel
       // initialiseer this.valhoogte mbv het noordpaneel 
+	   
+	   this.dt = noordpaneel.getDt();
+	   this.valhoogte = noordpaneel.getY();
    }
 
    public void run()
    {      
       while (doorgaan_thread)
       {      
-         if // laat de thread stoppen als de bal de bodem bereikt 
+         if ( bal.getY() == valhoogte ) // laat de thread stoppen als de bal de bodem bereikt 
          {
             pleaseStop();
             return;
@@ -51,6 +61,8 @@ public class BalController implements Runnable, MouseWheelListener
             // las een pauze in van 'dt' msec            
             // gebruik de methode adjust van de
             // bal om de tijd aan te passen met 'dt' 
+        	 this.slaap( dt );    
+        	 bal.adjust( dt );
          }
          balview.repaint();// teken balview opnieuw ... waarom? 
       }
@@ -59,17 +71,21 @@ public class BalController implements Runnable, MouseWheelListener
 
    public void mouseWheelMoved (MouseWheelEvent event)
    {      
-      if       // deze methode alleen uitvoeren als de thread uitstaat EN
-      {        // 'het verplaatsen met het wieltje' aan 
-      
+      if ( !doorgaan_thread && doorgaan_wheel )       // deze methode alleen uitvoeren als de thread uitstaat EN
+      {       										  // 'het verplaatsen met het wieltje' aan 
         int ticks = event.getWheelRotation(); // wat levert dit op?
         
         if ((bal.getY() <  valhoogte) && (bal.getT() > 0) ) // waarom deze conditie? 
-           // hoe pas je nu de bal aan?  gebruik 'adjust', 'ticks' en 'dt' 
+           // hoe pas je nu de bal aan?  gebruik 'adjust', 'ticks' en 'dt'
+        {
+        	bal.adjust( dt - ticks );
+        	balview.repaint();
+        }
         else
           return;
            
-        // teken balview opnieuw 
+        // teken balview opnieuw
+        balview.repaint();
       }
    }
 
@@ -81,17 +97,22 @@ public class BalController implements Runnable, MouseWheelListener
        // initialiseer this.dt mbv noordpaneel
        // initialiseer this.valhoogte mbv noordpaneel 
        
+       this.dt = noordpaneel.getDt();
+       this.valhoogte = noordpaneel.getY();
+       
        doorgaan_thread = true;  // zet de thread aan 
        doorgaan_wheel = false;  // zet de 'verplaatsing mbv het wieltje' uit 
            
-       draad = // creeer een nieuwe thread 
+       draad = new Thread();// creeer een nieuwe thread 
        draad.start(); // welke methode roept dit statement aan? 
    }
 
    public void pleaseStop()
    {
       // zet de thread uit 
-      // zet de 'verplaatsing mbv het wieltje' aan     
+      // zet de 'verplaatsing mbv het wieltje' aan 
+	  doorgaan_thread = false;
+	  doorgaan_wheel = true;
       draad = null;   // waarom?
    }
 
