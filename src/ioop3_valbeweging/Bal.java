@@ -33,13 +33,13 @@ public class Bal
       // valbeweging formule over de afgelegde weg .. zie een basis natuurkunde boek.
       // y (afgelegde weg in meters) = 1/2 * VALVERSNELLING * tijd * tijd (tijd in seconden) 
        
-      y = 1/2 *
+      y = 1/2 * VALVERSNELLING * t * t;
  
       	
       // vy is de snelheid (in meter/sec) van de puntmassa
       // vy = VALVERSNELLING * tijd (tijd in seconden) 
       
-      vy = ...............................................
+      vy = VALVERSNELLING * t;
       
       // waarom verandert hier (bij deze animatie) de x-waarde niet? 
       
@@ -56,37 +56,37 @@ public class Bal
    // getters
    public double getX()
    {
-      .........................
+      return x;
    }
 
    public double getY()
    {
-      .........................
+      return y;
    }
 
    public double getVy()
    {
-      .........................
+      return vy;
    }
 
    public int getT()
    {
-      .........................
+      return t;
    }
    
    public Color getKleur()
    {
-      .........................
+      return kleur;
    }
 
    // setters .. zo nodig bij toekomstige uitbreidingen .. 
    public void setY (double y)
    {
-      .........................
+      this.y = y;
    } 
 
    public void setX (double x)
    {
-      ........................
+      this.x = x;
    }
 } 
