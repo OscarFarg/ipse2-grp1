@@ -8,7 +8,7 @@ public class ControlePaneelNoord extends JPanel
    //private JTextField bereikXveld;
    private JTextField bereikYveld;
    private JTextField dtVeld;
-   
+   private int hoogte, tijdverschil;
 
    // geef de velden bereikXveld en bereikYveld default de 
    // waarden 100 (meter)
@@ -18,8 +18,10 @@ public class ControlePaneelNoord extends JPanel
      
    public ControlePaneelNoord()
    {
-      bereikYveld = new JTextField("100",5);
-      dtVeld = new JTextField("20", 4);
+      resetInvoer();
+	   
+	  bereikYveld = new JTextField("" + hoogte,5);
+      dtVeld = new JTextField("" + tijdverschil, 4);
       
       Label y = new Label("Hoogte(m)");
       Label dt = new Label("dt(ms)");
@@ -29,24 +31,41 @@ public class ControlePaneelNoord extends JPanel
       add(dt);
       add(dtVeld);
    }
+   
+   public void resetInvoer()
+   {
+	   hoogte = 100;
+	   tijdverschil = 20;
+   }
 
    public double getYbereik()
    {
-     return 
+     return hoogte;
    }
 
-   public double getXbereik()
-   {
-     return 
-   }
-
+   //public double getXbereik()
+   //{
+   //  return 
+   //}
 
    public int getDt()
    {
-     return 
+     return tijdverschil;
    }
    
    // wat zou je kunnen doen om tijdens de animatie het gebruik van
    // de invoervelden onmogelijk te maken? 
-
+   public void running(boolean running)
+   {
+	   if (running)
+	   {
+		   bereikYveld.setEditable(false);
+		   dtVeld.setEditable(false);
+	   }
+	   else
+	   {
+		   bereikYveld.setEditable(true);
+		   dtVeld.setEditable(true);
+	   }
+   }
 }
