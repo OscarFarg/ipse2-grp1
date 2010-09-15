@@ -1,7 +1,7 @@
 package ioop3_valbeweging;
+
 import javax.swing.*;
 import java.awt.event.*;
-
 
 public class ControlePaneelZuid extends JPanel implements ActionListener
 {
@@ -20,12 +20,27 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
    
    public ControlePaneelZuid (ValBewegingPaneel paneel) 
    {
-      .........................................
+      animate = new JButton("Start");
+      animate.addActionListener(this);
+      stop = new JButton("Stop");
+      stop.addActionListener(this);
+      
+      this.valpaneel = paneel;
+      
+      add(animate);
+      add(stop);
    }
 
    public void actionPerformed (ActionEvent ae)
    {
-      .........................................
+      if (ae.getSource() == animate)
+      {
+    	  
+      }
+      else
+      {
+    	  
+      }
    }
 
 }
