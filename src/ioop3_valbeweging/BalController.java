@@ -35,7 +35,7 @@ public class BalController implements Runnable, MouseWheelListener
 	   
 	   this.bal = valpaneel.getBal();
 	   this.balview = valpaneel.getBalView();
-	   noordpaneel = this.noordpaneel;
+	   this.noordpaneel = noordpaneel;
 	   valpaneel.addMouseWheelListener( this );
 	   doorgaan_thread = false;
 	   doorgaan_wheel = false;
