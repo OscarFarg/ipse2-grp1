@@ -20,8 +20,8 @@ public class ControlePaneelNoord extends JPanel
    {
       resetInvoer();
 	  
-      bereikXveld = new JTextField("" + breedte, 5);
-	  bereikYveld = new JTextField("" + hoogte, 5);
+      bereikXveld = new JTextField("" + breedte, 4);
+	  bereikYveld = new JTextField("" + hoogte, 4);
       dtVeld = new JTextField("" + tijdverschil, 4);
       
       Label x = new Label("Breedte(m)");
