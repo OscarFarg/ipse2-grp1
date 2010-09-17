@@ -21,6 +21,9 @@ public class BalView extends JPanel
 	   setOpaque ( false );
 	   setBounds(0, 0, 12, 12);
 	   
+	   //Door Oscar. Bal werd niet geinitialiseerd.
+	   this.bal = valpaneel.getBal();
+	   
 	   dataview = new DataView ( valpaneel );
 	
       // zet de 'ondoorzichtbaarheid' van de view op false .. zie 'setOpaque' in de API 
