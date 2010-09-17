@@ -35,6 +35,7 @@ public class BalView extends JPanel
 		// geef deze view een size van 12 pixles breed en 12 hoog
 		// creeer het object dataview (wat geef je als parameter mee?)
 		dataview = new DataView ( valpaneel );
+		dataview.setLocation( 300, 20 );
 
 	}
 
