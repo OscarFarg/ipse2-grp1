@@ -13,6 +13,7 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
    private BalController balController;
    private Bal bal;
    private BalView balView;
+   private ControlePaneelNoord noordpaneel;
 
 
    // bij het drukken op de stop-button wordt de
@@ -20,7 +21,7 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
    
    // bij het drukken op de animate-button wordt de reset-methode van de bal
    // aangeroepen, de balview wordt opnieuw getekend en de methode pleaseStart van de balController
-   // wordt aangeroepen 
+   // wordt aangeroepen
    
    public ControlePaneelZuid (ValBewegingPaneel paneel) 
    {
@@ -32,6 +33,7 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
       reset.addActionListener(this);
       
       this.valpaneel = paneel;
+      this.noordpaneel = new ControlePaneelNoord();
       balController = valpaneel.getController();
       bal = valpaneel.getBal();
       balView = valpaneel.getBalView();
@@ -56,7 +58,9 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
       if (ae.getSource() == reset)
       {
     	  bal.reset();
+    	  balController.pleaseStop();
     	  balView.repaint();
+    	  noordpaneel.running( false );
       }
    }
 
