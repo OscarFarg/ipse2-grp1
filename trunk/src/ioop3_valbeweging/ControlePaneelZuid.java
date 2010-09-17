@@ -7,6 +7,7 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
 {
    private JButton animate;
    private JButton stop;
+   private JButton reset;
 
    private ValBewegingPaneel valpaneel;
 
@@ -24,11 +25,14 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
       animate.addActionListener(this);
       stop = new JButton("Stop");
       stop.addActionListener(this);
+      reset = new JButton("Reset");
+      reset.addActionListener(this);
       
       this.valpaneel = paneel;
       
       add(animate);
       add(stop);
+      add(reset);
    }
 
    public void actionPerformed (ActionEvent ae)
@@ -37,7 +41,11 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
       {
     	  
       }
-      else
+      if (ae.getSource() == stop)
+      {
+    	  
+      }
+      if (ae.getSource() == reset)
       {
     	  
       }
