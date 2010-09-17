@@ -54,7 +54,7 @@ public class BalController implements Runnable, MouseWheelListener
 	{      
 		while (doorgaan_thread)
 		{
-			if ( bal.getY() == valhoogte ) // laat de thread stoppen als de bal de bodem bereikt 
+			if ( bal.getY() > valhoogte ) // laat de thread stoppen als de bal de bodem bereikt 
 			{
 				pleaseStop();
 				return;
