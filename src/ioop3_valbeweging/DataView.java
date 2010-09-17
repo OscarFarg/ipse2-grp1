@@ -42,7 +42,7 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 
 		this.setBorder(titelrand);
 		this.setBackground(Color.ORANGE);
-		setSize (180, hoogte);
+		setSize (200, hoogte);
 		setLocation (0, 0);
 
 		// voeg dit view toe aan het paneel 
