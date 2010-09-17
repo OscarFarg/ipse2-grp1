@@ -13,7 +13,8 @@ public class ValBewegingPaneel extends JPanel
    private Bal deBal;
    private BalView balview;
    private BalController controller;
-
+   private ControlePaneelNoord noordpaneel;
+   
    private int startX, startY;
    private int eindX, eindY;
    private final int PARTS = 12; // hoezo 12? 
@@ -25,6 +26,7 @@ public class ValBewegingPaneel extends JPanel
    {
      setLayout (null); // waarom? 
 
+     this.noordpaneel = noordpaneel;
      float [] dashes = {3.0f,7.0f}; // wat gebeurt hier?
      s_new = new BasicStroke(0.5f,BasicStroke.CAP_BUTT,BasicStroke.JOIN_MITER,1.0f,dashes,0);
      // leg uit! 
@@ -110,6 +112,11 @@ public class ValBewegingPaneel extends JPanel
      return (PARTS);
    }    
    // end getters 
+
+
+public ControlePaneelNoord getNoordpaneel() {
+	return noordpaneel;
+}
    
 }
 
