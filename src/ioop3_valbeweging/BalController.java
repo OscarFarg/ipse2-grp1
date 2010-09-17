@@ -98,7 +98,9 @@ public class BalController implements Runnable, MouseWheelListener
        // initialiseer this.valhoogte mbv noordpaneel 
        
        this.dt = noordpaneel.getDt();
-       this.valhoogte = noordpaneel.getY();
+       this.valhoogte = noordpaneel.getYbereik();
+       
+       noordpaneel.running(true);
        
        doorgaan_thread = true;  // zet de thread aan 
        doorgaan_wheel = false;  // zet de 'verplaatsing mbv het wieltje' uit 
