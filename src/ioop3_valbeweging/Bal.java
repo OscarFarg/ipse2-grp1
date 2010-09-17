@@ -9,7 +9,7 @@ public class Bal
                        // de omzetting in screen-coordinaten gebeurt in BalView 
                        
    private double vy;  // snelheid van de bal in meter/sec
-   private int t;      // verstreken tijd in msec
+   private double t;   // verstreken tijd in msec
    
    private Color kleur;// kleur van de bal
    
@@ -29,17 +29,17 @@ public class Bal
    {
       t = t + dt; // t en dt in msec(!) 
       
+      double tSec = t / 1000;
       
       // valbeweging formule over de afgelegde weg .. zie een basis natuurkunde boek.
       // y (afgelegde weg in meters) = 1/2 * VALVERSNELLING * tijd * tijd (tijd in seconden) 
        
-      y = 1/2 * VALVERSNELLING * t * t;
- 
-      	
+      y = 0.5 * VALVERSNELLING * (tSec * tSec);
+       	
       // vy is de snelheid (in meter/sec) van de puntmassa
       // vy = VALVERSNELLING * tijd (tijd in seconden) 
       
-      vy = VALVERSNELLING * t;
+      vy = VALVERSNELLING * tSec;
       
       // waarom verandert hier (bij deze animatie) de x-waarde niet? 
       
@@ -69,7 +69,7 @@ public class Bal
       return vy;
    }
 
-   public int getT()
+   public double getT()
    {
       return t;
    }

@@ -68,9 +68,9 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 		//
 
 		g.setColor(Color.BLUE);
-		g.drawString("Tijd = " + st_t, 10, 30);
-		g.drawString("Afgelegde weg = " + st_y, 10, 50);
-		g.drawString("Snelheid = " + st_vy, 10, 70);
+		g.drawString("Tijd = " + st_t + " s", 10, 30);
+		g.drawString("Afgelegde weg = " + st_y + " m", 10, 50);
+		g.drawString("Snelheid = " + st_vy + " m/s", 10, 70);
 
 	}
 
