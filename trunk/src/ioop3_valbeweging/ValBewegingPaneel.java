@@ -32,7 +32,8 @@ public class ValBewegingPaneel extends JPanel
      deBal = new Bal ();
      balview = new BalView (this, noordpaneel);
      controller = new BalController (this, noordpaneel);
-     add (balview);   
+     add (balview);  
+     add (balview.getDataview());
    }
 
 
