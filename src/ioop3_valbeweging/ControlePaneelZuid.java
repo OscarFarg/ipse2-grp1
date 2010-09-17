@@ -33,7 +33,7 @@ public class ControlePaneelZuid extends JPanel implements ActionListener
       reset.addActionListener(this);
       
       this.valpaneel = paneel;
-      this.noordpaneel = new ControlePaneelNoord();
+      this.noordpaneel = paneel.getNoordpaneel();
       balController = valpaneel.getController();
       bal = valpaneel.getBal();
       balView = valpaneel.getBalView();
