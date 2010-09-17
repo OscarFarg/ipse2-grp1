@@ -36,10 +36,13 @@ public class Bal
        
       y = 0.5 * VALVERSNELLING * (tSec * tSec);
        	
+
       // vy is de snelheid (in meter/sec) van de puntmassa
       // vy = VALVERSNELLING * tijd (tijd in seconden) 
       
+
       vy = VALVERSNELLING * tSec;
+
       
       // waarom verandert hier (bij deze animatie) de x-waarde niet? 
       

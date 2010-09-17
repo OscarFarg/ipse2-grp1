@@ -82,7 +82,7 @@ public class BalController implements Runnable, MouseWheelListener
 			if ((bal.getY() <  valhoogte) && (bal.getT() > 0) ) // waarom deze conditie? 
 				// hoe pas je nu de bal aan?  gebruik 'adjust', 'ticks' en 'dt'
 			{
-				bal.adjust( dt - ticks );
+				bal.adjust( dt * ticks );
 				balview.repaint();
 			}
 			else
