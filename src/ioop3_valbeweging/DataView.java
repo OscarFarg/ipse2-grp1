@@ -12,6 +12,7 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 	private Bal bal;  
 	private ValBewegingPaneel paneel;
 	private final int MINHOOGTE = 17;// mininale hoogte van dit view in pixels
+	private final int MAXHOOGTE = 80;
 	private int hoogte;              // actuele hoogte van dit view
 
 	private int x, y;
@@ -29,7 +30,7 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 		//
 		this.paneel = paneel;
 		this.bal = paneel.getBal();
-		hoogte = 100;
+		hoogte = 80;
 
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -67,9 +68,9 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 		//
 
 		g.setColor(Color.BLUE);
-		g.drawString("Tijd = " + st_t, 10, 10);
-		g.drawString("Afgelegde weg = " + st_y, 10, 20);
-		g.drawString("Snelheid = " + st_vy, 10, 30);
+		g.drawString("Tijd = " + st_t, 10, 30);
+		g.drawString("Afgelegde weg = " + st_y, 10, 50);
+		g.drawString("Snelheid = " + st_vy, 10, 70);
 
 	}
 
@@ -81,25 +82,30 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 		// pas de hoogte van deze view aan mbv de waarde 'ticks'
 		// mocht de hoogte < MINHOOGTE dan mag de view niet smaller worden dan MINHOOGTE
 		// zie ook de methode setSize
-		if (MINHOOGTE < (hoogte + ticks))
+		if (ticks < 0) 
 		{
-			this.hoogte += ticks;
-			this.setSize(this.getWidth(), hoogte);
+			if (MINHOOGTE < (hoogte + ticks))
+			{
+				hoogte += ticks;
+				setSize(this.getWidth(), hoogte);
+			}
+		}
+		else 
+		{
+			if (MAXHOOGTE > (hoogte + ticks))
+			{
+				hoogte += ticks;
+				setSize(this.getWidth(), hoogte);
+			}
 		}
 	}
 
 	// MouseListener-methods
-	public void mouseClicked (MouseEvent me)
-	{
-	}
+	public void mouseClicked (MouseEvent me) {}
 
-	public void mouseEntered (MouseEvent me)
-	{
-	}
+	public void mouseEntered (MouseEvent me) {}
 
-	public void mouseExited (MouseEvent me)
-	{
-	}
+	public void mouseExited (MouseEvent me) {}
 	// waarom staan de vorige drie methoden hier? 
 	// als ze niets doen dan kan ik ze toch beter weglaten? 
 	// Moeten er zijn omdat ze bij de mouselistener horen.
