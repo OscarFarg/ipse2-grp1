@@ -45,17 +45,20 @@ public class ControlePaneelNoord extends JPanel
 
    public double getYbereik()
    {
-     return hoogte;
+	   hoogte = Integer.parseInt(bereikYveld.getText());
+	   return hoogte;
    }
 
    public double getXbereik()
    {
-     return breedte;
+	   breedte = Integer.parseInt(bereikXveld.getText());
+	   return breedte;
    }
 
    public int getDt()
    {
-     return tijdverschil;
+	   tijdverschil = Integer.parseInt(dtVeld.getText());
+	   return tijdverschil;
    }
    
    // wat zou je kunnen doen om tijdens de animatie het gebruik van
