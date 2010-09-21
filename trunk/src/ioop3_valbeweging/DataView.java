@@ -10,6 +10,7 @@ public class DataView extends JPanel implements MouseListener, MouseMotionListen
 {
 
 	private Bal bal;  
+	@SuppressWarnings("unused")
 	private ValBewegingPaneel paneel;
 	private final int MINHOOGTE = 17;// mininale hoogte van dit view in pixels
 	private final int MAXHOOGTE = 80;
