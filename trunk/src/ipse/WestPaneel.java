@@ -2,6 +2,8 @@ package ipse;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.*;
 
 public class WestPaneel extends JPanel implements ActionListener
@@ -10,16 +12,14 @@ public class WestPaneel extends JPanel implements ActionListener
 	
 	public WestPaneel()
 	{	
-		//setLayout(null);
-		setBackground( Color.red );
+		GridLayout gLayout = new GridLayout(0,1);
+		gLayout.setVgap(50);
+		setLayout(gLayout); 
 		
 		nieuwKnop = new JButton("Nieuw");
 		nieuwKnop.addActionListener(this);
 		//nieuwKnop.setBounds( 10, 0, 100, 20 );
 		add(nieuwKnop);
-		
-		testKnop = new JButton( "test" );
-		add(testKnop);
 		
 		bewerkKnop = new JButton("Bewerk");
 		bewerkKnop.addActionListener(this);
