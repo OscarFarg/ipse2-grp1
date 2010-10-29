@@ -1,7 +1,6 @@
 package ipse;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class LoginView extends JFrame implements ActionListener
@@ -58,8 +57,26 @@ public class LoginView extends JFrame implements ActionListener
 		setVisible( true );
 	}
 	
-	public void actionPerformed( ActionEvent e )
+	public void actionPerformed( ActionEvent ae )
 	{
+		String naam = inlogNaamVeld.getText();
+		String ww = wwVeld.getText();
 		
+		if (ae.getSource() == okKnop)
+		{
+			if (naam.equals("medewerker") && ww.equals("1234"))
+			{
+				new BestelSnelApp();
+				this.dispose();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "De naam en/of het wachtwoord is niet goed.", "Fout", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		else
+		{
+			System.exit(0);
+		}
 	}
 }
