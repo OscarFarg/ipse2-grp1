@@ -1,6 +1,7 @@
 package ipse;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class LoginView extends JFrame implements ActionListener
@@ -8,7 +9,6 @@ public class LoginView extends JFrame implements ActionListener
 	private JButton okKnop, annulerenKnop, vergetenKnop;
 	private JTextField inlogNaamVeld, wachtWoordVeld;
 	private JLabel imageLabel;
-	private String path;
 	
 	public LoginView()
 	{
@@ -30,9 +30,9 @@ public class LoginView extends JFrame implements ActionListener
 		
 		vergetenKnop = new JButton( "Wachtwoord vergeten?" );
 		vergetenKnop.addActionListener( this );
-		
-		path = new String( "logo.png" );
-		imageLabel = new JLabel( new ImageIcon( path ) );
+	
+		imageLabel = new JLabel( new ImageIcon( "/ipse2/src/ipse/Images/logo.png" ) );
+		imageLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 		imageLabel.setBounds( 10, 10, 200, 100 );
 		
 		add( okKnop );
