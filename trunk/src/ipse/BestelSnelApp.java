@@ -22,6 +22,6 @@ public class BestelSnelApp extends JFrame
 	
 	public static void main( String[]args )
 	{
-		new BestelSnelApp();
+		new LoginView();
 	}
 }
