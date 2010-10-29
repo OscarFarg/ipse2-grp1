@@ -13,7 +13,12 @@ public class BestelSnelApp extends JFrame
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
 		NoordPaneel noordPaneel = new NoordPaneel();
-		add (noordPaneel, BorderLayout.NORTH);
+		WestPaneel westPaneel = new WestPaneel();
+		ZuidPaneel zuidPaneel = new ZuidPaneel();
+		
+		add(noordPaneel, BorderLayout.NORTH);
+		add(westPaneel, BorderLayout.WEST);
+		add(zuidPaneel, BorderLayout.SOUTH);
 		
 		//JPanel knopView = new KnopView();
 		//this.add( knopView );

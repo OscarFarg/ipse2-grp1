@@ -28,6 +28,13 @@ public class NoordPaneel extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent ae)
 	{
-		
+		if (ae.getSource() == uitlogKnop)
+		{
+			
+		}
+		else
+		{
+			
+		}
 	}	
 }
