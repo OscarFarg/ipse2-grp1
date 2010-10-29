@@ -1,6 +1,8 @@
 package ipse;
 
 import javax.swing.*;
+
+import java.awt.GridLayout;
 import java.awt.event.*;
 
 public class ZuidPaneel extends JPanel implements ActionListener
@@ -9,6 +11,10 @@ public class ZuidPaneel extends JPanel implements ActionListener
 	
 	public ZuidPaneel()
 	{
+		GridLayout gLayout = new GridLayout(1,0);
+		gLayout.setVgap(50);
+		setLayout(gLayout); 
+		
 		bestellingKnop = new JButton("Bestellingen");
 		bestellingKnop.addActionListener(this);
 		add(bestellingKnop);
