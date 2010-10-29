@@ -59,13 +59,15 @@ public class Database
 			insertKlant = dbConnectie.prepareStatement(
 					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaalstatus, klant_status)" +
 			"values (?, ?, ?, ?, ?, ?)");
+			insertMedewerker = dbConnectie.prepareStatement(
+					"instert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chef_id, medewerker_status" +
+			"values (?, ?, ?, ?, ?, ?)");
 
 		}
 		catch (Exception ex)
 		{
 			System.out.println(ex);
 			ex.printStackTrace();
-
 		}
 	}
 
@@ -81,11 +83,29 @@ public class Database
 			insertKlant.setString(5, k.getBetaalStatus());
 			insertKlant.setString(6, k.getKlantStatus());
 			insertKlant.executeUpdate();
-		} catch (SQLException ex)
+		} 
+		catch (SQLException ex)
 		{
 			System.out.println(ex);
 		}
+	}
 
+	public void insertMedewerker (Medewerker m)
+	{
+		try
+		{
+			insertMedewerker.setString(1, m.getVoornaam());
+			insertMedewerker.setString(2, m.getTussenvoegsel());
+			insertMedewerker.setString(3, m.getAchternaam());
+			insertMedewerker.setString(4, m.getFunctie());
+			insertMedewerker.setString(5, m.getChefId());
+			insertMedewerker.setString(6, m.getMedewerkerStatus());
+			insertMedewerker.executeUpdate();
+		}
+		catch (SQLException ex)
+		{
+			System.out.println(ex);
+		}
 	}
 
 	// sluit alle PreparedStatements en 
