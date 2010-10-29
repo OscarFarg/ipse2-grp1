@@ -14,15 +14,8 @@ public class BestelSnelApp extends JFrame
 		this.setTitle( "BestelSnel Groep1" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		NoordPaneel noordPaneel = new NoordPaneel();
-		WestPaneel westPaneel = new WestPaneel();
-		OostPaneel oostPaneel = new OostPaneel();
-		ZuidPaneel zuidPaneel = new ZuidPaneel();
-		
-		add(noordPaneel, BorderLayout.NORTH);
-		add(westPaneel, BorderLayout.WEST);
-		add(oostPaneel, BorderLayout.EAST );
-		add(zuidPaneel, BorderLayout.SOUTH);
+		KnopView knopView = new KnopView();
+		this.add(knopView);
 		
 		this.setVisible( true );
 	}
