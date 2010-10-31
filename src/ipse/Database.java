@@ -15,6 +15,7 @@ public class Database
 	private PreparedStatement insertMedewerker;
 	private PreparedStatement insertArtikel;
 	private PreparedStatement insertBestelling;
+	private Statement statement;
 
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Medewerker> medewerkerLijst;
@@ -70,7 +71,7 @@ public class Database
 			ex.printStackTrace();
 		}
 	}
-
+	
 	public void insertKlant (Klant k)
 	{
 		// gebruik het PreparedStatement 'insertRekening'
@@ -89,7 +90,7 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-
+	
 	public void insertMedewerker (Medewerker m)
 	{
 		try
@@ -99,13 +100,27 @@ public class Database
 			insertMedewerker.setString(3, m.getAchternaam());
 			insertMedewerker.setString(4, m.getFunctie());
 			insertMedewerker.setString(5, m.getChefId());
-			insertMedewerker.setString(6, m.getMedewerkerStatus());
+			insertMedewerker.setString(6, m.getMwStatus());
 			insertMedewerker.executeUpdate();
 		}
 		catch (SQLException ex)
 		{
 			System.out.println(ex);
 		}
+	}
+
+	public ResultSet getMedewerkers()
+	{
+		try
+		{
+			statement = dbConnectie.createStatement();
+			statement.executeQuery("select * from medewerkers");
+		}
+		catch( SQLException se )
+		{
+			System.out.println( se );
+		}
+		return (ResultSet) statement;
 	}
 
 	// sluit alle PreparedStatements en 
