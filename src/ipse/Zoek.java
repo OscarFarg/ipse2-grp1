@@ -1,6 +1,7 @@
 package ipse;
 
 import javax.swing.*;
+
 import java.util.*;
 import java.awt.event.*;
 
@@ -29,7 +30,7 @@ public class Zoek extends JFrame implements ActionListener
 	{		
 		JPanel contentPane = new JPanel();
 		JFrame venster = new JFrame();
-		venster.setSize(600,300); 
+		venster.setSize(500,300); 
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
 		venster.setContentPane(contentPane);
@@ -47,7 +48,8 @@ public class Zoek extends JFrame implements ActionListener
 		
 		zoekVeld = new JTextField("zoekwoord", 20);
 		
-		contentPane.add(new JLabel("Kies hier uw zoekoptie."));
+		contentPane.add(new JLabel( new ImageIcon("src/ipse/Images/logo.png")));
+		contentPane.add(new JLabel("Kies hier uw zoekoptie:"));
 		contentPane.add(artikelRadio);
 		contentPane.add(bestellingRadio);
 		contentPane.add(bestelregelRadio);
