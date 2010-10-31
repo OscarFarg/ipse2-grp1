@@ -23,7 +23,7 @@ public class ArtikelView extends View
 	
 	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestelregelstabel
 	{
-		ResultSet resultSet = database.getArtikelen(artikelid);
+		ResultSet resultSet = database.getArtikelen();
 		
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		int numberOfColumns = metaData.getColumnCount();
