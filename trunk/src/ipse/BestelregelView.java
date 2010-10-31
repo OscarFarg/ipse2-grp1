@@ -21,7 +21,7 @@ public class BestelregelView extends View
 		add(scrollPane);
 	}
 	
-	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestellingentabel
+	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestelregelstabel
 	{
 		ResultSet resultSet = database.getBestelregels(bestelnr);
 		
@@ -52,5 +52,6 @@ public class BestelregelView extends View
 			}
 		};
 		bestelregels.setAutoCreateRowSorter(true);
+		bestelregels.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 }
