@@ -3,6 +3,7 @@ package ipse;
 import javax.swing.*;
 
 import java.util.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class Zoek extends JFrame implements ActionListener
@@ -27,10 +28,12 @@ public class Zoek extends JFrame implements ActionListener
 	
 
 	public Zoek()
-	{		
-		JPanel contentPane = new JPanel();
+	{	
+		JPanel contentPane = new JPanel();	
+			
 		JFrame venster = new JFrame();
-		venster.setSize(500,300); 
+		venster.setSize(450,320); 
+		venster.setResizable(false);
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
 		venster.setContentPane(contentPane);
@@ -47,16 +50,20 @@ public class Zoek extends JFrame implements ActionListener
 		zoekKnop = new JButton("Zoek");
 		
 		zoekVeld = new JTextField("zoekwoord", 20);
+	
+		JPanel radiocontentPane = new JPanel(new GridLayout(0,1));
+		radiocontentPane.add(artikelRadio);
+		radiocontentPane.add(bestellingRadio);
+		radiocontentPane.add(bestelregelRadio);
+		radiocontentPane.add(klantRadio);
+		radiocontentPane.add(medewerkerRadio);
 		
 		contentPane.add(new JLabel( new ImageIcon("src/ipse/Images/logo.png")));
 		contentPane.add(new JLabel("Kies hier uw zoekoptie:"));
-		contentPane.add(artikelRadio);
-		contentPane.add(bestellingRadio);
-		contentPane.add(bestelregelRadio);
-		contentPane.add(klantRadio);
-		contentPane.add(medewerkerRadio);
+		contentPane.add(radiocontentPane);
 		contentPane.add( zoekVeld);
-		contentPane.add(zoekKnop);
+		contentPane.add(zoekKnop);		
+		
 	
 		ButtonGroup group = new ButtonGroup();
 		group.add(artikelRadio);
