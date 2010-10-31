@@ -37,7 +37,7 @@ public class Zoek extends JFrame implements ActionListener
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
 		venster.setContentPane(contentPane);
-		venster.setVisible(true);
+		
 		
 		artikelRadio = new JRadioButton(artikelString);
 		bestellingRadio = new JRadioButton(bestellingString);
@@ -78,6 +78,8 @@ public class Zoek extends JFrame implements ActionListener
 		klantRadio.addActionListener(this);
 		medewerkerRadio.addActionListener(this);
 		zoekKnop.addActionListener(this);
+		
+		venster.setVisible(true);
 		
 	}
 
