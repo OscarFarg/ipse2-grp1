@@ -2,7 +2,6 @@ package ipse;
 
 import java.sql.*;
 import java.util.*;
-
 import javax.swing.*;
 
 public class MedewerkerView extends View
@@ -15,43 +14,52 @@ public class MedewerkerView extends View
 	{
 		this.database = database;
 		this.controller = controller;
+		
+		setSize(800,300);
 
 		maakLijst();
 
 		JScrollPane scrollPane = new JScrollPane(medewerkers);
 		add(scrollPane);
+		
+		setVisible( true );
 	}
 
 	public void maakLijst()
 	{
-		ResultSet resultSet = database.getMedewekers();
-
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int numberOfColumns = metaData.getColumnCount();
-
-		Vector<String> koppen = new Vector<String>();
-		for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+		try
 		{
-			koppen.add(metaData.getColumnName(kolom));
-		}
+			ResultSet resultSet = database.getMedewerkers();
 
-		Vector<Vector<String>> data = new Vector<Vector<String>>();
-		while (resultSet.next())
-		{
-			Vector<String> rij = new Vector<String>();
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			int numberOfColumns = metaData.getColumnCount();
+
+			Vector<String> koppen = new Vector<String>();
 			for (int kolom = 1; kolom <= numberOfColumns; kolom++)
 			{
-				rij.add(resultSet.getString(kolom));
+				koppen.add(metaData.getColumnName(kolom));
 			}
-			data.add(rij);
-		}
-		medewerkers = new JTable(data, koppen)
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex)
+
+			Vector<Vector<String>> data = new Vector<Vector<String>>();
+			while (resultSet.next())
 			{
-				return false;
+				Vector<String> rij = new Vector<String>();
+				for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+				{
+					rij.add(resultSet.getString(kolom));
+				}
+				data.add(rij);
 			}
-		};
-		medewerkers.setAutoCreateRowSorter(true);
+			
+			JTable medewerkers = new JTable(data, koppen);
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView( medewerkers );
+		
+			medewerkers.setAutoCreateRowSorter(true);
+		}
+		catch( SQLException se )
+		{
+			System.out.println( se );
+		}
 	}
 }
