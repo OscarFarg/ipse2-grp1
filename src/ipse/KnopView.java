@@ -72,6 +72,7 @@ public class KnopView extends JPanel implements ActionListener
 
 	public void actionPerformed( ActionEvent e )
 	{
-		
+		if( e.getSource() == zoekKnop)
+		{		new Zoek();		}
 	}
 }
