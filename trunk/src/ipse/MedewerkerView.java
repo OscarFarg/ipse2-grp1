@@ -2,6 +2,7 @@ package ipse;
 
 import java.sql.*;
 import java.util.*;
+
 import javax.swing.*;
 
 public class MedewerkerView extends View
@@ -14,18 +15,18 @@ public class MedewerkerView extends View
 	{
 		this.database = database;
 		this.controller = controller;
-		
+
 		setSize(800,300);
 
 		maakLijst();
 
 		JScrollPane scrollPane = new JScrollPane(medewerkers);
 		add(scrollPane);
-		
+
 		setVisible( true );
 	}
 
-	public void maakLijst()
+	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestellingentabel
 	{
 		try
 		{
@@ -50,12 +51,15 @@ public class MedewerkerView extends View
 				}
 				data.add(rij);
 			}
-			
-			JTable medewerkers = new JTable(data, koppen);
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setViewportView( medewerkers );
-		
+			medewerkers = new JTable(data, koppen)
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex)
+				{
+					return false;
+				}
+			};
 			medewerkers.setAutoCreateRowSorter(true);
+			medewerkers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
 		catch( SQLException se )
 		{
