@@ -18,13 +18,13 @@ public class Zoek extends JFrame implements ActionListener
 	
 	private JTextField zoekVeld;
 	
-	private String artikelString = "Artikel";
-	private String bestellingString = "Besteling";
-	private String bestelregelString = "Bestelregel";
-	private String klantString = "Klant";
-	private String medewerkerString = "Medewerker";
+	private String artikelString = "artikel";
+	private String bestellingString = "besteling";
+	private String bestelregelString = "bestelregel";
+	private String klantString = "klant";
+	private String medewerkerString = "medewerker";
 	
-	private String zoekSegment = "Artikel"; // Bepaald waarop wordt gezocht
+	private String zoekSegment = "artikel"; // Bepaald waarop wordt gezocht
 	
 
 	public Zoek()
