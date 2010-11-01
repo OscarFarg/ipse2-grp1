@@ -41,7 +41,7 @@ public class LoginView extends JFrame implements ActionListener
 		vergetenKnop = new JButton( "Wachtwoord vergeten?" );
 		vergetenKnop.addActionListener( this );
 	
-		login = new ImageIcon( "src/ipse/Images/logo.png" );
+		login = new ImageIcon( "src/ipse/images/logo.png" );
 		imageLabel = new JLabel( login );
 		imageLabel.setBounds( 50, 0, 300, 100 );
 		
