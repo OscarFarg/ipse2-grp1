@@ -19,6 +19,7 @@ public class Database
 	private PreparedStatement selectArtikelen;
 	private PreparedStatement selectMedewerkers;
 	private PreparedStatement totaalPrijsBestelling;
+	private PreparedStatement deleteArtikel;
 
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Medewerker> medewerkerLijst;
@@ -59,6 +60,7 @@ public class Database
 			//			insertRekening = deDbConnectie.prepareStatement ("insert into rekening (nr, saldo, bsn) values (?, ?, ?)");
 			//			geselecteerdeRekening = deDbConnectie.prepareStatement("select * from rekening where bsn = ?");
 			//			allePersonen = deDbConnectie.prepareStatement("select * from persoon");
+			//			deleteArtikel = deDBConnectie.prepareStatement("delete from artikel where artikelid = ?")
 
 			insertKlant = dbConnectie.prepareStatement(
 					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaal_status, status)" +
@@ -71,6 +73,7 @@ public class Database
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
+			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
 		}
@@ -120,7 +123,7 @@ public class Database
 	
 	public void insertArtikel (Artikel a)
 	{
-		// gebruik het PreparedStatement 'insertRekening'
+		// gebruik het PreparedStatement 'insertArtikel'
 		try
 		{
 			insertArtikel.setInt(1, a.getArtikelid());
@@ -129,6 +132,19 @@ public class Database
 			insertArtikel.executeUpdate();
 		} 
 		catch (SQLException ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	
+	public void deleteArtikel(Artikel a )
+	{
+		try
+		{
+			deleteArtikel.setInt(1, a.getArtikelid());
+			deleteArtikel.executeUpdate();
+		}
+		catch(SQLException ex)
 		{
 			System.out.println(ex);
 		}
