@@ -23,35 +23,44 @@ public class ArtikelView extends View
 	
 	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestelregelstabel
 	{
-		ResultSet resultSet = database.getArtikelen();
 		
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int numberOfColumns = metaData.getColumnCount();
+		try
+		{
+			ResultSet resultSet = database.getArtikelen();
 		
-		Vector<String> koppen = new Vector<String>();
-		for (int kolom = 1; kolom <= numberOfColumns; kolom++)
-		{
-			koppen.add(metaData.getColumnName(kolom));
-		}
-
-		Vector<Vector<String>> data = new Vector<Vector<String>>();
-		while (resultSet.next())
-		{
-			Vector<String> rij = new Vector<String>();
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			int numberOfColumns = metaData.getColumnCount();
+		
+			Vector<String> koppen = new Vector<String>();
 			for (int kolom = 1; kolom <= numberOfColumns; kolom++)
 			{
-				rij.add(resultSet.getString(kolom));
+				koppen.add(metaData.getColumnName(kolom));
 			}
-			data.add(rij);
-		}
-		artikelen = new JTable(data, koppen)
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex)
+
+			Vector<Vector<String>> data = new Vector<Vector<String>>();
+			while (resultSet.next())
 			{
-				return false;
+				Vector<String> rij = new Vector<String>();
+				for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+				{
+					rij.add(resultSet.getString(kolom));
+				}
+				data.add(rij);
 			}
-		};
-		artikelen.setAutoCreateRowSorter(true);
-		artikelen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			artikelen = new JTable(data, koppen)
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex)
+				{
+					return false;
+				}
+			};
+			artikelen.setAutoCreateRowSorter(true);
+			artikelen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		catch(SQLException se)
+		{
+			System.out.println( se );
+		}
+	
+		}
 	}
-}
