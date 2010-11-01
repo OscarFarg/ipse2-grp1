@@ -7,9 +7,14 @@ public class Klant {
 	private String achternaam;
 	private String rekeningNr;
 	private String betaalStatus;
-	private String klantStatus;
+	private String status;
 	
 	public Klant()
+	{
+		
+	}
+	
+	public Klant(String id, String voornaam, String tussenvoegsel, String achternaam, String rekeningNr, String betaalStatus, String status)
 	{
 		
 	}
@@ -52,11 +57,11 @@ public class Klant {
 	public void setBetaalStatus(String betaalStatus) {
 		this.betaalStatus = betaalStatus;
 	}
-	public String getKlantStatus() {
-		return klantStatus;
+	public String getStatus() {
+		return status;
 	}
-	public void setKlantStatus(String klantStatus) {
-		this.klantStatus = klantStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

@@ -18,6 +18,8 @@ public class Database
 	private PreparedStatement selectBestellingen;
 	private PreparedStatement selectArtikelen;
 	private PreparedStatement selectMedewerkers;
+	private PreparedStatement selectKlanten;
+
 	private PreparedStatement totaalPrijsBestelling;
 	private PreparedStatement deleteArtikel;
 
@@ -73,6 +75,7 @@ public class Database
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
+			selectKlanten = dbConnectie.prepareStatement("select * from klant");
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
@@ -94,7 +97,7 @@ public class Database
 			insertKlant.setString(3, k.getAchternaam());
 			insertKlant.setString(4, k.getRekeningNr());
 			insertKlant.setString(5, k.getBetaalStatus());
-			insertKlant.setString(6, k.getKlantStatus());
+			insertKlant.setString(6, k.getStatus());
 			insertKlant.executeUpdate();
 		} 
 		catch (SQLException ex)
@@ -200,6 +203,20 @@ public class Database
 		try
 		{
 			resultSet = selectArtikelen.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public ResultSet getKlanten()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectKlanten.executeQuery();
 		}
 		catch (SQLException e)
 		{
