@@ -4,6 +4,7 @@ public class Klant {
 	private String id;
 	private String voornaam;
 	private String tussenvoegsel;
+	private String achternaam;
 	private String rekeningNr;
 	private String betaalStatus;
 	private String klantStatus;
@@ -31,6 +32,14 @@ public class Klant {
 	public void setTussenvoegsel(String tussenvoegsel) {
 		this.tussenvoegsel = tussenvoegsel;
 	}
+	public String getAchternaam() {
+		return achternaam;
+	}
+
+	public void setAchternaam(String achternaam) {
+		this.achternaam = achternaam;
+	}
+
 	public String getRekeningNr() {
 		return rekeningNr;
 	}
