@@ -15,7 +15,8 @@ public class Database
 	private PreparedStatement insertMedewerker;
 	private PreparedStatement insertArtikel;
 	private PreparedStatement insertBestelling;
-	private Statement statement;
+	private PreparedStatement selectBestellingen;
+	private PreparedStatement totaalPrijsBestelling;
 
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Medewerker> medewerkerLijst;
@@ -63,6 +64,8 @@ public class Database
 			insertMedewerker = dbConnectie.prepareStatement(
 					"instert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chef_id, medewerker_status" +
 			"values (?, ?, ?, ?, ?, ?)");
+			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
+			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
 		}
 		catch (Exception ex)
@@ -109,6 +112,36 @@ public class Database
 		}
 	}
 
+	public ResultSet getBestellingen()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectBestellingen.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public double getTotaalPrijs(String bestelnr)
+	{
+		double totaalPrijs = null;
+		try
+		{
+			totaalPrijsBestelling.setString(1, bestelnr);
+			ResultSet resultSet = totaalPrijsBestelling.executeQuery();
+			totaalPrijs = Double.parseDouble(resultSet.getString(1));
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return totaalPrijs;
+	}
+	
 	public ResultSet getMedewerkers()
 	{
 		try
