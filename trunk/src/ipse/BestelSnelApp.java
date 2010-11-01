@@ -1,5 +1,7 @@
 package ipse;
 
+import ipse.HoofdView.Views;
+
 import java.awt.*;
 import javax.swing.*;
 
