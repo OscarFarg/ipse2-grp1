@@ -23,37 +23,44 @@ public class BestellingView extends View
 
 	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestellingentabel
 	{
-		ResultSet resultSet = database.getBestellingen();
-
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int numberOfColumns = metaData.getColumnCount();
-
-		Vector<String> koppen = new Vector<String>();
-		for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+		try
 		{
-			koppen.add(metaData.getColumnName(kolom));
-		}
-		koppen.add("Totaal prijs");
+			ResultSet resultSet = database.getBestellingen();
 
-		Vector<Vector<String>> data = new Vector<Vector<String>>();
-		while (resultSet.next())
-		{
-			Vector<String> rij = new Vector<String>();
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			int numberOfColumns = metaData.getColumnCount();
+
+			Vector<String> koppen = new Vector<String>();
 			for (int kolom = 1; kolom <= numberOfColumns; kolom++)
 			{
-				rij.add(resultSet.getString(kolom));
+				koppen.add(metaData.getColumnName(kolom));
 			}
-			rij.add(database.getTotaalPrijs(resultSet.getString("bestelnr")));
-			data.add(rij);
-		}
-		bestellingen = new JTable(data, koppen)
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex)
+			koppen.add("Totaal prijs");
+
+			Vector<Vector<String>> data = new Vector<Vector<String>>();
+			while (resultSet.next())
 			{
-				return false;
+				Vector<String> rij = new Vector<String>();
+				for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+				{
+					rij.add(resultSet.getString(kolom));
+				}
+				rij.add(database.getTotaalPrijs(resultSet.getString("bestelnr")));
+				data.add(rij);
 			}
-		};
-		bestellingen.setAutoCreateRowSorter(true);
-		bestellingen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			bestellingen = new JTable(data, koppen)
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex)
+				{
+					return false;
+				}
+			};
+			bestellingen.setAutoCreateRowSorter(true);
+			bestellingen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
 	}
 }

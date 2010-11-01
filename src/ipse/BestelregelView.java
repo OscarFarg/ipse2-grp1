@@ -9,49 +9,56 @@ public class BestelregelView extends View
 	private Database database;
 	private Controller controller;
 	private JTable bestelregels;
-	
+
 	public BestelregelView(Database database, Controller controller)
 	{
 		this.database = database;
 		this.controller = controller;
-		
+
 		maakLijst();
-		
+
 		JScrollPane scrollPane = new JScrollPane(bestelregels);
 		add(scrollPane);
 	}
-	
+
 	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestelregelstabel
 	{
-		ResultSet resultSet = database.getBestelregels(bestelnr);
-		
-		ResultSetMetaData metaData = resultSet.getMetaData();
-		int numberOfColumns = metaData.getColumnCount();
-		
-		Vector<String> koppen = new Vector<String>();
-		for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+		try
 		{
-			koppen.add(metaData.getColumnName(kolom));
-		}
+			ResultSet resultSet = database.getBestelregels(bestelnr);
 
-		Vector<Vector<String>> data = new Vector<Vector<String>>();
-		while (resultSet.next())
-		{
-			Vector<String> rij = new Vector<String>();
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			int numberOfColumns = metaData.getColumnCount();
+
+			Vector<String> koppen = new Vector<String>();
 			for (int kolom = 1; kolom <= numberOfColumns; kolom++)
 			{
-				rij.add(resultSet.getString(kolom));
+				koppen.add(metaData.getColumnName(kolom));
 			}
-			data.add(rij);
-		}
-		bestelregels = new JTable(data, koppen)
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex)
+
+			Vector<Vector<String>> data = new Vector<Vector<String>>();
+			while (resultSet.next())
 			{
-				return false;
+				Vector<String> rij = new Vector<String>();
+				for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+				{
+					rij.add(resultSet.getString(kolom));
+				}
+				data.add(rij);
 			}
-		};
-		bestelregels.setAutoCreateRowSorter(true);
-		bestelregels.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			bestelregels = new JTable(data, koppen)
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex)
+				{
+					return false;
+				}
+			};
+			bestelregels.setAutoCreateRowSorter(true);
+			bestelregels.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
 	}
 }

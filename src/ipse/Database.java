@@ -148,14 +148,14 @@ public class Database
 		return resultSet;
 	}
 	
-	public double getTotaalPrijs(String bestelnr)
+	public String getTotaalPrijs(String bestelnr)
 	{
-		double totaalPrijs = 0.0;
+		String totaalPrijs = null;
 		try
 		{
 			totaalPrijsBestelling.setString(1, bestelnr);
 			ResultSet resultSet = totaalPrijsBestelling.executeQuery();
-			totaalPrijs = Double.parseDouble(resultSet.getString(1));
+			totaalPrijs = resultSet.getString(1);
 		}
 		catch (SQLException e)
 		{
