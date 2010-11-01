@@ -5,10 +5,17 @@ import java.awt.event.*;
 
 public class HoofdView extends JPanel implements ActionListener
 {
+	public enum Views{ARTIKEL, BESTELLING, KLANT, MEDWEWERKER};
+	private Views huidigeView;
+	
 	private JButton bestellingKnop, artikelKnop, medewerkerKnop, klantenKnop, zoekKnop, uitlogKnop,
 					nieuwKnop, bewerkKnop, verwijderKnop, meerInfoKnop;
 	private JLabel logoLabel;
+	
 	MedewerkerView mwView;
+	ArtikelView atView;
+	BestellingView bsView;
+	KlantView klView;
 	
 	Database database;
 	Controller controller;
@@ -21,7 +28,13 @@ public class HoofdView extends JPanel implements ActionListener
 		setLayout( null );
 		
 		mwView = new MedewerkerView( database, controller );
-		mwView.setBounds( 100, 100, 400, 200 );
+		mwView.setBounds( 110, 120, 550, 350 );
+		atView = new ArtikelView( database, controller );
+		atView.setBounds( 110, 120, 550, 350 );
+		bsView = new BestellingView( database, controller );
+		bsView.setBounds( 110, 120, 550, 350 );
+		//klView = new KlantView( database, controller );
+		//klView.setBounds( 110, 120, 550, 350 );
 		
 		logoLabel = new JLabel( new ImageIcon("src/ipse/Images/logo.png") );
 		logoLabel.setBounds( 250, 20, 300, 100 );
@@ -77,12 +90,18 @@ public class HoofdView extends JPanel implements ActionListener
 		add( bewerkKnop );
 		add( verwijderKnop );
 		add( meerInfoKnop );
-		add( mwView );
-		
+		add( bsView );	
 	}
 
 	public void actionPerformed( ActionEvent e )
 	{
+		if( e.getSource() == artikelKnop )
+		{
+			removeAll();
+			add(atView);
+			repaint();
+		}
+		
 		if( e.getSource() == zoekKnop)
 		{		new Zoek();		}
 	}
