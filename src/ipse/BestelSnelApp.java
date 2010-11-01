@@ -5,8 +5,14 @@ import javax.swing.*;
 
 public class BestelSnelApp extends JFrame
 {
+	Database database;
+	Controller controller;
+	
 	public BestelSnelApp()
 	{
+		database = new Database();
+		controller = new Controller();
+		
 		this.setLayout( new BorderLayout() );
 		
 		this.setSize( 800, 600 );
@@ -14,7 +20,7 @@ public class BestelSnelApp extends JFrame
 		this.setTitle( "BestelSnel Groep1" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		KnopView knopView = new KnopView();
+		HoofdView knopView = new HoofdView( controller );
 		this.add(knopView);
 		
 		this.setVisible( true );
