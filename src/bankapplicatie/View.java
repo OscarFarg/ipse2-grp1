@@ -1,4 +1,4 @@
-package associaties.database;
+package bankapplicatie;
 
 import java.awt.event.*;
 import javax.swing.*;
