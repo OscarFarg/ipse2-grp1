@@ -5,10 +5,10 @@ import java.util.*;
 public class Bestelling
 {
 	private int bestelnr, klantid, medewerkerid;
-	private String bestelDatum, leverDatum, betaalDatum;
+	private Date bestelDatum, leverDatum, betaalDatum;
 	private ArrayList<Bestelregel> bestelregels;
 	
-	public Bestelling(int bestelnr, String bestelDatum, String leverDatum, String betaalDatum, int klantid, int medewerkerid)
+	public Bestelling(int bestelnr, Date bestelDatum, Date leverDatum, Date betaalDatum, int klantid, int medewerkerid)
 	{
 		this.bestelnr = bestelnr;
 		this.bestelDatum = bestelDatum;
@@ -50,17 +50,17 @@ public class Bestelling
 		return medewerkerid;
 	}
 
-	public String getBestelDatum()
+	public Date getBestelDatum()
 	{
 		return bestelDatum;
 	}
 
-	public String getLeverDatum()
+	public Date getLeverDatum()
 	{
 		return leverDatum;
 	}
 
-	public String getBetaalDatum()
+	public Date getBetaalDatum()
 	{
 		return betaalDatum;
 	}
