@@ -3,14 +3,14 @@ package ipse;
 public class Artikel 
 {
 	private int artikelid;
-	private String artikelNaam;
+	private String artikelnaam;
 	private double prijs;
 	
 	
 	public Artikel( int artikelid, String artikelNaam, double prijs)
 	{
 		this.artikelid = artikelid;
-		this.artikelNaam = artikelNaam;
+		this.artikelnaam = artikelnaam;
 		this.prijs = prijs;
 	}
 
@@ -21,9 +21,9 @@ public class Artikel
 	}
 
 
-	public String getArtikelNaam() 
+	public String getArtikelnaam() 
 	{
-		return artikelNaam;
+		return artikelnaam;
 	}
 
 

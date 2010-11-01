@@ -16,6 +16,7 @@ public class Database
 	private PreparedStatement insertArtikel;
 	private PreparedStatement insertBestelling;
 	private PreparedStatement selectBestellingen;
+	private PreparedStatement selectArtikelen;
 	private PreparedStatement totaalPrijsBestelling;
 
 	private ArrayList<Klant> klantLijst;
@@ -64,7 +65,10 @@ public class Database
 			insertMedewerker = dbConnectie.prepareStatement(
 					"instert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chef_id, medewerker_status" +
 			"values (?, ?, ?, ?, ?, ?)");
+			insertArtikel = dbConnectie.prepareStatement(
+					"insert into artikel ( artikelid, artikelnaam, prijs" + "values (?, ?, ? )");
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
+			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
 		}
@@ -111,6 +115,22 @@ public class Database
 			System.out.println(ex);
 		}
 	}
+	
+	public void insertArtikel (Artikel a)
+	{
+		// gebruik het PreparedStatement 'insertRekening'
+		try
+		{
+			insertArtikel.setInt(1, a.getArtikelid());
+			insertArtikel.setString(2, a.getArtikelnaam());
+			insertArtikel.setDouble(3, a.getPrijs());
+			insertArtikel.executeUpdate();
+		} 
+		catch (SQLException ex)
+		{
+			System.out.println(ex);
+		}
+	}
 
 	public ResultSet getBestellingen()
 	{
@@ -128,7 +148,7 @@ public class Database
 	
 	public double getTotaalPrijs(String bestelnr)
 	{
-		double totaalPrijs = null;
+		double totaalPrijs = 0.0;
 		try
 		{
 			totaalPrijsBestelling.setString(1, bestelnr);
@@ -154,6 +174,20 @@ public class Database
 			System.out.println( se );
 		}
 		return (ResultSet) statement;
+	}
+	
+	public ResultSet getArtikelen()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectArtikelen.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
 	}
 
 	// sluit alle PreparedStatements en 
