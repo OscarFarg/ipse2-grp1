@@ -39,7 +39,7 @@ public class HoofdView extends JPanel implements ActionListener
 		view = Views.BESTELLING;
 		huidigeView = bsView;
 
-		logoLabel = new JLabel( new ImageIcon("src/ipse/Images/logo.png") );
+		logoLabel = new JLabel( new ImageIcon("src/ipse/images/logo.png") );
 		logoLabel.setBounds( 250, 20, 300, 100 );
 
 		bestellingKnop = new JButton( "Bestelling" );
