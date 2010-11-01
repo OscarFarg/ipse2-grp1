@@ -17,6 +17,7 @@ public class Database
 	private PreparedStatement insertBestelling;
 	private PreparedStatement selectBestellingen;
 	private PreparedStatement selectArtikelen;
+	private PreparedStatement selectMedewerkers;
 	private PreparedStatement totaalPrijsBestelling;
 
 	private ArrayList<Klant> klantLijst;
@@ -60,15 +61,16 @@ public class Database
 			//			allePersonen = deDbConnectie.prepareStatement("select * from persoon");
 
 			insertKlant = dbConnectie.prepareStatement(
-					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaalstatus, klant_status)" +
+					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaal_status, status)" +
 			"values (?, ?, ?, ?, ?, ?)");
 			insertMedewerker = dbConnectie.prepareStatement(
-					"instert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chef_id, medewerker_status" +
+					"insert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chefid, status)" +
 			"values (?, ?, ?, ?, ?, ?)");
 			insertArtikel = dbConnectie.prepareStatement(
-					"insert into artikel ( artikelid, artikelnaam, prijs" + "values (?, ?, ? )");
+					"insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
+			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
 		}
@@ -164,16 +166,16 @@ public class Database
 	
 	public ResultSet getMedewerkers()
 	{
+		ResultSet resultSet = null;
 		try
 		{
-			statement = dbConnectie.createStatement();
-			statement.executeQuery("select * from medewerkers");
+			resultSet = selectMedewerkers.executeQuery();
 		}
-		catch( SQLException se )
+		catch (SQLException e)
 		{
-			System.out.println( se );
+			System.out.println(e);
 		}
-		return (ResultSet) statement;
+		return resultSet;
 	}
 	
 	public ResultSet getArtikelen()
