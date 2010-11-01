@@ -25,7 +25,6 @@ public class HoofdView extends JPanel implements ActionListener
 	{
 		this.controller = controller;
 		database = new Database();
-
 		setLayout( null );
 
 		mwView = new MedewerkerView( database, controller );
@@ -34,8 +33,8 @@ public class HoofdView extends JPanel implements ActionListener
 		atView.setBounds( 110, 120, 550, 350 );
 		bsView = new BestellingView( database, controller );
 		bsView.setBounds( 110, 120, 550, 350 );
-		//klView = new KlantView( database, controller );
-		//klView.setBounds( 110, 120, 550, 350 );
+		klView = new KlantView( database, controller );
+		klView.setBounds( 110, 120, 550, 350 );
 
 		view = Views.BESTELLING;
 		huidigeView = bsView;
