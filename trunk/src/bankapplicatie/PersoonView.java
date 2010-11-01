@@ -1,4 +1,4 @@
-package associaties.database;
+package bankapplicatie;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

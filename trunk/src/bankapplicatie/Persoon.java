@@ -1,4 +1,4 @@
-package associaties.database;
+package bankapplicatie;
 
 import java.util.ArrayList;
 
