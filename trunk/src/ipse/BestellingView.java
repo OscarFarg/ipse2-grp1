@@ -45,7 +45,7 @@ public class BestellingView extends View
 				{
 					rij.add(resultSet.getString(kolom));
 				}
-				rij.add(database.getTotaalPrijs(resultSet.getString("bestelnr")));
+				rij.add(database.getTotaalPrijs(resultSet.getInt(1)));
 				data.add(rij);
 			}
 			bestellingen = new JTable(data, koppen)

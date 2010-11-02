@@ -6,21 +6,16 @@ import java.util.ArrayList;
 public class Database 
 {
 	private Connection dbConnectie;
-	//	private PreparedStatement insertPersoon;
-	//	private PreparedStatement insertRekening;
-	//	private PreparedStatement geselecteerdeRekening;
-	//	private PreparedStatement allePersonen;
 
 	private PreparedStatement insertKlant;
 	private PreparedStatement insertMedewerker;
 	private PreparedStatement insertArtikel;
-	private PreparedStatement insertBestelling;
-	private PreparedStatement selectBestellingen;
+	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
+	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement selectArtikelen;
 	private PreparedStatement selectMedewerkers;
 	private PreparedStatement selectKlanten;
 
-	private PreparedStatement totaalPrijsBestelling;
 	private PreparedStatement deleteArtikel;
 
 	private ArrayList<Klant> klantLijst;
@@ -57,13 +52,7 @@ public class Database
 	private void prepare_statements()
 	{
 		try
-		{	
-			//			insertPersoon = deDbConnectie.prepareStatement ("insert into persoon (bsn, naam) values (?, ?)");
-			//			insertRekening = deDbConnectie.prepareStatement ("insert into rekening (nr, saldo, bsn) values (?, ?, ?)");
-			//			geselecteerdeRekening = deDbConnectie.prepareStatement("select * from rekening where bsn = ?");
-			//			allePersonen = deDbConnectie.prepareStatement("select * from persoon");
-			//			deleteArtikel = deDBConnectie.prepareStatement("delete from artikel where artikelid = ?")
-
+		{
 			insertKlant = dbConnectie.prepareStatement(
 					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaal_status, status)" +
 			"values (?, ?, ?, ?, ?, ?)");
@@ -73,12 +62,16 @@ public class Database
 			insertArtikel = dbConnectie.prepareStatement(
 					"insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
+			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
+				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
+			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
+				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
+			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			selectKlanten = dbConnectie.prepareStatement("select * from klant");
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
-
 		}
 		catch (Exception ex)
 		{
@@ -167,12 +160,60 @@ public class Database
 		return resultSet;
 	}
 	
-	public String getTotaalPrijs(String bestelnr)
+	public void insertBestelling(Bestelling b)
 	{
-		String totaalPrijs = null;
 		try
 		{
-			totaalPrijsBestelling.setString(1, bestelnr);
+			insertBestelling.setDate(1, (Date) b.getBestelDatum());
+			insertBestelling.setDate(2, (Date) b.getLeverDatum());
+			insertBestelling.setDate(3, (Date) b.getBetaalDatum());
+			insertBestelling.setInt(4, b.getKlantid());
+			insertBestelling.setInt(5, b.getMedewerkerid());
+			insertBestelling.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void updateBestelling(Bestelling b)
+	{
+		try
+		{
+			updateBestelling.setDate(1, (Date) b.getBestelDatum());
+			updateBestelling.setDate(2, (Date) b.getLeverDatum());
+			updateBestelling.setDate(3, (Date) b.getBetaalDatum());
+			updateBestelling.setInt(4, b.getKlantid());
+			updateBestelling.setInt(5, b.getMedewerkerid());
+			updateBestelling.setInt(6, b.getBestelnr());
+			updateBestelling.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void deleteBestelling(int bestelnr)
+	{
+		try
+		{
+			deleteBestelling.setInt(1, bestelnr);
+			deleteBestelling.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public String getTotaalPrijs(int bestelnr)
+	{
+		String totaalPrijs = "";
+		try
+		{
+			totaalPrijsBestelling.setInt(1, bestelnr);
 			ResultSet resultSet = totaalPrijsBestelling.executeQuery();
 			totaalPrijs = resultSet.getString(1);
 		}
