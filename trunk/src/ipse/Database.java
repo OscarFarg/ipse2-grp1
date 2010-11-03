@@ -13,6 +13,7 @@ public class Database
 	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
 	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement selectKlanten;
+	private PreparedStatement zoekDatabase;
 
 
 	private ArrayList<Klant> klantLijst;
@@ -54,7 +55,7 @@ public class Database
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
 					"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
-			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ? " + 
+			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
 					"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
 			
@@ -77,6 +78,10 @@ public class Database
 				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
+		
+			//Zoek Functie
+			zoekDatabase = dbConnectie.prepareStatement("select * from ? where ? = ?");
+			
 		}
 		catch (Exception ex)
 		{
@@ -319,6 +324,22 @@ public class Database
 		}
 		return totaalPrijs;
 	}
+	
+	//zoek
+	public void zoekDatabase (Zoek z)
+	{
+		try
+		{
+			zoekDatabase.setString(1, z.getZoekSegment());
+			zoekDatabase.setString(2, z.getZoekVeld());
+			zoekDatabase.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
 	
 	// sluit alle PreparedStatements en 
 	// de database-connectie 
