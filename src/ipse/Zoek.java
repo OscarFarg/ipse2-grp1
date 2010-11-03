@@ -25,6 +25,7 @@ public class Zoek extends JFrame implements ActionListener
 	private String medewerkerString = "medewerker";
 	
 	private String zoekSegment = "artikel"; // Bepaald waarop wordt gezocht
+	private String zoekKolom = "";  // Kolom waarop word gezocht
 	
 
 	public Zoek()
@@ -82,8 +83,17 @@ public class Zoek extends JFrame implements ActionListener
 		venster.setVisible(true);
 		
 	}
-
 	
+	public String getZoekSegment() 
+	{
+		return zoekSegment;
+	}
+	
+	public String getZoekVeld()
+	{
+		return( zoekVeld.getText());
+	}
+
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getSource() == artikelRadio )
