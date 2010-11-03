@@ -60,12 +60,12 @@ public class Database
 					"insert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chefid, status)" +
 			"values (?, ?, ?, ?, ?, ?)");
 			insertArtikel = dbConnectie.prepareStatement(
-					"insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
+			"insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
-				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
+			"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
 			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
-				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
+			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
@@ -79,7 +79,7 @@ public class Database
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public void insertKlant (Klant k)
 	{
 		// gebruik het PreparedStatement 'insertRekening'
@@ -98,7 +98,7 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-	
+
 	public void insertMedewerker (Medewerker m)
 	{
 		try
@@ -116,7 +116,7 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-	
+
 	public void insertArtikel (Artikel a)
 	{
 		// gebruik het PreparedStatement 'insertArtikel'
@@ -132,7 +132,7 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-	
+
 	public void deleteArtikel(Artikel a )
 	{
 		try
@@ -159,7 +159,7 @@ public class Database
 		}
 		return resultSet;
 	}
-	
+
 	public void insertBestelling(Bestelling b)
 	{
 		try
@@ -176,7 +176,7 @@ public class Database
 			System.out.println(e);
 		}
 	}
-	
+
 	public void updateBestelling(Bestelling b)
 	{
 		try
@@ -194,7 +194,7 @@ public class Database
 			System.out.println(e);
 		}
 	}
-	
+
 	public void deleteBestelling(int bestelnr)
 	{
 		try
@@ -207,7 +207,7 @@ public class Database
 			System.out.println(e);
 		}
 	}
-	
+
 	public String getTotaalPrijs(int bestelnr)
 	{
 		String totaalPrijs = "";
@@ -215,7 +215,8 @@ public class Database
 		{
 			totaalPrijsBestelling.setInt(1, bestelnr);
 			ResultSet resultSet = totaalPrijsBestelling.executeQuery();
-			totaalPrijs = resultSet.getString(1);
+			while (resultSet.next())
+				totaalPrijs = resultSet.getString(1);
 		}
 		catch (SQLException e)
 		{
@@ -223,7 +224,7 @@ public class Database
 		}
 		return totaalPrijs;
 	}
-	
+
 	public ResultSet getMedewerkers()
 	{
 		ResultSet resultSet = null;
@@ -237,7 +238,7 @@ public class Database
 		}
 		return resultSet;
 	}
-	
+
 	public ResultSet getArtikelen()
 	{
 		ResultSet resultSet = null;
@@ -251,7 +252,7 @@ public class Database
 		}
 		return resultSet;
 	}
-	
+
 	public ResultSet getKlanten()
 	{
 		ResultSet resultSet = null;
