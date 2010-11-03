@@ -65,7 +65,7 @@ public class Bestelling
 		return betaalDatum;
 	}
 	
-	public ArrayList getBestelregels()
+	public ArrayList<Bestelregel> getBestelregels()
 	{
 		return bestelregels;
 	}

@@ -60,7 +60,7 @@ public class LoginView extends JFrame implements ActionListener
 	public void actionPerformed( ActionEvent ae )
 	{
 		String naam = inlogNaamVeld.getText();
-		String ww = wwVeld.getText();
+		String ww = wwVeld.getPassword().toString();
 		
 		if (ae.getSource() == okKnop)
 		{
