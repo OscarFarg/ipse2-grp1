@@ -69,4 +69,10 @@ public class KlantView extends View{
 			System.out.println( se );
 		}
 	}
+	
+	public String getGeselecteerdeKlant()
+	{
+		String bestelnr = (String) klanten.getValueAt(klanten.getSelectedRow(), 0);
+		return bestelnr;
+	}
 }

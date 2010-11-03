@@ -7,12 +7,11 @@ public class Database
 {
 	private Connection dbConnectie;
 
-	private PreparedStatement insertKlant;
+	private PreparedStatement selectKlanten, insertKlant, updateKlant, deleteKlant;
 	private PreparedStatement selectMedewerkers, insertMedewerker, updateMedewerker, deleteMedewerker;
 	private PreparedStatement selectArtikelen, insertArtikel, updateArtikel, deleteArtikel;
 	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
 	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
-	private PreparedStatement selectKlanten;
 	private PreparedStatement zoekDatabase;
 
 
@@ -63,6 +62,8 @@ public class Database
 			selectKlanten = dbConnectie.prepareStatement("select * from klant");
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 					"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
+			//updateKlant = dbConnectie.prepareStatement("");
+			deleteKlant = dbConnectie.prepareStatement("delete from klant where id = ?");
 			
 			//artikelen
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
@@ -79,8 +80,15 @@ public class Database
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 		
+			//bestelregels
+			selectBestelregels = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ?");
+			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
+			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
+					"prijs = ?, aantal = ?, totaal_prijs = ?");
+			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
+			
 			//Zoek Functie
-			zoekDatabase = dbConnectie.prepareStatement("select * from ? where ? = ?");
+			//zoekDatabase = dbConnectie.prepareStatement("select * from ? where ? = ?");
 			
 		}
 		catch (Exception ex)
@@ -141,11 +149,11 @@ public class Database
 		}
 	}
 	
-	public void deleteMedewerker(Medewerker m)
+	public void deleteMedewerker(int id)
 	{
 		try
 		{
-			deleteMedewerker.setInt(1, m.getId());
+			deleteMedewerker.setInt(1, id);
 			deleteMedewerker.executeUpdate();
 		}
 		catch (SQLException e)
@@ -188,6 +196,24 @@ public class Database
 		}
 	}
 	
+	public void updateKlant(Klant k)
+	{
+		
+	}
+	
+	public void deleteKlant(int id)
+	{
+		try
+		{
+			deleteKlant.setInt(1, id);
+			deleteKlant.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
 	//artikel
 	public ResultSet getArtikelen()
 	{
@@ -218,11 +244,11 @@ public class Database
 		}
 	}
 	
-	public void deleteArtikel(Artikel a )
+	public void deleteArtikel(int artikelid )
 	{
 		try
 		{
-			deleteArtikel.setInt(1, a.getArtikelid());
+			deleteArtikel.setInt(1, artikelid);
 			deleteArtikel.executeUpdate();
 		}
 		catch(SQLException ex)
@@ -323,6 +349,70 @@ public class Database
 			System.out.println(e);
 		}
 		return totaalPrijs;
+	}
+	
+	//bestelregel
+	public ResultSet getBestelregels(int bestelnr)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectBestelregels.setInt(1, bestelnr);
+			resultSet = selectBestelregels.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public void insertBestelregel(Bestelregel b)
+	{
+		try
+		{
+			insertBestelregel.setInt(1, b.getBestelnr());
+			insertBestelregel.setInt(2, b.getArtikelid());
+			insertBestelregel.setDouble(3, b.getPrijs());
+			insertBestelregel.setInt(4, b.getAantal());
+			insertBestelregel.setDouble(5, b.getTotaalPrijs());
+			insertBestelregel.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void updateBestelregel(Bestelregel b)
+	{
+		try
+		{
+			updateBestelregel.setInt(1, b.getBestelnr());
+			updateBestelregel.setInt(2, b.getArtikelid());
+			updateBestelregel.setDouble(3, b.getPrijs());
+			updateBestelregel.setInt(4, b.getAantal());
+			updateBestelregel.setDouble(5, b.getTotaalPrijs());
+			updateBestelregel.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void deleteBestelregel(int bestelnr, int artikelid)
+	{
+		try
+		{
+			deleteBestelregel.setInt(1, bestelnr);
+			deleteBestelregel.setInt(2, artikelid);
+			deleteBestelregel.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
 	}
 	
 	//zoek

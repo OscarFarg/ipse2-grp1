@@ -5,8 +5,10 @@ import java.awt.event.*;
 
 public class HoofdView extends JPanel implements ActionListener
 {
-	public enum Views{ARTIKEL, BESTELLING, KLANT, MEDEWERKER};
-	private Views view;
+	public enum ViewsEnum{ARTIKEL, BESTELLING, KLANT, MEDEWERKER, BESTELREGEL};
+	private ViewsEnum viewEnum;
+	public enum VerwijderEnum{VWARTIKEL, VWBESTELLING, VWKLANT, VWMEDEWERKER, VWBESTELREGEL};
+	private VerwijderEnum vwEnum;
 
 	private JButton bestellingKnop, artikelKnop, medewerkerKnop, klantenKnop, zoekKnop, uitlogKnop,
 	nieuwKnop, bewerkKnop, verwijderKnop, meerInfoKnop;
@@ -16,15 +18,16 @@ public class HoofdView extends JPanel implements ActionListener
 	MedewerkerView mwView;
 	ArtikelView atView;
 	BestellingView bsView;
+	BestelregelView brView;
 	KlantView klView;
 
 	Database database;
 	Controller controller;
 
-	public HoofdView( Controller controller )
+	public HoofdView( Controller controller, Database database)
 	{
 		this.controller = controller;
-		database = new Database();
+		this.database = database;
 		setLayout( null );
 
 		mwView = new MedewerkerView( database, controller );
@@ -33,10 +36,14 @@ public class HoofdView extends JPanel implements ActionListener
 		atView.setBounds( 110, 120, 550, 350 );
 		bsView = new BestellingView( database, controller );
 		bsView.setBounds( 110, 120, 550, 350 );
+		brView = new BestelregelView(database, controller);
+		brView.setBounds(110, 120, 550, 350);
 		klView = new KlantView( database, controller );
 		klView.setBounds( 110, 120, 550, 350 );
 
-		view = Views.BESTELLING;
+		viewEnum = ViewsEnum.BESTELLING;
+		vwEnum = VerwijderEnum.VWBESTELLING;
+		
 		huidigeView = bsView;
 
 		logoLabel = new JLabel( new ImageIcon("src/ipse/images/logo.png") );
@@ -98,32 +105,61 @@ public class HoofdView extends JPanel implements ActionListener
 
 	public void veranderView()
 	{
-		switch( view )
+		switch( viewEnum )
 		{
-		case ARTIKEL:		remove(huidigeView);
-							huidigeView = atView;
-							this.add(huidigeView);
-							this.validate();
-							repaint();
-		break;
-		case BESTELLING:	remove(huidigeView);
-							huidigeView = bsView;
-							this.add(huidigeView);
-							this.validate();
-							repaint();;
-		break;
-		case KLANT: 		remove(huidigeView);
-							huidigeView = klView;
-							this.add(huidigeView);
-							this.validate();
-							repaint();;
-		break;
-		case MEDEWERKER:   	remove(huidigeView);
-							huidigeView = mwView;
-							this.add(huidigeView);
-							this.validate();
-							repaint();;
-		break;
+			case ARTIKEL:		remove(huidigeView);
+								huidigeView = atView;
+								this.add(huidigeView);
+								this.validate();
+								repaint();
+			break;
+			case BESTELLING:	remove(huidigeView);
+								huidigeView = bsView;
+								this.add(huidigeView);
+								this.validate();
+								repaint();
+			break;
+			case KLANT: 		remove(huidigeView);
+								huidigeView = klView;
+								this.add(huidigeView);
+								this.validate();
+								repaint();
+			break;
+			case MEDEWERKER:   	remove(huidigeView);
+								huidigeView = mwView;
+								this.add(huidigeView);
+								this.validate();
+								repaint();
+			break;
+			case BESTELREGEL:	remove(huidigeView);
+								huidigeView = brView;
+								this.add(huidigeView);
+								this.validate();
+								repaint();
+			break;
+		}
+	}
+	
+	public void verwijderObject()
+	{
+		switch( vwEnum )
+		{
+			case VWBESTELLING:	database.deleteBestelling(Integer.parseInt(bsView.getGeselecteerdeBestelling()));
+								bsView.maakLijst();
+			break;
+			case VWBESTELREGEL:	database.deleteBestelregel(Integer.parseInt(brView.getGeselecteerdeRegelBestelnr()), 
+									Integer.parseInt(brView.getGeselecteerdeRegelArtikelid()));
+								brView.maakLijst();
+			break;
+			case VWARTIKEL:		database.deleteArtikel(Integer.parseInt(atView.getGeselecteerdeBestelling()));
+								atView.maakLijst();
+			break;
+			case VWMEDEWERKER:	database.deleteMedewerker(Integer.parseInt(mwView.getGeselecteerdeMedewerker()));
+								atView.maakLijst();
+			break;
+			case VWKLANT:		database.deleteKlant(Integer.parseInt(klView.getGeselecteerdeKlant()));
+								klView.maakLijst();
+			break;
 		}
 	}
 
@@ -131,29 +167,45 @@ public class HoofdView extends JPanel implements ActionListener
 	{
 		if( e.getSource() == bestellingKnop )
 		{
-			view = Views.BESTELLING;
+			viewEnum = ViewsEnum.BESTELLING;
+			vwEnum = VerwijderEnum.VWBESTELLING;
 			veranderView();
 		}
 
 		if( e.getSource() == artikelKnop )
 		{
-			view = Views.ARTIKEL;
+			viewEnum = ViewsEnum.ARTIKEL;
+			vwEnum = VerwijderEnum.VWARTIKEL;
 			veranderView();
 		}
 
 		if( e.getSource() == medewerkerKnop )
 		{
-			view = Views.MEDEWERKER;
+			viewEnum = ViewsEnum.MEDEWERKER;
+			vwEnum = VerwijderEnum.VWMEDEWERKER;
 			veranderView();
 		}
 
 		if( e.getSource() == klantenKnop )
 		{
-			view = Views.KLANT;
+			viewEnum = ViewsEnum.KLANT;
+			vwEnum = VerwijderEnum.VWKLANT;
 			veranderView();
 		}
 
 		if( e.getSource() == zoekKnop)
-			new Zoek();		
+			new Zoek();
+		if (e.getSource() == verwijderKnop)
+		{			
+			int n = JOptionPane.showConfirmDialog(null, "Weet u het zeker?", "Verwijderen", JOptionPane.YES_NO_OPTION);
+			if (n == 0)
+			{
+				verwijderObject();
+			}
+			else
+			{
+				
+			}
+		}
 	}
 }

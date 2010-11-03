@@ -1,7 +1,5 @@
 package ipse;
 
-import ipse.HoofdView.Views;
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -22,7 +20,7 @@ public class BestelSnelApp extends JFrame
 		this.setTitle( "BestelSnel Groep1" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		HoofdView knopView = new HoofdView( controller );
+		HoofdView knopView = new HoofdView( controller, database);
 		this.add(knopView);
 		
 		this.setVisible( true );

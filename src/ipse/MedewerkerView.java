@@ -66,4 +66,10 @@ public class MedewerkerView extends View
 			System.out.println( se );
 		}
 	}
+	
+	public String getGeselecteerdeMedewerker()
+	{
+		String bestelnr = (String) medewerkers.getValueAt(medewerkers.getSelectedRow(), 0);
+		return bestelnr;
+	}
 }
