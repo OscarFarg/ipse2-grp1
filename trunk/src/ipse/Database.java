@@ -3,6 +3,8 @@ package ipse;
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Database 
 {
 	private Connection dbConnectie;
@@ -35,6 +37,12 @@ public class Database
 		{
 			String url = "jdbc:derby://195.169.84.60:1527/IpseDB";
 			dbConnectie = DriverManager.getConnection(url, USERNAME, PASSWORD);
+		}
+		catch (SQLNonTransientConnectionException connectEx)
+		{
+			JOptionPane.showMessageDialog(null, "Fout bij het verbinden met de database server. Programma word afgesloten");
+			System.exit(0);
+			return false;
 		}
 		catch (Exception ex)
 		{
