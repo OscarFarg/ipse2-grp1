@@ -9,13 +9,11 @@ public class Database
 
 	private PreparedStatement insertKlant;
 	private PreparedStatement selectMedewerkers, insertMedewerker, updateMedewerker, deleteMedewerker;
-	private PreparedStatement insertArtikel;
+	private PreparedStatement selectArtikelen, insertArtikel, updateArtikel, deleteArtikel;
 	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
 	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
-	private PreparedStatement selectArtikelen;
 	private PreparedStatement selectKlanten;
 
-	private PreparedStatement deleteArtikel;
 
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Medewerker> medewerkerLijst;
@@ -59,6 +57,7 @@ public class Database
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ? " + 
 					"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
+			
 			//klanten
 			selectKlanten = dbConnectie.prepareStatement("select * from klant");
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
@@ -67,7 +66,9 @@ public class Database
 			//artikelen
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			insertArtikel = dbConnectie.prepareStatement("insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
+			updateArtikel = dbConnectie.prepareStatement("update artikel set artikel_naam = ?, prijs = ?");
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
+			
 			//bestellingen
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
@@ -202,9 +203,8 @@ public class Database
 		// gebruik het PreparedStatement 'insertArtikel'
 		try
 		{
-			insertArtikel.setInt(1, a.getArtikelid());
-			insertArtikel.setString(2, a.getArtikelnaam());
-			insertArtikel.setDouble(3, a.getPrijs());
+			insertArtikel.setString(1, a.getArtikelnaam());
+			insertArtikel.setDouble(2, a.getPrijs());
 			insertArtikel.executeUpdate();
 		} 
 		catch (SQLException ex)
@@ -219,6 +219,20 @@ public class Database
 		{
 			deleteArtikel.setInt(1, a.getArtikelid());
 			deleteArtikel.executeUpdate();
+		}
+		catch(SQLException ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	
+	public void updateArtikel(Artikel a )
+	{
+		try
+		{
+			updateArtikel.setString(1, a.getArtikelnaam());
+			updateArtikel.setDouble(2, a.getPrijs());
+			updateArtikel.executeUpdate();
 		}
 		catch(SQLException ex)
 		{
