@@ -63,4 +63,10 @@ public class BestellingView extends View
 			System.out.println(e);
 		}
 	}
+	
+	public String getGeselecteerdeBestelling()
+	{
+		String bestelnr = (String) bestellingen.getValueAt(bestellingen.getSelectedRow(), 0);
+		return bestelnr;
+	}
 }

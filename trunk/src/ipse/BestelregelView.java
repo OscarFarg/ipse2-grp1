@@ -15,7 +15,7 @@ public class BestelregelView extends View
 		this.database = database;
 		this.controller = controller;
 
-		maakLijst();
+		//maakLijst();
 
 		JScrollPane scrollPane = new JScrollPane(bestelregels);
 		add(scrollPane);
@@ -60,5 +60,17 @@ public class BestelregelView extends View
 		{
 			System.out.println(e);
 		}
+	}
+	
+	public String getGeselecteerdeRegelBestelnr()
+	{
+		String bestelnr = (String) bestelregels.getValueAt(bestelregels.getSelectedRow(), 0);
+		return bestelnr;
+	}
+	
+	public String getGeselecteerdeRegelArtikelid()
+	{
+		String artikelid = (String) bestelregels.getValueAt(bestelregels.getSelectedRow(), 1);
+		return artikelid;
 	}
 }
