@@ -8,12 +8,11 @@ public class Database
 	private Connection dbConnectie;
 
 	private PreparedStatement insertKlant;
-	private PreparedStatement insertMedewerker;
+	private PreparedStatement selectMedewerkers, insertMedewerker, updateMedewerker, deleteMedewerker;
 	private PreparedStatement insertArtikel;
 	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
 	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement selectArtikelen;
-	private PreparedStatement selectMedewerkers;
 	private PreparedStatement selectKlanten;
 
 	private PreparedStatement deleteArtikel;
@@ -53,24 +52,29 @@ public class Database
 	{
 		try
 		{
-			insertKlant = dbConnectie.prepareStatement(
-					"insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, betaal_status, status)" +
-			"values (?, ?, ?, ?, ?, ?)");
-			insertMedewerker = dbConnectie.prepareStatement(
-					"insert into medewerker (voornaam, tussenvoegsel, achternaam, functie, chefid, status)" +
-			"values (?, ?, ?, ?, ?, ?)");
-			insertArtikel = dbConnectie.prepareStatement(
-			"insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
+			//medewerkers
+			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
+			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
+					"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
+			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ? " + 
+					"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
+			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
+			//klanten
+			selectKlanten = dbConnectie.prepareStatement("select * from klant");
+			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
+					"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
+			
+			//artikelen
+			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
+			insertArtikel = dbConnectie.prepareStatement("insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
+			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
+			//bestellingen
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
-			"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
+				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
 			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
-			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
+				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
-			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
-			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
-			selectKlanten = dbConnectie.prepareStatement("select * from klant");
-			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 		}
 		catch (Exception ex)
@@ -80,6 +84,85 @@ public class Database
 		}
 	}
 
+	//medewerker
+	public ResultSet getMedewerkers()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectMedewerkers.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public void insertMedewerker (Medewerker m)
+	{
+		try
+		{
+			insertMedewerker.setString(1, m.getVoornaam());
+			insertMedewerker.setString(2, m.getTussenvoegsel());
+			insertMedewerker.setString(3, m.getAchternaam());
+			insertMedewerker.setString(4, m.getFunctie());
+			insertMedewerker.setInt(5, m.getChefId());
+			insertMedewerker.setString(6, m.getMwStatus());
+			insertMedewerker.executeUpdate();
+		}
+		catch (SQLException ex)
+		{
+			System.out.println(ex);
+		}
+	}
+	
+	public void updateMedewerker(Medewerker m)
+	{
+		try
+		{
+			updateMedewerker.setString(1, m.getVoornaam());
+			updateMedewerker.setString(2, m.getTussenvoegsel());
+			updateMedewerker.setString(3, m.getAchternaam());
+			updateMedewerker.setString(4, m.getFunctie());
+			updateMedewerker.setInt(5, m.getChefId());
+			updateMedewerker.setString(6, m.getMwStatus());
+			updateMedewerker.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void deleteMedewerker(Medewerker m)
+	{
+		try
+		{
+			deleteMedewerker.setInt(1, m.getId());
+			deleteMedewerker.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	//klant
+	public ResultSet getKlanten()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectKlanten.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
 	public void insertKlant (Klant k)
 	{
 		// gebruik het PreparedStatement 'insertRekening'
@@ -98,25 +181,22 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-
-	public void insertMedewerker (Medewerker m)
+	
+	//artikel
+	public ResultSet getArtikelen()
 	{
+		ResultSet resultSet = null;
 		try
 		{
-			insertMedewerker.setString(1, m.getVoornaam());
-			insertMedewerker.setString(2, m.getTussenvoegsel());
-			insertMedewerker.setString(3, m.getAchternaam());
-			insertMedewerker.setString(4, m.getFunctie());
-			insertMedewerker.setString(5, m.getChefId());
-			insertMedewerker.setString(6, m.getMwStatus());
-			insertMedewerker.executeUpdate();
+			resultSet = selectArtikelen.executeQuery();
 		}
-		catch (SQLException ex)
+		catch (SQLException e)
 		{
-			System.out.println(ex);
+			System.out.println(e);
 		}
+		return resultSet;
 	}
-
+	
 	public void insertArtikel (Artikel a)
 	{
 		// gebruik het PreparedStatement 'insertArtikel'
@@ -132,7 +212,7 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-
+	
 	public void deleteArtikel(Artikel a )
 	{
 		try
@@ -145,7 +225,8 @@ public class Database
 			System.out.println(ex);
 		}
 	}
-
+	
+	//bestelling
 	public ResultSet getBestellingen()
 	{
 		ResultSet resultSet = null;
@@ -224,49 +305,7 @@ public class Database
 		}
 		return totaalPrijs;
 	}
-
-	public ResultSet getMedewerkers()
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			resultSet = selectMedewerkers.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
-	public ResultSet getArtikelen()
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			resultSet = selectArtikelen.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
-	public ResultSet getKlanten()
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			resultSet = selectKlanten.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
+	
 	// sluit alle PreparedStatements en 
 	// de database-connectie 
 	public void close()

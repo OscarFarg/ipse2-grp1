@@ -2,10 +2,12 @@ package ipse;
 
 public class Medewerker 
 {
-	private String voornaam, tussenvoegsel, achternaam, functie, chefId, mwStatus;
+	private String voornaam, tussenvoegsel, achternaam, functie, mwStatus;
+	private int id, chefId;
 	
-	public Medewerker( String voornaam, String tussenvoegsel, String achternaam, String functie, String chefId, String mwStatus )
+	public Medewerker(int id, String voornaam, String tussenvoegsel, String achternaam, String functie, int chefId, String mwStatus )
 	{
+		this.id = id;
 		this.voornaam = voornaam;
 		this.tussenvoegsel = tussenvoegsel;
 		this.achternaam = achternaam;
@@ -14,6 +16,11 @@ public class Medewerker
 		this.mwStatus = mwStatus;
 	}
 
+	public int getId()
+	{
+		return id;
+	}
+	
 	public String getVoornaam() {
 		return voornaam;
 	}
@@ -30,7 +37,7 @@ public class Medewerker
 		return functie;
 	}
 
-	public String getChefId() {
+	public int getChefId() {
 		return chefId;
 	}
 
@@ -54,7 +61,7 @@ public class Medewerker
 		this.functie = functie;
 	}
 
-	public void setChefId(String chefId) {
+	public void setChefId(int chefId) {
 		this.chefId = chefId;
 	}
 
