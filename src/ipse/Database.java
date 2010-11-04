@@ -72,7 +72,7 @@ public class Database
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
-					"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
+					"functie, status) values (?, ?, ?, ?, ?)");
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
 					"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
@@ -167,8 +167,7 @@ public class Database
 			insertMedewerker.setString(2, m.getTussenvoegsel());
 			insertMedewerker.setString(3, m.getAchternaam());
 			insertMedewerker.setString(4, m.getFunctie());
-			insertMedewerker.setInt(5, m.getChefId());
-			insertMedewerker.setString(6, m.getMwStatus());
+			insertMedewerker.setString(5, m.getMwStatus());
 			insertMedewerker.executeUpdate();
 		}
 		catch (SQLException ex)
