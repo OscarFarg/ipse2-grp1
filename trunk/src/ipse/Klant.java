@@ -1,7 +1,8 @@
 package ipse;
 
-public class Klant {
-	private String id;
+public class Klant
+{
+	private int id;
 	private String voornaam;
 	private String tussenvoegsel;
 	private String achternaam;
@@ -9,20 +10,21 @@ public class Klant {
 	private String betaalStatus;
 	private String status;
 	
-	public Klant()
+	public Klant(int id, String voornaam, String tussenvoegsel, String achternaam, String rekeningNr, String betaalStatus, String status)
 	{
-		
+		this.id = id;
+		this.voornaam = voornaam;
+		this.tussenvoegsel = tussenvoegsel;
+		this.achternaam = achternaam;
+		this.rekeningNr = rekeningNr;
+		this.betaalStatus = betaalStatus;
+		this.status = status;
 	}
 	
-	public Klant(String id, String voornaam, String tussenvoegsel, String achternaam, String rekeningNr, String betaalStatus, String status)
-	{
-		
-	}
-	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getVoornaam() {
@@ -63,7 +65,4 @@ public class Klant {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
-
 }
