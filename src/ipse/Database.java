@@ -72,16 +72,16 @@ public class Database
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
-			"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
+				"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
-			"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
+				"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
 
 			//klanten
 			selectKlanten = dbConnectie.prepareStatement("select * from klant where status = 'Actief'");
 			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
-			"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
+				"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
 			updateKlant = dbConnectie.prepareStatement("update klant set voornaam = ?, tussenvoegsel = ?, achternaam = ?, " + 
 				"rekeningnr = ?, betaal_status = ? where id = ?");
 			deleteKlant = dbConnectie.prepareStatement("update klant set status = 'Niet actief' where id = ?");
@@ -95,15 +95,15 @@ public class Database
 
 			//bestellingen
 			selectBestellingen = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", b.bestel_datum \"Bestel datum\", " + 
-					"b.lever_datum \"Lever datum\", b.betaal_datum \"Betaal datum\", " + 
-					"k.achternaam || ', ' || k.voornaam || ' ' || coalesce(k.tussenvoegsel, '') \"Klant\", " + 
-					"m.achternaam || ', ' || m.voornaam || ' ' || coalesce(m.tussenvoegsel, '') \"Medewerker\" " + 
-			"from bestelling b, klant k, medewerker m where b.klantid = k.id and b.medewerkerid = m.id");
+				"b.lever_datum \"Lever datum\", b.betaal_datum \"Betaal datum\", " + 
+				"k.achternaam || ', ' || k.voornaam || ' ' || coalesce(k.tussenvoegsel, '') \"Klant\", " + 
+				"m.achternaam || ', ' || m.voornaam || ' ' || coalesce(m.tussenvoegsel, '') \"Medewerker\" " + 
+				"from bestelling b, klant k, medewerker m where b.klantid = k.id and b.medewerkerid = m.id");
 			selectBestelling = dbConnectie.prepareStatement("select * from bestelling where bestelnr = ?");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
-			"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
+				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
 			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
-			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
+				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
 
@@ -112,7 +112,7 @@ public class Database
 			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
-			"prijs = ?, aantal = ?, totaal_prijs = ?");
+				"prijs = ?, aantal = ?, totaal_prijs = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
 			//Zoek
