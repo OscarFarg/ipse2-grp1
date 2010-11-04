@@ -9,17 +9,15 @@ public class Zoek extends JFrame implements ActionListener
 {
 	private JRadioButton artikelRadio;
 	private JRadioButton bestellingRadio;
-	private JRadioButton bestelregelRadio;
 	private JRadioButton klantRadio;
 	private JRadioButton medewerkerRadio;
 	
 	private JButton zoekKnop;
 	
 	private JTextField zoekVeld;
-	
+	private JComboBox kolomBox;
 	private String artikelString = "artikel";
 	private String bestellingString = "besteling";
-	private String bestelregelString = "bestelregel";
 	private String klantString = "klant";
 	private String medewerkerString = "medewerker";
 	
@@ -41,7 +39,6 @@ public class Zoek extends JFrame implements ActionListener
 		
 		artikelRadio = new JRadioButton(artikelString);
 		bestellingRadio = new JRadioButton(bestellingString);
-		bestelregelRadio = new JRadioButton(bestelregelString);
 		klantRadio = new JRadioButton(klantString);
 		medewerkerRadio = new JRadioButton(medewerkerString);
 		
@@ -54,7 +51,6 @@ public class Zoek extends JFrame implements ActionListener
 		JPanel radiocontentPane = new JPanel(new GridLayout(0,1));
 		radiocontentPane.add(artikelRadio);
 		radiocontentPane.add(bestellingRadio);
-		radiocontentPane.add(bestelregelRadio);
 		radiocontentPane.add(klantRadio);
 		radiocontentPane.add(medewerkerRadio);
 		
@@ -68,13 +64,11 @@ public class Zoek extends JFrame implements ActionListener
 		ButtonGroup group = new ButtonGroup();
 		group.add(artikelRadio);
 		group.add(bestellingRadio);
-		group.add(bestelregelRadio);
 		group.add(klantRadio);
 		group.add(medewerkerRadio);
 		
 		artikelRadio.addActionListener(this);
 		bestellingRadio.addActionListener(this);
-		bestelregelRadio.addActionListener(this);
 		klantRadio.addActionListener(this);
 		medewerkerRadio.addActionListener(this);
 		zoekKnop.addActionListener(this);
@@ -92,6 +86,11 @@ public class Zoek extends JFrame implements ActionListener
 	{
 		return( zoekVeld.getText());
 	}
+	
+	public String getZoekKolom() 
+	{
+		return zoekKolom;
+	}
 
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -103,11 +102,6 @@ public class Zoek extends JFrame implements ActionListener
 		if(e.getSource() == bestellingRadio )
 		{
 			zoekSegment = bestellingString;
-		}
-		
-		if(e.getSource() == bestelregelRadio )
-		{
-			zoekSegment = bestelregelString;
 		}
 		
 		if(e.getSource() == klantRadio )
