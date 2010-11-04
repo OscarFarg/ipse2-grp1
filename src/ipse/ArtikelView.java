@@ -48,7 +48,10 @@ public class ArtikelView extends View
 
 	public void opslaan() 
 	{
-	
+		String naam = artikelNaamVeld.getText();
+		double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
+		Artikel artikel = new Artikel( naam, prijs );
+		database.insertArtikel(artikel);
 	}
 	
 	public void annuleren()
