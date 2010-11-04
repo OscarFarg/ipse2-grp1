@@ -53,7 +53,9 @@ public class View extends JFrame implements ActionListener
 
 	public void opslaan(){}
 
-	public void annuleren(){}
+	public void annuleren(){
+		this.dispose();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
