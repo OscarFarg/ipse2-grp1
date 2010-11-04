@@ -51,9 +51,9 @@ public class ArtikelView extends View
 	{
 		this(database, controller);
 		updateMode = true;
-		
+
 		Artikel artikel = database.selectArtikel(artikelid);
-		
+
 		int id = artikel.getArtikelid();
 		String idNaam = Integer.toString(id);
 		String naam = artikel.getArtikelnaam();
@@ -80,38 +80,20 @@ public class ArtikelView extends View
 
 	public void opslaan() 
 	{
-		if( artikelIdVeld.getText().equals("") )
+		String id = artikelIdVeld.getText();
+		int idNr = 0;
+		try
 		{
-			String id = artikelIdVeld.getText();
-			int idNr = Integer.parseInt(id);
-			String naam = artikelNaamVeld.getText();
-			double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
-			Artikel artikel = new Artikel( idNr, naam, prijs );
-
-			if( naam.length() != 0 && prijs >= 0.0 )
-			{
-				if( naam.length() != 0 && prijs >= 0.0 )
-				{
-					int n = JOptionPane.showConfirmDialog(null, "Artikel is toegevoegd!, Wilt u er nog een toevoegen?",
-							"Toevoegen", JOptionPane.YES_NO_OPTION);
-					if (n == 0) 
-					{
-						artikelNaamVeld.setText("");
-						artikelPrijsVeld.setText("");
-					} 
-					else {
-						this.dispose();
-					}
-				}
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null, "De ingevoerde waarden kloppen niet. Controleer of alles is ingevuld en of de prijs hoger is dan 0.0", 
-						"Fout", JOptionPane.ERROR_MESSAGE);
-			}
+			idNr = Integer.parseInt(id);
 		}
-		else {}
-		
+		catch( Exception e)
+		{
+			System.out.println(e);
+		}
+		String naam = artikelNaamVeld.getText();
+		double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
+		Artikel artikel = new Artikel( idNr, naam, prijs );
+
 		if( updateMode )
 		{
 			database.updateArtikel(artikel);
