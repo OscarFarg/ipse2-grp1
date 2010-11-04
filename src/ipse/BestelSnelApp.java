@@ -10,7 +10,7 @@ public class BestelSnelApp extends JFrame
 	
 	public BestelSnelApp()
 	{
-		database = new Database();
+		database = Database.getDatabase();
 		controller = new Controller();
 		
 		this.setLayout( new BorderLayout() );

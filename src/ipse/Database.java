@@ -90,7 +90,11 @@ public class Database
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 			
 			//bestellingen
-			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
+			selectBestellingen = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", b.bestel_datum \"Bestel datum\", " + 
+					"b.lever_datum \"Lever datum\", b.betaal_datum \"Betaal datum\", " + 
+					"k.achternaam || ', ' || k.voornaam || ' ' || coalesce(k.tussenvoegsel, '') \"Klant\", " + 
+					"m.achternaam || ', ' || m.voornaam || ' ' || coalesce(m.tussenvoegsel, '') \"Medewerker\" " + 
+					"from bestelling b, klant k, medewerker m where b.klantid = k.id and b.medewerkerid = m.id");
 			selectBestelling = dbConnectie.prepareStatement("select * from bestelling where bestelnr = ?");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
 				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
