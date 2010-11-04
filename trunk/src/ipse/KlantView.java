@@ -106,9 +106,4 @@ public class KlantView extends View
 			database.insertKlant(klant);
 		}
 	}
-	
-	public static void main(String[] args) 
-	{
-		new KlantView(Database.getDatabase(), null);
-	}
 }
