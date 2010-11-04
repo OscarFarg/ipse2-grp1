@@ -16,6 +16,15 @@ public class Medewerker
 		this.mwStatus = mwStatus;
 	}
 
+	public Medewerker()
+	{
+		
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getId()
 	{
 		return id;
