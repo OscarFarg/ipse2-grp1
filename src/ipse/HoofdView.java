@@ -137,7 +137,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			new ArtikelView(database, controller);
 			break;
 		case MEDEWERKER:
-			new MedewerkerView();
+			new MedewerkerView( database, controller );
 			break;
 		case KLANT:
 			new KlantView();

@@ -76,10 +76,9 @@ public class MedewerkerView extends View
 	public void opslaan() {
 		System.out.println("Opslaanknop ingedrukt.");
 	}
-
+/*
 	public static void main(String[] args)
 	{
 		new MedewerkerView(null, null);
-	}
-
+	*/
 }
