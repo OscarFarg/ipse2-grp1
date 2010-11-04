@@ -14,7 +14,7 @@ public class Database
 	private PreparedStatement selectArtikelen, selectArtikel, insertArtikel, updateArtikel, deleteArtikel;
 	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
-	private PreparedStatement zoekDatabase;
+	private PreparedStatement zoekKlant, zoekMedewerker, zoekBestelling, zoekArtikel;
 
 
 	private ArrayList<Klant> klantLijst;
@@ -111,8 +111,11 @@ public class Database
 					"prijs = ?, aantal = ?, totaal_prijs = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 			
-			//Zoek Functie
-			//zoekDatabase = dbConnectie.prepareStatement("select * from ? where ? = ?");
+			//Zoek
+			zoekKlant = dbConnectie.prepareStatement("select * from klant where ? like ?");
+			zoekMedewerker = dbConnectie.prepareStatement("select * from medewerker where ? like ?");
+			zoekBestelling = dbConnectie.prepareStatement("select * from bestelling where ? like ?");
+			zoekArtikel = dbConnectie.prepareStatement("select * from artikel where ? like ?");
 			
 		}
 		catch (Exception ex)
@@ -470,14 +473,56 @@ public class Database
 		}
 	}
 	
-	//zoek
-	public void zoekDatabase (Zoek z)
+//Zoek Methodes
+	public void zoekKlant (Zoek z)
 	{
 		try
 		{
-			zoekDatabase.setString(1, z.getZoekSegment());
-			zoekDatabase.setString(2, z.getZoekVeld());
-			zoekDatabase.executeUpdate();
+			zoekKlant.setString(1, z.getZoekKolom());
+			zoekKlant.setString(2, z.getZoekVeld());
+			zoekKlant.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void zoekMedewerker (Zoek z)
+	{
+		try
+		{
+			zoekMedewerker.setString(1, z.getZoekKolom());
+			zoekMedewerker.setString(2, z.getZoekVeld());
+			zoekMedewerker.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void zoekBestelling (Zoek z)
+	{
+		try
+		{
+			zoekBestelling.setString(1, z.getZoekKolom());
+			zoekBestelling.setString(2, z.getZoekVeld());
+			zoekBestelling.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	public void zoekArtikel (Zoek z)
+	{
+		try
+		{
+			zoekArtikel.setString(1, z.getZoekKolom());
+			zoekArtikel.setString(2, z.getZoekVeld());
+			zoekArtikel.executeUpdate();
 		}
 		catch (SQLException e)
 		{
