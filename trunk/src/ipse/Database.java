@@ -24,12 +24,22 @@ public class Database
 
 	private final String USERNAME = "ipse";
 	private final String PASSWORD = "ipse2";
+	
+	private static Database db;
 
-	public Database() 
+	private Database() 
 	{
 		if (initialiseer())
 			prepare_statements();
 	}
+	
+	public static Database getDatabase()
+	{
+		if (db == null)
+			db = new Database();
+		return db;
+	}
+	
 
 	private boolean initialiseer()
 	{    	
