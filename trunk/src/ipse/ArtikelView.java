@@ -8,7 +8,7 @@ public class ArtikelView extends View
 	private JLabel bsLabel, artikelIdLabel, artikelNaamLabel, artikelPrijsLabel;
 
 	Artikel artikel;
-	
+
 	public ArtikelView( Database database, Controller controller )
 	{
 		super( database, controller );
@@ -46,11 +46,25 @@ public class ArtikelView extends View
 
 		setVisible( true );
 	}
-	
-	public Artikel setArtikel(Artikel artikel){
-		return artikel;
+
+	public ArtikelView( Database database, Controller controller, int artikelid )
+	{
+		this(database, controller);
+		updateMode = true;
+		
+		Artikel artikel = database.selectArtikel(artikelid);
+		
+		int id = artikel.getArtikelid();
+		String idNaam = Integer.toString(id);
+		String naam = artikel.getArtikelnaam();
+		double prijs = artikel.getPrijs();
+		String prijsNaam = Double.toString(prijs);
+
+		artikelIdVeld.setText(idNaam);
+		artikelNaamVeld.setText(naam);
+		artikelPrijsVeld.setText(prijsNaam);
 	}
-	
+
 	public void vulWaardesIn()
 	{
 		int id = artikel.getArtikelid();
@@ -58,15 +72,10 @@ public class ArtikelView extends View
 		String naam = artikel.getArtikelnaam();
 		double prijs = artikel.getPrijs();
 		String prijsNaam = Double.toString(prijs);
-		
+
 		artikelIdVeld.setText(idNaam);
 		artikelNaamVeld.setText(naam);
 		artikelPrijsVeld.setText(prijsNaam);
-	}
-	
-	public void bewerk()
-	{
-		
 	}
 
 	public void opslaan() 
@@ -81,8 +90,6 @@ public class ArtikelView extends View
 
 			if( naam.length() != 0 && prijs >= 0.0 )
 			{
-				database.insertArtikel(artikel);
-
 				if( naam.length() != 0 && prijs >= 0.0 )
 				{
 					int n = JOptionPane.showConfirmDialog(null, "Artikel is toegevoegd!, Wilt u er nog een toevoegen?",
@@ -103,7 +110,15 @@ public class ArtikelView extends View
 						"Fout", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		else {}
+		
+		if( updateMode )
+		{
+			database.updateArtikel(artikel);
+		}
 		else
-			bewerk();
+		{
+			database.insertArtikel(artikel);
+		}
 	}
 }
