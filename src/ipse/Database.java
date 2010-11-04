@@ -320,19 +320,29 @@ public class Database
 		return resultSet;
 	}
 	
-	public ResultSet selectArtikel(int artikelid)
+	public Artikel selectArtikel(int artikelid)
 	{
-		ResultSet resultSet = null;
+		Artikel artikel = null;
+		int artikelId = 0;
+		String naam = "";
+		double prijs = 0.0;
 		try
 		{
 			selectArtikel.setInt(1, artikelid);
-			resultSet = selectArtikel.executeQuery();
+			ResultSet resultSet = selectArtikel.executeQuery();
+			while(resultSet.next())
+			{	
+				artikelId = resultSet.getInt(1);
+				naam = resultSet.getString(2);
+				prijs = resultSet.getDouble(3);
+			}
+			artikel = new Artikel(artikelId, naam, prijs);
 		}
 		catch (SQLException e)
 		{
 			System.out.println(e);
 		}
-		return resultSet;
+		return artikel;
 	}
 	
 	public void insertArtikel (Artikel a)
