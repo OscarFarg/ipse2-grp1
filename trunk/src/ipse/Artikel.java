@@ -7,7 +7,7 @@ public class Artikel
 	private double prijs;
 	
 	
-	public Artikel( String artikelnaam, double prijs)
+	public Artikel( int artikelid, String artikelnaam, double prijs)
 	{
 		this.artikelid = artikelid;
 		this.artikelnaam = artikelnaam;
