@@ -12,8 +12,8 @@ public class View extends JFrame implements ActionListener
 
 	private JButton opslaanKnop, annulerenKnop;
 
-	Database database;
-	Controller controller;
+	protected Database database;
+	protected Controller controller;
 
 	public View( Database database, Controller controller )
 	{
