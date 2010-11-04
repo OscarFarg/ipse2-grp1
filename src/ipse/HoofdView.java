@@ -12,6 +12,7 @@ public class HoofdView extends JPanel implements ActionListener {
 	private JLabel logoLabel;
 
 	private TabelPaneel tabelPaneel;
+	private ArtikelView atView;
 
 	Database database;
 	Controller controller;
@@ -20,7 +21,9 @@ public class HoofdView extends JPanel implements ActionListener {
 		this.controller = controller;
 		this.database = database;
 		setLayout(null);
-
+		
+		atView = new ArtikelView(database, controller);
+		
 		/*
 		 * mwView = new MedewerkerView( database, controller );
 		 * mwView.setBounds( 110, 120, 550, 350 );
@@ -131,20 +134,18 @@ public class HoofdView extends JPanel implements ActionListener {
 		switch (viewEnum) 
 		{
 		case BESTELLING:
-			database.selectBestelling(tabelPaneel.getGeselecteerdItem());
-			tabelPaneel.herlaad();
+			database.selectBestelling(tabelPaneel.getGeselecteerdItem());	
 			break;
 		case ARTIKEL:
-			database.selectArtikel(tabelPaneel.getGeselecteerdItem());
-			tabelPaneel.herlaad();
+			atView.setArtikel(database.selectArtikel(tabelPaneel.getGeselecteerdItem()));
+			atView.vulWaardesIn();
+			new ArtikelView(database, controller);
 			break;
 		case MEDEWERKER:
 			database.selectMedewerker(tabelPaneel.getGeselecteerdItem());
-			tabelPaneel.herlaad();
 			break;
 		case KLANT:
 			database.selectKlant(tabelPaneel.getGeselecteerdItem());
-			tabelPaneel.herlaad();
 			break;
 		}
 	}

@@ -7,7 +7,8 @@ public class ArtikelView extends View
 	private JTextField artikelIdVeld, artikelNaamVeld, artikelPrijsVeld;
 	private JLabel bsLabel, artikelIdLabel, artikelNaamLabel, artikelPrijsLabel;
 
-
+	Artikel artikel;
+	
 	public ArtikelView( Database database, Controller controller )
 	{
 		super( database, controller );
@@ -45,31 +46,64 @@ public class ArtikelView extends View
 
 		setVisible( true );
 	}
+	
+	public Artikel setArtikel(Artikel artikel){
+		return artikel;
+	}
+	
+	public void vulWaardesIn()
+	{
+		int id = artikel.getArtikelid();
+		String idNaam = Integer.toString(id);
+		String naam = artikel.getArtikelnaam();
+		double prijs = artikel.getPrijs();
+		String prijsNaam = Double.toString(prijs);
+		
+		artikelIdVeld.setText(idNaam);
+		artikelNaamVeld.setText(naam);
+		artikelPrijsVeld.setText(prijsNaam);
+	}
+	
+	public void bewerk()
+	{
+		
+	}
 
 	public void opslaan() 
 	{
-		String naam = artikelNaamVeld.getText();
-		double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
-		Artikel artikel = new Artikel( naam, prijs );
-		database.insertArtikel(artikel);
-
-		if( naam.length() != 0 && prijs >= 0.0 )
+		if( artikelIdVeld.getText().equals("") )
 		{
-			int n = JOptionPane.showConfirmDialog(null, "Artikel is toegevoegd!, Wilt u er nog een toevoegen?",
-					"Toevoegen", JOptionPane.YES_NO_OPTION);
-			if (n == 0) 
+			String id = artikelIdVeld.getText();
+			int idNr = Integer.parseInt(id);
+			String naam = artikelNaamVeld.getText();
+			double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
+			Artikel artikel = new Artikel( idNr, naam, prijs );
+
+			if( naam.length() != 0 && prijs >= 0.0 )
 			{
-				artikelNaamVeld.setText("");
-				artikelPrijsVeld.setText("");
-			} 
-			else {
-				this.dispose();
+				database.insertArtikel(artikel);
+
+				if( naam.length() != 0 && prijs >= 0.0 )
+				{
+					int n = JOptionPane.showConfirmDialog(null, "Artikel is toegevoegd!, Wilt u er nog een toevoegen?",
+							"Toevoegen", JOptionPane.YES_NO_OPTION);
+					if (n == 0) 
+					{
+						artikelNaamVeld.setText("");
+						artikelPrijsVeld.setText("");
+					} 
+					else {
+						this.dispose();
+					}
+				}
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "De ingevoerde waarden kloppen niet. Controleer of alles is ingevuld en of de prijs hoger is dan 0.0", 
+						"Fout", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else
-		{
-			JOptionPane.showMessageDialog(null, "De ingevoerde waarden kloppen niet. Controleer of alles is ingevuld en of de prijs hoger is dan 0.0", 
-					"Fout", JOptionPane.ERROR_MESSAGE);
-		}
+			bewerk();
 	}
 }
