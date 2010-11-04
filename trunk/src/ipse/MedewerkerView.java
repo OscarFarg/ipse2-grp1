@@ -62,10 +62,13 @@ public class MedewerkerView extends View
 		setVisible(true);
 	}
 
+	//Constructor voor update ipv insert
 	public MedewerkerView(Database database, Controller controller, int id)
 	{
 		this(database, controller);
-
+		updateMode = true; //Boolean in super klasse view. Op true zetten bij update.
+		
+		//Hier kan je dus doen wat er nodig is om de velden te vullen.
 	}
 
 	@Override
@@ -89,8 +92,14 @@ public class MedewerkerView extends View
 		}
 		m.setMwStatus("Actief");
 
-		database.insertMedewerker(m);
-
+		if (updateMode)
+		{
+			//hier doen wat nodig is bij een update.
+		}
+		else
+		{
+			database.insertMedewerker(m);
+		}
 
 	}
 
