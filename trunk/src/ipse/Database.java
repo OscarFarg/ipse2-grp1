@@ -82,7 +82,8 @@ public class Database
 			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 					"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
-			//updateKlant = dbConnectie.prepareStatement("");
+			updateKlant = dbConnectie.prepareStatement("update klant set voornaam = ?, tussenvoegsel = ?, achternaam = ?, " + 
+					"rekeningnr = ?, betaal_status = ? where id = ?");
 			deleteKlant = dbConnectie.prepareStatement("delete from klant where id = ?");
 			
 			//artikelen
@@ -222,19 +223,37 @@ public class Database
 		return resultSet;
 	}
 	
-	public ResultSet selectKlant(int id)
+	public Klant selectKlant(int id)
 	{
-		ResultSet resultSet = null;
+		Klant klant = null;
+		int klantId = 0;
+		String voornaam = "";
+		String tussenvoegsel = "";
+		String achternaam = "";
+		String rekeningNr = "";
+		String betaalStatus = "";
+		String status = "";
 		try
 		{
 			selectKlant.setInt(1, id);
-			resultSet = selectKlant.executeQuery();
+			ResultSet resultSet = selectKlant.executeQuery();
+			while(resultSet.next())
+			{
+				klantId = resultSet.getInt(1);
+				voornaam = resultSet.getString(2);
+				tussenvoegsel = resultSet.getString(3);
+				achternaam = resultSet.getString(4);
+				rekeningNr = resultSet.getString(5);
+				betaalStatus = resultSet.getString(6);
+				status = resultSet.getString(7);
+			}
+			klant = new Klant(klantId, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, status);
 		}
 		catch (SQLException e)
 		{
 			System.out.println(e);
 		}
-		return resultSet;
+		return klant;
 	}
 	
 	public void insertKlant (Klant k)
@@ -258,7 +277,20 @@ public class Database
 	
 	public void updateKlant(Klant k)
 	{
-		
+		try
+		{
+			updateKlant.setString(1, k.getVoornaam());
+			updateKlant.setString(2, k.getTussenvoegsel());
+			updateKlant.setString(3, k.getAchternaam());
+			updateKlant.setString(4, k.getRekeningNr());
+			updateKlant.setString(5, k.getBetaalStatus());
+			updateKlant.setInt(6, k.getId());
+			updateKlant.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
 	}
 	
 	public void deleteKlant(int id)
