@@ -5,8 +5,6 @@ import java.awt.event.*;
 
 public class HoofdView extends JPanel implements ActionListener {
 	private ViewsEnum viewEnum;
-	private VerwijderEnum vwEnum;
-	private NieuwEnum nwEnum;
 
 	private JButton bestellingKnop, artikelKnop, medewerkerKnop, klantenKnop,
 	zoekKnop, uitlogKnop, nieuwKnop, bewerkKnop, verwijderKnop,
@@ -41,8 +39,6 @@ public class HoofdView extends JPanel implements ActionListener {
 		 */
 
 		viewEnum = ViewsEnum.BESTELLING;
-		vwEnum = VerwijderEnum.VWBESTELLING;
-		nwEnum = NieuwEnum.NWBESTELLING;
 
 		tabelPaneel = new TabelPaneel(database, viewEnum);
 		tabelPaneel.setBounds(110, 120, 550, 350);
@@ -106,98 +102,49 @@ public class HoofdView extends JPanel implements ActionListener {
 		add(tabelPaneel);
 		// add( huidigeView );
 	}
-	/*
+	
 	public void verwijderObject() 
 	{
-		switch (vwEnum) 
+		switch (viewEnum) 
 		{
-		case VWBESTELLING:
+		case BESTELLING:
 			database.deleteBestelling(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
-		case VWARTIKEL:
+		case ARTIKEL:
 			database.deleteArtikel(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
-		case VWMEDEWERKER:
+		case MEDEWERKER:
 			database.deleteMedewerker(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
-		case VWKLANT:
+		case KLANT:
 			database.deleteKlant(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
 		}
 	}
-	 */
-
-	public void bewerk()
-	{
-		switch( viewEnum )
-		{
-		case BESTELLING: 
-			if( huidigeKnop == nieuwKnop )
-				new BestellingView();
-			if( huidigeKnop == verwijderKnop )
-			{
-				database.deleteBestelling(tabelPaneel.getGeselecteerdItem());
-				tabelPaneel.herlaad();
-			}
-			if( huidigeKnop == bewerkKnop ){}
-			if( huidigeKnop == meerInfoKnop ){}
-			break;
-		case KLANT:
-			if( huidigeKnop == nieuwKnop )
-				new KlantView();
-			if( huidigeKnop == verwijderKnop )
-			{
-				database.deleteKlant(tabelPaneel.getGeselecteerdItem());
-				tabelPaneel.herlaad();
-			}
-			if( huidigeKnop == bewerkKnop ){}
-			if( huidigeKnop == meerInfoKnop ){}
-			break;
-		case MEDEWERKER:
-			if( huidigeKnop == nieuwKnop )
-				new MedewerkerView();
-			if( huidigeKnop == verwijderKnop )
-			{
-				database.deleteMedewerker(tabelPaneel.getGeselecteerdItem());
-				tabelPaneel.herlaad();
-			}
-			if( huidigeKnop == bewerkKnop ){}
-			if( huidigeKnop == meerInfoKnop ){}
-			break;
-		case ARTIKEL:
-			if( huidigeKnop == nieuwKnop )
-				new ArtikelView(database, controller);
-			if( huidigeKnop == verwijderKnop )
-			{
-				database.deleteArtikel(tabelPaneel.getGeselecteerdItem());
-				tabelPaneel.herlaad();
-			}
-			if( huidigeKnop == bewerkKnop ){}
-			if( huidigeKnop == meerInfoKnop ){}
-			break;
-		}
-	}
-	/*
+	
 	public void voegObjectToe()
 	{
-		switch( nwEnum )
+		switch (viewEnum) 
 		{
-		case NWARTIKEL:
-
+		case BESTELLING:
+			new BestellingView();
 			break;
-		case NWMEDEWERKER:
+		case ARTIKEL:
+			new ArtikelView(database, controller);
 			break;
-		case NWKLANT:
+		case MEDEWERKER:
+			new MedewerkerView();
 			break;
-		case NWBESTELLING:
+		case KLANT:
+			new KlantView();
 			break;
 		}
 	}
-	 */
+	 
 	
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -206,28 +153,24 @@ public class HoofdView extends JPanel implements ActionListener {
 		if (e.getSource() == bestellingKnop) 
 		{
 			viewEnum = ViewsEnum.BESTELLING;
-			vwEnum = VerwijderEnum.VWBESTELLING;
 			tabelPaneel.veranderView(viewEnum);
 		}
 
 		if (e.getSource() == artikelKnop) 
 		{
 			viewEnum = ViewsEnum.ARTIKEL;
-			vwEnum = VerwijderEnum.VWARTIKEL;
 			tabelPaneel.veranderView(viewEnum);
 		}
 
 		if (e.getSource() == medewerkerKnop) 
 		{
 			viewEnum = ViewsEnum.MEDEWERKER;
-			vwEnum = VerwijderEnum.VWMEDEWERKER;
 			tabelPaneel.veranderView(viewEnum);
 		}
 
 		if (e.getSource() == klantenKnop) 
 		{
 			viewEnum = ViewsEnum.KLANT;
-			vwEnum = VerwijderEnum.VWKLANT;
 			tabelPaneel.veranderView(viewEnum);
 		}
 
@@ -235,21 +178,18 @@ public class HoofdView extends JPanel implements ActionListener {
 
 		if( e.getSource() == nieuwKnop )
 		{
-			huidigeKnop = nieuwKnop;
-			bewerk();
+			voegObjectToe();
 		}
 
 		if (e.getSource() == zoekKnop)
 			new Zoek();
 
 		if (e.getSource() == verwijderKnop) 
-		{
-			huidigeKnop = verwijderKnop;
-			
+		{	
 			int n = JOptionPane.showConfirmDialog(null, "Weet u het zeker?",
 					"Verwijderen", JOptionPane.YES_NO_OPTION);
 			if (n == 0) {
-				bewerk();
+				verwijderObject();
 			} else {
 
 			}
