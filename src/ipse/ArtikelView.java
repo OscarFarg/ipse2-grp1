@@ -12,10 +12,6 @@ public class ArtikelView extends View
 
 	public ArtikelView()
 	{
-		logoIcon = new ImageIcon("src/ipse/images/logo.png");
-		imageLabel = new JLabel( logoIcon );
-		imageLabel.setBounds( 150, 10, 300, 100 );
-		
 		bsLabel = new JLabel( "Voeg hier onder een nieuw artikel toe" );
 		bsLabel.setBounds( 185, 120, 250, 20 );
 		
@@ -41,7 +37,6 @@ public class ArtikelView extends View
 		voegToeKnop = new JButton( "Voeg Toe" );
 		voegToeKnop.setBounds( 350, 250, 100, 30 );
 		
-		mainPanel.add( imageLabel );
 		mainPanel.add( bsLabel );
 		mainPanel.add( artikelIdVeld );
 		mainPanel.add( artikelNaamVeld );
