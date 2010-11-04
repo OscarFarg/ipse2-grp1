@@ -70,6 +70,7 @@ public class Database
 		{
 			//medewerkers
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
+			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
 					"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
@@ -78,6 +79,7 @@ public class Database
 			
 			//klanten
 			selectKlanten = dbConnectie.prepareStatement("select * from klant");
+			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 					"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
 			//updateKlant = dbConnectie.prepareStatement("");
@@ -85,6 +87,7 @@ public class Database
 			
 			//artikelen
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
+			selectArtikel = dbConnectie.prepareStatement( "select * from artikel where artikelid = ?" );
 			insertArtikel = dbConnectie.prepareStatement("insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
 			updateArtikel = dbConnectie.prepareStatement("update artikel set artikel_naam = ?, prijs = ?");
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
@@ -132,6 +135,21 @@ public class Database
 		try
 		{
 			resultSet = selectMedewerkers.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public ResultSet selectMedewerker(int id)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectMedewerker.setInt(1, id);
+			resultSet = selectMedewerker.executeQuery();
 		}
 		catch (SQLException e)
 		{
@@ -204,6 +222,21 @@ public class Database
 		return resultSet;
 	}
 	
+	public ResultSet selectKlant(int id)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectKlant.setInt(1, id);
+			resultSet = selectKlant.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
 	public void insertKlant (Klant k)
 	{
 		// gebruik het PreparedStatement 'insertRekening'
@@ -248,6 +281,21 @@ public class Database
 		try
 		{
 			resultSet = selectArtikelen.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public ResultSet selectArtikel(int artikelid)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectArtikel.setInt(1, artikelid);
+			resultSet = selectArtikel.executeQuery();
 		}
 		catch (SQLException e)
 		{
