@@ -7,7 +7,7 @@ public class KlantView extends View
 	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, rekeningVeld;
 	private JComboBox betaalStatusBox;
 	
-	public KlantView(Database database, Controller controller)
+	public KlantView(Database database, Controller controller)	
 	{
 		super(database, controller);
 		
@@ -62,6 +62,19 @@ public class KlantView extends View
 		
 		this.setVisible(true);
 	}
+	
+	public KlantView(Database database, Controller controller, int id)
+	{
+		this(database, controller);
+		updateMode = true;
+		Klant klant = database.selectKlant(id);
+		idVeld.setText(klant.getId() + "");
+		voornaamVeld.setText(klant.getVoornaam());
+		tussenvoegselVeld.setText(klant.getTussenvoegsel());
+		achternaamVeld.setText(klant.getAchternaam());
+		rekeningVeld.setText(klant.getRekeningNr());
+		betaalStatusBox.setSelectedItem(klant.getBetaalStatus());
+	}
 
 	public void opslaan()
 	{
@@ -82,15 +95,15 @@ public class KlantView extends View
 		String rekeningNr = rekeningVeld.getText();
 		String betaalStatus = (String) betaalStatusBox.getSelectedItem();
 		Klant klant = new Klant(idNr, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, "Actief");
-		if (id.equals(""))
+		if (updateMode)
 		{
-			System.out.println("insert");
-			database.insertKlant(klant);
+			System.out.println("update");
+			database.updateKlant(klant);
 		}
 		else
 		{
-			System.out.println("update");
-			//database.updateKlant(klant);
+			System.out.println("insert");
+			database.insertKlant(klant);
 		}
 	}
 	
