@@ -113,7 +113,7 @@ public class TabelPaneel extends JPanel
 		}
 		catch (IndexOutOfBoundsException e)
 		{
-			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.WARNING_MESSAGE);;
+			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);;
 		}
 		return bestelnr;
 	}

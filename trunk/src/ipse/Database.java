@@ -83,7 +83,7 @@ public class Database
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 			"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
 			updateKlant = dbConnectie.prepareStatement("update klant set voornaam = ?, tussenvoegsel = ?, achternaam = ?, " + 
-			"rekeningnr = ?, betaal_status = ? where id = ?");
+				"rekeningnr = ?, betaal_status = ? where id = ?");
 			deleteKlant = dbConnectie.prepareStatement("update klant set status = 'Niet actief' where id = ?");
 
 			//artikelen

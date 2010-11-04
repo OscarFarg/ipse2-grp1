@@ -151,7 +151,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			database.selectMedewerker(tabelPaneel.getGeselecteerdItem());
 			break;
 		case KLANT:
-			database.selectKlant(tabelPaneel.getGeselecteerdItem());
+			new KlantView(database, controller, tabelPaneel.getGeselecteerdItem());
 			break;
 		}
 	}
