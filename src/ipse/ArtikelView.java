@@ -3,7 +3,7 @@ package ipse;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class ArtikelView extends JFrame implements ActionListener
+public class ArtikelView extends View
 {
 	private JTextField artikelIdVeld, artikelNaamVeld, artikelPrijsVeld;
 	private JLabel imageLabel, bsLabel, artikelIdLabel, artikelNaamLabel, artikelPrijsLabel;
@@ -12,16 +12,6 @@ public class ArtikelView extends JFrame implements ActionListener
 
 	public ArtikelView()
 	{
-		setSize( 600,400 );
-		setLocation( 100,100 );
-		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		setResizable( false );
-		
-		JPanel mainPanel = new JPanel();
-		setContentPane( mainPanel );
-		
-		mainPanel.setLayout( null );
-		
 		logoIcon = new ImageIcon("src/ipse/images/logo.png");
 		imageLabel = new JLabel( logoIcon );
 		imageLabel.setBounds( 150, 10, 300, 100 );
@@ -73,5 +63,4 @@ public class ArtikelView extends JFrame implements ActionListener
 	{
 		new ArtikelView();
 	}
-
 }
