@@ -1,14 +1,12 @@
 package ipse;
 
 import javax.swing.*;
-import java.awt.event.*;
 
 public class ArtikelView extends View
 {
 	private JTextField artikelIdVeld, artikelNaamVeld, artikelPrijsVeld;
-	private JLabel imageLabel, bsLabel, artikelIdLabel, artikelNaamLabel, artikelPrijsLabel;
-	private JButton voegToeKnop;
-	private ImageIcon logoIcon;
+	private JLabel bsLabel, artikelIdLabel, artikelNaamLabel, artikelPrijsLabel;
+
 
 	public ArtikelView( Database database, Controller controller )
 	{
@@ -36,9 +34,6 @@ public class ArtikelView extends View
 		artikelPrijsVeld = new JTextField( 5 );
 		artikelPrijsVeld.setBounds( 250, 220, 200, 20 );
 		
-		voegToeKnop = new JButton( "Voeg Toe" );
-		voegToeKnop.setBounds( 350, 250, 100, 30 );
-		
 		mainPanel.add( bsLabel );
 		mainPanel.add( artikelIdVeld );
 		mainPanel.add( artikelNaamVeld );
@@ -46,7 +41,7 @@ public class ArtikelView extends View
 		mainPanel.add( artikelIdLabel );
 		mainPanel.add( artikelNaamLabel );
 		mainPanel.add( artikelPrijsLabel );
-		//mainPanel.add( voegToeKnop );
+	
 		
 		setVisible( true );
 	}
