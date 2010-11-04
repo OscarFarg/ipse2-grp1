@@ -126,6 +126,28 @@ public class HoofdView extends JPanel implements ActionListener {
 		}
 	}
 	
+	public void bewerkObject()
+	{
+		switch (viewEnum) 
+		{
+		case BESTELLING:
+			database.selectBestelling(tabelPaneel.getGeselecteerdItem());
+			tabelPaneel.herlaad();
+			break;
+		case ARTIKEL:
+			database.selectArtikel(tabelPaneel.getGeselecteerdItem());
+			tabelPaneel.herlaad();
+			break;
+		case MEDEWERKER:
+			database.selectMedewerker(tabelPaneel.getGeselecteerdItem());
+			tabelPaneel.herlaad();
+			break;
+		case KLANT:
+			database.selectKlant(tabelPaneel.getGeselecteerdItem());
+			tabelPaneel.herlaad();
+			break;
+	}
+	
 	public void voegObjectToe()
 	{
 		switch (viewEnum) 
@@ -140,7 +162,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			new MedewerkerView( database, controller );
 			break;
 		case KLANT:
-			new KlantView();
+			new KlantView( database, controller );
 			break;
 		}
 	}
