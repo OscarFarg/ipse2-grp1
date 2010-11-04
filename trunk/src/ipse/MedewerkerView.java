@@ -62,18 +62,27 @@ public class MedewerkerView extends View
 		setVisible(true);
 	}
 	
-	@Override
-	public void annuleren() {
-		System.out.println("Annulerenknop ingedrukt.");
-	}
 
 	@Override
 	public void opslaan() {
-		System.out.println("Opslaanknop ingedrukt.");
+		Medewerker m = new Medewerker();
+		String voornaam = voornaamVeld.getText();
+		String tussenvoegsel = tussenvoegselVeld.getText();
+		String achternaam = achternaamVeld.getText();
+		String functie = functieVeld.getText();
+		int chefId = 0;
+		m.setVoornaam(voornaam);
+		m.setTussenvoegsel(tussenvoegsel);
+		m.setAchternaam(achternaam);
+		m.setFunctie(functie);
+		m.setMwStatus("Actief");
+		database.insertMedewerker(m);
+		try {
+
+			chefId = Integer.parseInt(idVeld.getText());			
+		}
+		catch (NumberFormatException nfe){}
+		//database.updateMedewerkerChefId(m);
 	}
-/*
-	public static void main(String[] args)
-	{
-		new MedewerkerView(null, null);
-	*/
+
 }
