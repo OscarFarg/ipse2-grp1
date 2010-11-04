@@ -10,8 +10,10 @@ public class ArtikelView extends View
 	private JButton voegToeKnop;
 	private ImageIcon logoIcon;
 
-	public ArtikelView()
+	public ArtikelView( Database database, Controller controller )
 	{
+		super( database, controller );
+		
 		bsLabel = new JLabel( "Voeg hier onder een nieuw artikel toe" );
 		bsLabel.setBounds( 185, 120, 250, 20 );
 		
@@ -44,18 +46,18 @@ public class ArtikelView extends View
 		mainPanel.add( artikelIdLabel );
 		mainPanel.add( artikelNaamLabel );
 		mainPanel.add( artikelPrijsLabel );
-		mainPanel.add( voegToeKnop );
+		//mainPanel.add( voegToeKnop );
 		
 		setVisible( true );
 	}
 
-	public void actionPerformed( ActionEvent e )
+	public void opslaan() 
 	{
-		
+	
 	}
 	
-	public static void main(String[] args) 
+	public void annuleren()
 	{
-		new ArtikelView();
+		
 	}
 }
