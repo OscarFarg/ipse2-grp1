@@ -14,6 +14,7 @@ public class View extends JFrame implements ActionListener
 
 	protected Database database;
 	protected Controller controller;
+	protected boolean updateMode = false;
 
 	public View( Database database, Controller controller )
 	{
