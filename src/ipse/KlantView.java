@@ -40,9 +40,9 @@ public class KlantView extends View
 		rekeningnrLabel.setBounds(40, 210, 120, 20);
 
 		betaalStatusBox = new JComboBox();
+		betaalStatusBox.addItem("Gemiddelde betaler");
 		betaalStatusBox.addItem("Goede betaler");
 		betaalStatusBox.addItem("Slechte betaler");
-		betaalStatusBox.addItem("Gemiddelde betaler");
 		betaalStatusBox.setBounds(150, 235, 150, 20);
 		JLabel betaalstatusLabel = new JLabel("Betaalstatus");
 		betaalstatusLabel.setBounds(40, 235, 120, 20);
@@ -66,11 +66,28 @@ public class KlantView extends View
 	public void opslaan()
 	{
 		System.out.println("Opslaanknop ingedrukt.");
-		
+		String id = idVeld.getText();
+		int idNr = Integer.parseInt(id);
+		String voornaam = voornaamVeld.getText();
+		String tussenvoegsel = tussenvoegselVeld.getText();
+		String achternaam = achternaamVeld.getText();
+		String rekeningNr = rekeningVeld.getText();
+		String betaalStatus = (String) betaalStatusBox.getSelectedItem();
+		Klant klant = new Klant(idNr, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, "Actief");
+		if (id.equals(""))
+		{
+			System.out.println("insert");
+			database.insertKlant(klant);
+		}
+		else
+		{
+			System.out.println("update");
+			//database.updateKlant(klant);
+		}
 	}
 	
 	public static void main(String[] args) 
 	{
-		new KlantView(null, null);
+		new KlantView(Database.getDatabase(), null);
 	}
 }
