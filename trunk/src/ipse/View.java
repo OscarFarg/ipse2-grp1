@@ -12,6 +12,10 @@ public class View extends JFrame implements ActionListener
 	
 	public View()
 	{
+		ImageIcon logoIcon = new ImageIcon("src/ipse/images/logo.png");
+		JLabel imageLabel = new JLabel( logoIcon );
+		imageLabel.setBounds( 150, 10, 300, 100 );
+		
 		//Dit geld voor alle views.
 		setSize( 600,400 );
 		setLocationRelativeTo(null);
@@ -20,6 +24,9 @@ public class View extends JFrame implements ActionListener
 		
 		mainPanel = new JPanel();
 		setContentPane( mainPanel );
+		
+		mainPanel.add( imageLabel );
+
 		
 		mainPanel.setLayout( null );
 		
