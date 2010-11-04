@@ -90,7 +90,7 @@ public class Database
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
 			selectArtikel = dbConnectie.prepareStatement( "select * from artikel where artikelid = ?" );
 			insertArtikel = dbConnectie.prepareStatement("insert into artikel ( artikel_naam, prijs ) values ( ?, ? )");
-			updateArtikel = dbConnectie.prepareStatement("update artikel set artikel_naam = ?, prijs = ?");
+			updateArtikel = dbConnectie.prepareStatement("update artikel set artikel_naam = ?, prijs = ? where artikelid = ?");
 			deleteArtikel = dbConnectie.prepareStatement("delete from artikel where artikelid = ?");
 
 			//bestellingen
@@ -399,6 +399,7 @@ public class Database
 		{
 			updateArtikel.setString(1, a.getArtikelnaam());
 			updateArtikel.setDouble(2, a.getPrijs());
+			updateArtikel.setInt(3, a.getArtikelid());
 			updateArtikel.executeUpdate();
 		}
 		catch(SQLException ex)
