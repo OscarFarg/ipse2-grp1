@@ -8,25 +8,25 @@ import javax.swing.JTextField;
 public class MedewerkerView extends View
 {
 	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, functieVeld, chefidVeld;
-	
+
 	public MedewerkerView(Database database, Controller controller)
 	{
 		super(database, controller);
 		this.setResizable(true);
-		
+
 		//ÍD
 		idVeld = new JTextField(5);
 		idVeld.setEditable(false);
 		idVeld.setBounds( 150, 110, 100, 20 );
 		JLabel idLabel = new JLabel("Medewerker ID");
 		idLabel.setBounds(40, 110, 120, 20);
-		
+
 		//Voornaam
 		voornaamVeld = new JTextField(15);
 		voornaamVeld.setBounds(150, 135, 150, 20);
 		JLabel voornaamLabel = new JLabel("Voornaam");
 		voornaamLabel.setBounds(40, 135, 120, 20);
-		
+
 		tussenvoegselVeld = new JTextField(10);
 		tussenvoegselVeld.setBounds(150, 160, 150, 20);
 		JLabel tussenvoegselLabel = new JLabel("Tussenvoegsel");
@@ -46,7 +46,7 @@ public class MedewerkerView extends View
 		chefidVeld.setBounds(150, 235, 150, 20);
 		JLabel chefidLabel = new JLabel("Chef ID");
 		chefidLabel.setBounds(40, 235, 120, 20);
-		
+
 		mainPanel.add(idLabel);
 		mainPanel.add(idVeld);
 		mainPanel.add(voornaamLabel);
@@ -61,28 +61,37 @@ public class MedewerkerView extends View
 		mainPanel.add(chefidVeld);
 		setVisible(true);
 	}
-	
+
+	public MedewerkerView(Database database, Controller controller, int id)
+	{
+		this(database, controller);
+
+	}
 
 	@Override
 	public void opslaan() {
 		Medewerker m = new Medewerker();
+
 		String voornaam = voornaamVeld.getText();
 		String tussenvoegsel = tussenvoegselVeld.getText();
 		String achternaam = achternaamVeld.getText();
 		String functie = functieVeld.getText();
-		int chefId = 0;
 		m.setVoornaam(voornaam);
 		m.setTussenvoegsel(tussenvoegsel);
 		m.setAchternaam(achternaam);
 		m.setFunctie(functie);
-		m.setMwStatus("Actief");
-		database.insertMedewerker(m);
 		try {
-
-			chefId = Integer.parseInt(idVeld.getText());			
+			int chefId = Integer.parseInt(chefidVeld.getText());
+			m.setChefId(chefId);
 		}
-		catch (NumberFormatException nfe){}
-		//database.updateMedewerkerChefId(m);
+		catch (NumberFormatException nfe){
+			m.setChefId(0);
+		}
+		m.setMwStatus("Actief");
+
+		database.insertMedewerker(m);
+
+
 	}
 
 }
