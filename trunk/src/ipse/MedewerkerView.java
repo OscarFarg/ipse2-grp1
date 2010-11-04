@@ -1,9 +1,5 @@
 package ipse;
 
-import java.awt.FlowLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -11,8 +7,7 @@ import javax.swing.JTextField;
 
 public class MedewerkerView extends View
 {
-	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, rekeningnrVeld;
-	private JComboBox betaalstatusVeld;
+	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, functieVeld, chefidVeld;
 	
 	public MedewerkerView(Database database, Controller controller)
 	{
@@ -42,15 +37,15 @@ public class MedewerkerView extends View
 		JLabel achternaamLabel = new JLabel("Achternaam");
 		achternaamLabel.setBounds(40, 185, 120, 20);
 
-		rekeningnrVeld = new JTextField(15);
-		rekeningnrVeld.setBounds(150, 210, 150, 20);
-		JLabel rekeningnrLabel = new JLabel("Rekening");
-		rekeningnrLabel.setBounds(40, 210, 120, 20);
+		functieVeld = new JTextField(15);
+		functieVeld.setBounds(150, 210, 150, 20);
+		JLabel functieLabel = new JLabel("Functie");
+		functieLabel.setBounds(40, 210, 120, 20);
 
-		betaalstatusVeld = new JComboBox();
-		betaalstatusVeld.setBounds(150, 235, 150, 20);
-		JLabel betaalstatusLabel = new JLabel("Betaalstatus");
-		betaalstatusLabel.setBounds(40, 235, 120, 20);
+		chefidVeld = new JTextField();
+		chefidVeld.setBounds(150, 235, 150, 20);
+		JLabel chefidLabel = new JLabel("Chef ID");
+		chefidLabel.setBounds(40, 235, 120, 20);
 		
 		mainPanel.add(idLabel);
 		mainPanel.add(idVeld);
@@ -60,10 +55,10 @@ public class MedewerkerView extends View
 		mainPanel.add(tussenvoegselVeld);
 		mainPanel.add(achternaamLabel);
 		mainPanel.add(achternaamVeld);
-		mainPanel.add(rekeningnrLabel);
-		mainPanel.add(rekeningnrVeld);
-		mainPanel.add(betaalstatusLabel);
-		mainPanel.add(betaalstatusVeld);
+		mainPanel.add(functieLabel);
+		mainPanel.add(functieVeld);
+		mainPanel.add(chefidLabel);
+		mainPanel.add(chefidVeld);
 		setVisible(true);
 	}
 	
