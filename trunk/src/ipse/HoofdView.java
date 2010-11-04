@@ -16,13 +16,18 @@ public class HoofdView extends JPanel implements ActionListener {
 
 	Database database;
 	Controller controller;
+	
+	public HoofdView( Controller controller, Database database, ArtikelView atView)
+	{
+		this.controller = controller;
+		this.database = database;
+		this.atView = atView;
+	}
 
 	public HoofdView(Controller controller, Database database) {
 		this.controller = controller;
 		this.database = database;
 		setLayout(null);
-		
-		atView = new ArtikelView(database, controller);
 		
 		/*
 		 * mwView = new MedewerkerView( database, controller );
@@ -137,7 +142,8 @@ public class HoofdView extends JPanel implements ActionListener {
 			database.selectBestelling(tabelPaneel.getGeselecteerdItem());	
 			break;
 		case ARTIKEL:
-			atView.setArtikel(database.selectArtikel(tabelPaneel.getGeselecteerdItem()));
+			Artikel artikel = database.selectArtikel(tabelPaneel.getGeselecteerdItem());
+			atView.setArtikel(artikel);
 			atView.vulWaardesIn();
 			new ArtikelView(database, controller);
 			break;
