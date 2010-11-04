@@ -16,6 +16,7 @@ public class Zoek extends JFrame implements ActionListener
 	
 	private JTextField zoekVeld;
 	private JComboBox kolomBox;
+	private JComboBox medewerkerBox;
 	private String artikelString = "artikel";
 	private String bestellingString = "besteling";
 	private String klantString = "klant";
@@ -24,13 +25,20 @@ public class Zoek extends JFrame implements ActionListener
 	private String zoekSegment = "artikel"; // Bepaald waarop wordt gezocht
 	private String zoekKolom = "";  // Kolom waarop word gezocht
 	
+	 String[] kolomStrings = {"", "", ""};
+	 String[] klantStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "rekeningnr", "betaal_status", "klant_status"};
+	 String[] medewerkerStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "functie", "chefid", "medewerker_status"};
+	 String[] bestellingStrings = { "bestelnr", "bestel_datum", "lever_datum", "betaal_datum", "klantid", "medewerkerid"};
+	 String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
+
+	
 
 	public Zoek()
 	{	
 		JPanel contentPane = new JPanel();	
 			
 		JFrame venster = new JFrame();
-		venster.setSize(450,320); 
+		venster.setSize(400,320); 
 		venster.setResizable(false);
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
@@ -41,6 +49,8 @@ public class Zoek extends JFrame implements ActionListener
 		bestellingRadio = new JRadioButton(bestellingString);
 		klantRadio = new JRadioButton(klantString);
 		medewerkerRadio = new JRadioButton(medewerkerString);
+		kolomBox = new JComboBox(klantStrings );
+		medewerkerBox = new JComboBox(medewerkerStrings);
 		
 		artikelRadio.setSelected(true);
 		
@@ -57,6 +67,7 @@ public class Zoek extends JFrame implements ActionListener
 		contentPane.add(new JLabel( new ImageIcon("src/ipse/Images/logo.png")));
 		contentPane.add(new JLabel("Kies hier uw zoekoptie:"));
 		contentPane.add(radiocontentPane);
+		contentPane.add(kolomBox);
 		contentPane.add( zoekVeld);
 		contentPane.add(zoekKnop);		
 		
@@ -97,21 +108,43 @@ public class Zoek extends JFrame implements ActionListener
 		if(e.getSource() == artikelRadio )
 		{
 			zoekSegment = artikelString;
+			kolomBox.removeAllItems();
+			for(int i = 0; i < artikelStrings.length; i++)
+			{
+				kolomBox.addItem(artikelStrings[i]);
+			}
 		}
 		
 		if(e.getSource() == bestellingRadio )
 		{
 			zoekSegment = bestellingString;
+			kolomBox.removeAllItems();
+			for(int i = 0; i < bestellingStrings.length; i++)
+			{
+				kolomBox.addItem(bestellingStrings[i]);
+			}
 		}
 		
 		if(e.getSource() == klantRadio )
 		{
 			zoekSegment = klantString;
+			kolomBox.removeAllItems();
+			for(int i = 0; i < klantStrings.length; i++)
+			{
+				kolomBox.addItem(klantStrings[i]);
+			}
 		}
 		
 		if(e.getSource() == medewerkerRadio )
 		{
 			zoekSegment = medewerkerString;
+			kolomBox.removeAllItems();
+			for(int i = 0; i < medewerkerStrings.length; i++)
+			{
+				kolomBox.addItem(medewerkerStrings[i]);
+			}
+			
+			System.out.println("printer");
 		}
 		
 		if(e.getSource() == zoekKnop )
