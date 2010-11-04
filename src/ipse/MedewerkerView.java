@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 public class MedewerkerView extends View
 {
 	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, functieVeld, chefidVeld;
-
+ 
 	public MedewerkerView(Database database, Controller controller)
 	{
 		super(database, controller);
@@ -69,6 +69,13 @@ public class MedewerkerView extends View
 		updateMode = true; //Boolean in super klasse view. Op true zetten bij update.
 		
 		//Hier kan je dus doen wat er nodig is om de velden te vullen.
+		Medewerker m = database.selectMedewerker(id);
+		idVeld.setText(m.getId() + "");
+		voornaamVeld.setText(m.getVoornaam());
+		tussenvoegselVeld.setText(m.getTussenvoegsel());
+		achternaamVeld.setText(m.getAchternaam());
+		functieVeld.setText(m.getFunctie());
+		chefidVeld.setText("" + m.getChefId());
 	}
 
 	@Override
@@ -94,7 +101,8 @@ public class MedewerkerView extends View
 
 		if (updateMode)
 		{
-			//hier doen wat nodig is bij een update.
+			m.setId(Integer.parseInt(idVeld.getText()));
+			database.updateMedewerker(m);
 		}
 		else
 		{
