@@ -102,7 +102,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		add(tabelPaneel);
 		// add( huidigeView );
 	}
-	
+
 	public void verwijderObject() 
 	{
 		switch (viewEnum) 
@@ -125,7 +125,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			break;
 		}
 	}
-	
+
 	public void bewerkObject()
 	{
 		switch (viewEnum) 
@@ -146,8 +146,9 @@ public class HoofdView extends JPanel implements ActionListener {
 			database.selectKlant(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
+		}
 	}
-	
+
 	public void voegObjectToe()
 	{
 		switch (viewEnum) 
@@ -166,8 +167,8 @@ public class HoofdView extends JPanel implements ActionListener {
 			break;
 		}
 	}
-	 
-	
+
+
 	public void actionPerformed(ActionEvent e) 
 	{
 		//Switchen tussen de views
@@ -201,6 +202,11 @@ public class HoofdView extends JPanel implements ActionListener {
 		if( e.getSource() == nieuwKnop )
 		{
 			voegObjectToe();
+		}
+		
+		if( e.getSource() == bewerkKnop )
+		{
+			bewerkObject();
 		}
 
 		if (e.getSource() == zoekKnop)
