@@ -52,10 +52,21 @@ public class ArtikelView extends View
 		double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
 		Artikel artikel = new Artikel( naam, prijs );
 		database.insertArtikel(artikel);
+		
+		int n = JOptionPane.showConfirmDialog(null, "Artikel is toegevoegd!, Wilt u er nog een toevoegen?",
+				"Toevoegen", JOptionPane.YES_NO_OPTION);
+		if (n == 0) 
+		{
+			artikelNaamVeld.setText("");
+			artikelPrijsVeld.setText("");
+		} 
+		else {
+			this.dispose();
+		}
 	}
 	
 	public void annuleren()
 	{
-		
+		this.dispose();
 	}
 }
