@@ -144,19 +144,29 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet selectMedewerker(int id)
+	public Medewerker selectMedewerker(int id)
 	{
-		ResultSet resultSet = null;
+		Medewerker m = new Medewerker();
 		try
 		{
 			selectMedewerker.setInt(1, id);
-			resultSet = selectMedewerker.executeQuery();
+			ResultSet rs = selectMedewerker.executeQuery();
+			while (rs.next())
+			{
+				m.setId(rs.getInt(1));
+				m.setVoornaam(rs.getString(2));
+				m.setTussenvoegsel(rs.getString(3));
+				m.setAchternaam(rs.getString(4));
+				m.setFunctie(rs.getString(5));
+				m.setChefId(rs.getInt(6));
+				m.setMwStatus(rs.getString(7));
+			}
 		}
 		catch (SQLException e)
 		{
 			System.out.println(e);
 		}
-		return resultSet;
+		return m;
 	}
 
 	public void insertMedewerker (Medewerker m)
@@ -189,8 +199,13 @@ public class Database
 			updateMedewerker.setString(2, m.getTussenvoegsel());
 			updateMedewerker.setString(3, m.getAchternaam());
 			updateMedewerker.setString(4, m.getFunctie());
-			updateMedewerker.setInt(5, m.getChefId());
+			if (m.getChefId() != 0)
+				updateMedewerker.setInt(5, m.getChefId());
+			else
+				updateMedewerker.setString(5, null);
+
 			updateMedewerker.setString(6, m.getMwStatus());
+			updateMedewerker.setInt(7, m.getId());
 			updateMedewerker.executeUpdate();
 		}
 		catch (SQLException e)
