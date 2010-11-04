@@ -9,11 +9,11 @@ public class Database
 {
 	private Connection dbConnectie;
 
-	private PreparedStatement selectKlanten, insertKlant, updateKlant, deleteKlant;
-	private PreparedStatement selectMedewerkers, insertMedewerker, updateMedewerker, deleteMedewerker;
-	private PreparedStatement selectArtikelen, insertArtikel, updateArtikel, deleteArtikel;
-	private PreparedStatement selectBestellingen, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
-	private PreparedStatement selectBestelregels, insertBestelregel, updateBestelregel, deleteBestelregel;
+	private PreparedStatement selectKlanten, selectKlant, insertKlant, updateKlant, deleteKlant;
+	private PreparedStatement selectMedewerkers, selectMedewerker, insertMedewerker, updateMedewerker, deleteMedewerker;
+	private PreparedStatement selectArtikelen, selectArtikel, insertArtikel, updateArtikel, deleteArtikel;
+	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
+	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement zoekDatabase;
 
 
@@ -81,6 +81,7 @@ public class Database
 			
 			//bestellingen
 			selectBestellingen = dbConnectie.prepareStatement("select * from bestelling");
+			selectBestelling = dbConnectie.prepareStatement("select * from bestelling where bestelnr = ?");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
 				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
 			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
@@ -90,6 +91,7 @@ public class Database
 		
 			//bestelregels
 			selectBestelregels = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ?");
+			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
 					"prijs = ?, aantal = ?, totaal_prijs = ?");
@@ -293,6 +295,21 @@ public class Database
 		}
 		return resultSet;
 	}
+	
+	public ResultSet selectBestelling(int bestelnr)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectBestelling.setInt(1, bestelnr);
+			resultSet = selectBestelling.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
 
 	public void insertBestelling(Bestelling b)
 	{
@@ -367,6 +384,22 @@ public class Database
 		{
 			selectBestelregels.setInt(1, bestelnr);
 			resultSet = selectBestelregels.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
+	public ResultSet selectBestelregel(int bestelnr, int artikelid)
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			selectBestelregel.setInt(1, bestelnr);
+			selectBestelregel.setInt(2, artikelid);
+			resultSet = selectBestelregel.executeQuery();
 		}
 		catch (SQLException e)
 		{
