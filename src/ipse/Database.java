@@ -78,13 +78,13 @@ public class Database
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
 
 			//klanten
-			selectKlanten = dbConnectie.prepareStatement("select * from klant");
+			selectKlanten = dbConnectie.prepareStatement("select * from klant where status = 'Actief'");
 			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 			"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
 			updateKlant = dbConnectie.prepareStatement("update klant set voornaam = ?, tussenvoegsel = ?, achternaam = ?, " + 
 			"rekeningnr = ?, betaal_status = ? where id = ?");
-			deleteKlant = dbConnectie.prepareStatement("delete from klant where id = ?");
+			deleteKlant = dbConnectie.prepareStatement("update klant set status = 'Niet actief' where id = ?");
 
 			//artikelen
 			selectArtikelen = dbConnectie.prepareStatement("select * from artikel");
@@ -275,7 +275,7 @@ public class Database
 		} 
 		catch (SQLException ex)
 		{
-			System.out.println(ex);
+			JOptionPane.showMessageDialog(null, "Een invoer is fout.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -293,7 +293,7 @@ public class Database
 		}
 		catch (SQLException e)
 		{
-			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Een invoer is fout.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -306,7 +306,7 @@ public class Database
 		}
 		catch (SQLException e)
 		{
-			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "De klant is niet verwijderd.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
