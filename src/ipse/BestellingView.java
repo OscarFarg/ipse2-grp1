@@ -6,7 +6,7 @@ public class BestellingView extends View
 {
 	private JTextField bestellingNrVeld, bestellingDatumVeld, leverDatumVeld, 
 	betaalDatumVeld, klantIdVeld, medewerkerIdVeld;
-	private JLabel imageLabel, bsLabel, bestellingNrLabel, bestellingDatumLabel, leverDatumLabel, 
+	private JLabel bsLabel, bestellingNrLabel, bestellingDatumLabel, leverDatumLabel, 
 	betaalDatumLabel, klantIdLabel, medewerkerIdLabel;
 
 
@@ -54,7 +54,6 @@ public class BestellingView extends View
 		medewerkerIdVeld = new JTextField( 5 );
 		medewerkerIdVeld.setBounds( 150, 310, 200, 20 );
 
-		mainPanel.add( imageLabel );
 		mainPanel.add( bsLabel );
 		mainPanel.add( bestellingNrVeld );
 		mainPanel.add( bestellingDatumVeld );
