@@ -5,6 +5,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -105,7 +106,15 @@ public class TabelPaneel extends JPanel
 	
 	public int getGeselecteerdItem()
 	{
-		int bestelnr = Integer.parseInt(contentTabel.getValueAt(contentTabel.getSelectedRow(), 0).toString());
+		int bestelnr = 0;
+		try
+		{
+			bestelnr = Integer.parseInt(contentTabel.getValueAt(contentTabel.getSelectedRow(), 0).toString());
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.WARNING_MESSAGE);;
+		}
 		return bestelnr;
 	}
 
