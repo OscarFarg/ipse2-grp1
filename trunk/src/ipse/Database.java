@@ -594,7 +594,7 @@ public class Database
 		}
 		catch (SQLException e)
 		{
-			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Een invoer is fout.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -611,7 +611,7 @@ public class Database
 		}
 		catch (SQLException e)
 		{
-			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Een invoer is fout.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
