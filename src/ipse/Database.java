@@ -106,8 +106,8 @@ public class Database
 			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
-			selectKlantBestelling = dbConnectie.prepareStatement("select id || ', ' || achternaam from klant");
-			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id || ', ' || achternaam from medewerker");
+			selectKlantBestelling = dbConnectie.prepareStatement("select id, achternaam from klant");
+			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id, achternaam from medewerker");
 
 			//bestelregels
 			selectBestelregels = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ?");
