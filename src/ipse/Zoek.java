@@ -14,9 +14,10 @@ public class Zoek extends JFrame implements ActionListener
 	
 	private JButton zoekKnop;
 	
+	private Database database;
+	
 	private JTextField zoekVeld;
 	private JComboBox kolomBox;
-	private JComboBox medewerkerBox;
 	private String artikelString = "artikel";
 	private String bestellingString = "besteling";
 	private String klantString = "klant";
@@ -33,8 +34,9 @@ public class Zoek extends JFrame implements ActionListener
 
 	
 
-	public Zoek()
+	public Zoek( Database database)
 	{	
+		this.database = database;
 		JPanel contentPane = new JPanel();	
 			
 		JFrame venster = new JFrame();
@@ -50,8 +52,7 @@ public class Zoek extends JFrame implements ActionListener
 		klantRadio = new JRadioButton(klantString);
 		medewerkerRadio = new JRadioButton(medewerkerString);
 		kolomBox = new JComboBox(klantStrings );
-		medewerkerBox = new JComboBox(medewerkerStrings);
-		
+			
 		artikelRadio.setSelected(true);
 		
 		zoekKnop = new JButton("Zoek");
@@ -147,7 +148,7 @@ public class Zoek extends JFrame implements ActionListener
 		
 		if(e.getSource() == zoekKnop )
 		{
-			// Hier moet Query of methode komen uit andere klasse voor het doorzoeken van de database
+			
 			
 		}
 		
