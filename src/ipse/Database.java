@@ -12,7 +12,7 @@ public class Database
 	private PreparedStatement selectKlanten, selectKlant, insertKlant, updateKlant, deleteKlant;
 	private PreparedStatement selectMedewerkers, selectMedewerker, insertMedewerker, updateMedewerker, deleteMedewerker;
 	private PreparedStatement selectArtikelen, selectArtikel, insertArtikel, updateArtikel, deleteArtikel;
-	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling;
+	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling, selectKlantBestelling, selectMedewerkerBestelling;
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement zoekKlant, zoekMedewerker, zoekBestelling, zoekArtikel;
 
@@ -72,18 +72,18 @@ public class Database
 			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
 			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
-				"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
+			"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
-				"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
+			"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
 			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
 
 			//klanten
 			selectKlanten = dbConnectie.prepareStatement("select * from klant where status = 'Actief'");
 			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
-				"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
+			"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
 			updateKlant = dbConnectie.prepareStatement("update klant set voornaam = ?, tussenvoegsel = ?, achternaam = ?, " + 
-				"rekeningnr = ?, betaal_status = ? where id = ?");
+			"rekeningnr = ?, betaal_status = ? where id = ?");
 			deleteKlant = dbConnectie.prepareStatement("update klant set status = 'Niet actief' where id = ?");
 
 			//artikelen
@@ -95,24 +95,26 @@ public class Database
 
 			//bestellingen
 			selectBestellingen = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", b.bestel_datum \"Bestel datum\", " + 
-				"b.lever_datum \"Lever datum\", b.betaal_datum \"Betaal datum\", " + 
-				"k.achternaam || ', ' || k.voornaam || ' ' || coalesce(k.tussenvoegsel, '') \"Klant\", " + 
-				"m.achternaam || ', ' || m.voornaam || ' ' || coalesce(m.tussenvoegsel, '') \"Medewerker\" " + 
-				"from bestelling b, klant k, medewerker m where b.klantid = k.id and b.medewerkerid = m.id");
+					"b.lever_datum \"Lever datum\", b.betaal_datum \"Betaal datum\", " + 
+					"k.achternaam || ', ' || k.voornaam || ' ' || coalesce(k.tussenvoegsel, '') \"Klant\", " + 
+					"m.achternaam || ', ' || m.voornaam || ' ' || coalesce(m.tussenvoegsel, '') \"Medewerker\" " + 
+			"from bestelling b, klant k, medewerker m where b.klantid = k.id and b.medewerkerid = m.id");
 			selectBestelling = dbConnectie.prepareStatement("select * from bestelling where bestelnr = ?");
 			insertBestelling = dbConnectie.prepareStatement("insert into bestelling (bestel_datum, lever_datum, betaal_datum, " + 
-				"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
+			"klantid, medewerkerid) values(?, ?, ?, ?, ?)");
 			updateBestelling = dbConnectie.prepareStatement("update bestelling set bestel_datum = ?, lever_datum = ?, " + 
-				"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
+			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
+			selectKlantBestelling = dbConnectie.prepareStatement("select id || ', ' || achternaam from klant");
+			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id || ', ' || achternaam from medewerker");
 
 			//bestelregels
 			selectBestelregels = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ?");
 			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
-				"prijs = ?, aantal = ?, totaal_prijs = ?");
+			"prijs = ?, aantal = ?, totaal_prijs = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
 			//Zoek
@@ -167,6 +169,20 @@ public class Database
 			System.out.println(e);
 		}
 		return m;
+	}
+	
+	public ResultSet selectMedewerkerBestelling()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectMedewerkerBestelling.executeQuery();
+		}
+		catch( SQLException se )
+		{
+			System.out.println( se );
+		}
+		return resultSet;
 	}
 
 	public void insertMedewerker (Medewerker m)
@@ -423,19 +439,35 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet selectBestelling(int bestelnr)
+	public Bestelling selectBestelling(int bestelnr)
 	{
-		ResultSet resultSet = null;
+		Bestelling bestelling = null;
+		int bestelNr = 0;
+		Date bestel_datum = null;
+		Date lever_datum = null;
+		Date betaal_datum = null;
+		int klant_id = 0;
+		int medewerker_id = 0;
 		try
 		{
 			selectBestelling.setInt(1, bestelnr);
-			resultSet = selectBestelling.executeQuery();
+			ResultSet resultSet = selectBestelling.executeQuery();
+			while(resultSet.next())
+			{	
+				bestelNr = resultSet.getInt(1);
+				bestel_datum = resultSet.getDate(2);
+				lever_datum = resultSet.getDate(3);
+				betaal_datum = resultSet.getDate(5);
+				klant_id = resultSet.getInt(6);
+				medewerker_id = resultSet.getInt(7);
+			}
+			bestelling = new Bestelling( bestelNr, bestel_datum, lever_datum, betaal_datum, klant_id, medewerker_id );
 		}
 		catch (SQLException e)
 		{
 			System.out.println(e);
 		}
-		return resultSet;
+		return bestelling;
 	}
 
 	public void insertBestelling(Bestelling b)
@@ -531,6 +563,20 @@ public class Database
 		catch (SQLException e)
 		{
 			System.out.println(e);
+		}
+		return resultSet;
+	}
+
+	public ResultSet selectKlantBestelling()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectKlantBestelling.executeQuery();
+		}
+		catch( SQLException se )
+		{
+			System.out.println( se );
 		}
 		return resultSet;
 	}
