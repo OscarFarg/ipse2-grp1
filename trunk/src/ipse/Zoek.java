@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class Zoek extends JFrame implements ActionListener
 {
@@ -103,6 +102,7 @@ public class Zoek extends JFrame implements ActionListener
 
 	public String getZoekKolom() 
 	{
+		zoekKolom = (String)kolomBox.getSelectedItem();
 		return zoekKolom;
 	}
 
@@ -150,14 +150,14 @@ public class Zoek extends JFrame implements ActionListener
 
 		if(e.getSource() == zoekKnop )
 		{
-			if( zoekSegment == medewerkerString)
+			if( zoekSegment.equals(medewerkerString))
 			{
 				try
 				{
-					ResultSet resultSet = database.zoekMedewerker(this);
+					ResultSet resultSet = database.zoekMedewerker(getZoekKolom(), getZoekVeld());
 					while(resultSet.next())
 					{
-						System.out.println( resultSet.getInt(1));
+						System.out.println( resultSet.getString(1));
 						System.out.println("Halloo");
 					}
 				}
@@ -169,15 +169,51 @@ public class Zoek extends JFrame implements ActionListener
 
 			if( zoekSegment == klantString)
 			{
-				System.out.println( database.zoekArtikel(this));
+				try
+				{
+					ResultSet resultSet = database.zoekKlant(this);
+					while(resultSet.next())
+					{
+						System.out.println( resultSet.getInt(1));
+						System.out.println("Halloo");
+					}
+				}
+				catch(SQLException sq)
+				{
+					System.out.println(sq);
+				}
 			}
 			if( zoekSegment == artikelString)
 			{
-				System.out.println( database.zoekArtikel(this));
+				try
+				{
+					ResultSet resultSet = database.zoekArtikel(this);
+					while(resultSet.next())
+					{
+						System.out.println( resultSet.getInt(1));
+						System.out.println("Halloo");
+					}
+				}
+				catch(SQLException sq)
+				{
+					System.out.println(sq);
+				}
 			}
 			if( zoekSegment == bestellingString)
 			{
-				System.out.println(database.zoekBestelling(this));
+				try
+				{
+					ResultSet resultSet = database.zoekBestelling(this);
+					while(resultSet.next())
+					{
+						System.out.println( resultSet.getInt(1));
+						System.out.println("Halloo");
+					}
+				}
+				catch(SQLException sq)
+				{
+					System.out.println(sq);
+				}
 			}
 
 

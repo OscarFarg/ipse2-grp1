@@ -121,7 +121,7 @@ public class Database
 
 			//Zoek
 			zoekKlant = dbConnectie.prepareStatement("select * from klant where ? like ?");
-			zoekMedewerker = dbConnectie.prepareStatement("select * from medewerker where ? like ?");
+			zoekMedewerker = dbConnectie.prepareStatement("select * from medewerker where voornaam like ?");
 			zoekBestelling = dbConnectie.prepareStatement("select * from bestelling where ? like ?");
 			zoekArtikel = dbConnectie.prepareStatement("select * from artikel where ? like ?");
 
@@ -664,13 +664,13 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet zoekMedewerker (Zoek z)
+	public ResultSet zoekMedewerker (String kolom, String zoekterm)
 	{
 		ResultSet resultSet = null;
 		try
 		{
-			zoekMedewerker.setString(1, z.getZoekKolom());
-			zoekMedewerker.setString(2, z.getZoekVeld());
+			//zoekMedewerker.setString(1, kolom);
+			zoekMedewerker.setString(1, zoekterm);
 			resultSet = zoekMedewerker.executeQuery();
 		}
 		catch (SQLException e)
@@ -686,7 +686,7 @@ public class Database
 		try
 		{
 			zoekBestelling.setString(1, z.getZoekKolom());
-			zoekBestelling.setString(2, z.getZoekVeld());
+			zoekBestelling.setString(1, z.getZoekVeld());
 			resultSet = zoekBestelling.executeQuery();
 		}
 		catch (SQLException e)
