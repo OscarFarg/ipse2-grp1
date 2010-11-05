@@ -143,8 +143,6 @@ public class Zoek extends JFrame implements ActionListener
 			{
 				kolomBox.addItem(medewerkerStrings[i]);
 			}
-			
-			System.out.println("printer");
 		}
 		
 		if(e.getSource() == zoekKnop )
