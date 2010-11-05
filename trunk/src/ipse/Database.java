@@ -110,11 +110,13 @@ public class Database
 			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id, achternaam from medewerker");
 
 			//bestelregels
-			selectBestelregels = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ?");
+			selectBestelregels = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", a.artikel_naam \"Artikel\", " + 
+					" b.prijs \"Prijs\", b.aantal \"Aantal\", b.totaal_prijs \"Totaal\" " + 
+					"from bestelregel b, artikel a where bestelnr = ? and b.artikelid = a.artikelid");
 			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
-			"prijs = ?, aantal = ?, totaal_prijs = ?");
+				"prijs = ?, aantal = ?, totaal_prijs = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
 			//Zoek
