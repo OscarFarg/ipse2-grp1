@@ -52,7 +52,9 @@ public class View extends JFrame implements ActionListener
 
 	}
 
-	public void opslaan(){}
+	public void opslaan(){
+		this.dispose();
+	}
 
 	public void annuleren(){
 		this.dispose();

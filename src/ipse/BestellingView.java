@@ -200,7 +200,10 @@ public class BestellingView extends View
 		catch( Exception e )
 		{
 			System.out.println(e);
-			e.printStackTrace();
+		}
+		finally
+		{
+			super.opslaan();
 		}
 	}
 

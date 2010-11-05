@@ -104,5 +104,9 @@ public class KlantView extends View
 		{
 			System.out.println(e);
 		}
+		finally
+		{
+			super.opslaan();
+		}
 	}
 }

@@ -80,27 +80,38 @@ public class ArtikelView extends View
 
 	public void opslaan() 
 	{
-		String id = artikelIdVeld.getText();
-		int idNr = 0;
 		try
 		{
-			idNr = Integer.parseInt(id);
+			String id = artikelIdVeld.getText();
+			int idNr = 0;
+			try
+			{
+				idNr = Integer.parseInt(id);
+			}
+			catch( Exception e)
+			{
+				System.out.println(e);
+			}
+			String naam = artikelNaamVeld.getText();
+			double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
+			Artikel artikel = new Artikel( idNr, naam, prijs );
+
+			if( updateMode )
+			{
+				database.updateArtikel(artikel);
+			}
+			else
+			{
+				database.insertArtikel(artikel);
+			}
 		}
-		catch( Exception e)
+		catch (Exception e)
 		{
 			System.out.println(e);
 		}
-		String naam = artikelNaamVeld.getText();
-		double prijs = Double.parseDouble( artikelPrijsVeld.getText() );
-		Artikel artikel = new Artikel( idNr, naam, prijs );
-
-		if( updateMode )
+		finally
 		{
-			database.updateArtikel(artikel);
-		}
-		else
-		{
-			database.insertArtikel(artikel);
+			super.opslaan();
 		}
 	}
 }

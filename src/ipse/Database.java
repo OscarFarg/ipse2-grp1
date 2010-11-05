@@ -16,7 +16,6 @@ public class Database
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement zoekKlant, zoekMedewerker, zoekBestelling, zoekArtikel;
 
-
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Medewerker> medewerkerLijst;
 	private ArrayList<Artikel> artikelLijst;
@@ -745,6 +744,50 @@ public class Database
 	{
 		try
 		{
+			//medewerkers
+			selectMedewerkers.close();
+			selectMedewerker.close();
+			insertMedewerker.close();
+			updateMedewerker.close();
+			deleteMedewerker.close();
+
+			//klanten
+			selectKlanten.close();
+			selectKlant.close();
+			insertKlant.close();
+			updateKlant.close();
+			deleteKlant.close();
+
+			//artikelen
+			selectArtikelen.close();
+			selectArtikel.close();
+			insertArtikel.close();
+			updateArtikel.close();
+			deleteArtikel.close();
+
+			//bestellingen
+			selectBestellingen.close();
+			selectBestelling.close();
+			insertBestelling.close();
+			updateBestelling.close();
+			deleteBestelling.close();
+			totaalPrijsBestelling.close();		
+			selectKlantBestelling.close();
+			selectMedewerkerBestelling.close();
+
+			//bestelregels
+			selectBestelregels.close();
+			selectBestelregel.close();
+			insertBestelregel.close();
+			updateBestelregel.close();
+			deleteBestelregel.close();
+
+			//Zoek
+			zoekKlant.close();
+			zoekMedewerker.close();
+			zoekBestelling.close();
+			zoekArtikel.close();
+
 			dbConnectie.close();
 		}
 		catch (Exception ex)
