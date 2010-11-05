@@ -1,10 +1,16 @@
 package ipse;
 
+import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 
 public class BestellingView extends View
 {
@@ -14,6 +20,7 @@ public class BestellingView extends View
 	betaalDatumLabel, klantIdLabel, medewerkerIdLabel;
 	private JComboBox klantBox, medewerkerBox;
 
+	private int klantId, mwId;
 
 	public BestellingView( Database database, Controller controller )
 	{
@@ -63,14 +70,15 @@ public class BestellingView extends View
 		{
 			System.out.println( se );
 		}
-		
+
 		klantBox.setBounds( 150, 280, 200, 20 );
+		klantBox.addActionListener(this);
 
 		medewerkerIdLabel = new JLabel( "Medewerker ID" );
 		medewerkerIdLabel.setBounds( 50, 310, 100, 20 );
-		
+
 		medewerkerBox = new JComboBox();
-		
+
 		try
 		{
 			ResultSet medewerkerSet = database.selectMedewerkerBestelling();
@@ -83,8 +91,9 @@ public class BestellingView extends View
 		{
 			System.out.println( se );
 		}
-		
+
 		medewerkerBox.setBounds( 150, 310, 200, 20 );
+		medewerkerBox.addActionListener(this);
 
 
 
@@ -116,37 +125,70 @@ public class BestellingView extends View
 		klantIdVeld.setText(bestelling.getKlantid() + "");
 		medewerkerIdVeld.setText(bestelling.getMedewerkerid() + "");
 	}
-	/*
+
 	public void opslaan()
 	{
-		System.out.println("Opslaanknop ingedrukt.");
-		String id = bestellingNrVeld.getText();
-		int bestelNr = 0;
 		try
 		{
-			bestelNr = Integer.parseInt(id);
+			System.out.println("Opslaanknop ingedrukt.");
+			String id = bestellingNrVeld.getText();
+			int bestelNr = 0;
+			try
+			{
+				bestelNr = Integer.parseInt(id);
+			}
+			catch (Exception e)
+			{
+				System.out.println(e);
+			}
+
+			/*
+			String datestring= some string(getText() or getParameter())
+			java.util.Date dt=new java.util.Date();
+			java.sql.Date dte=new java.sql.Date(dt.getTime());
+			java.sql.Date dte1=dte.valueOf(datestring);
+			 */
+			SimpleDateFormat format = new SimpleDateFormat( "yyyy-mm-dd" );
+			java.sql.Date bestelDate = (java.sql.Date)format.parse(bestellingDatumVeld.getText());
+			java.sql.Date leverDate = (java.sql.Date)format.parse(leverDatumVeld.getText());
+			java.sql.Date betaalDate = (java.sql.Date)format.parse(betaalDatumVeld.getText());
+
+			Bestelling bestelling = new Bestelling(bestelNr, bestelDate, leverDate, betaalDate, klantId, mwId );
+
+			if (updateMode)
+			{
+				System.out.println("update");
+				database.updateBestelling(bestelling);
+			}
+			else
+			{
+				System.out.println("insert");
+				database.insertBestelling(bestelling);
+			}
 		}
-		catch (Exception e)
+		catch( Exception e )
 		{
 			System.out.println(e);
 		}
-		Date bestelDatum = bestellingDatumVeld.getText();
-		String voornaam = voornaamVeld.getText();
-		String tussenvoegsel = tussenvoegselVeld.getText();
-		String achternaam = achternaamVeld.getText();
-		String rekeningNr = rekeningVeld.getText();
-		String betaalStatus = (String) betaalStatusBox.getSelectedItem();
-		Klant klant = new Klant(bestelNr, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, "Actief");
-		if (updateMode)
-		{
-			System.out.println("update");
-			database.updateKlant(klant);
-		}
-		else
-		{
-			System.out.println("insert");
-			database.insertKlant(klant);
-		}
 	}
-	*/
+
+	public void actionPerformed(ActionEvent ae)
+	{
+		super.actionPerformed(ae);
+		if( ae.getSource() == klantBox )
+		{
+			String klSelected = (String) klantBox.getSelectedItem();
+			Scanner kl = new Scanner(klSelected).useDelimiter("\\,");
+			klantId = kl.nextInt();
+		}
+
+		if( ae.getSource() == medewerkerBox )
+		{
+			String mwSelected = (String) medewerkerBox.getSelectedItem();
+			Scanner mw = new Scanner(mwSelected).useDelimiter("\\,");
+			mwId = mw.nextInt();
+		}
+
+	}
+
 }

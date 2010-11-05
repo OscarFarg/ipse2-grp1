@@ -5,10 +5,10 @@ import java.util.*;
 public class Bestelling
 {
 	private int bestelnr, klantid, medewerkerid;
-	private Date bestelDatum, leverDatum, betaalDatum;
+	private java.sql.Date bestelDatum, leverDatum, betaalDatum;
 	private ArrayList<Bestelregel> bestelregels;
 	
-	public Bestelling(int bestelnr, Date bestelDatum, Date leverDatum, Date betaalDatum, int klantid, int medewerkerid)
+	public Bestelling(int bestelnr, java.sql.Date bestelDatum, java.sql.Date leverDatum, java.sql.Date betaalDatum, int klantid, int medewerkerid)
 	{
 		this.bestelnr = bestelnr;
 		this.bestelDatum = bestelDatum;
