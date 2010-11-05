@@ -214,7 +214,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == zoekKnop)
-			new Zoek();
+			new Zoek(database);
 
 		if (e.getSource() == verwijderKnop) 
 		{	
