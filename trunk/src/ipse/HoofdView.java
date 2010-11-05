@@ -155,7 +155,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			new KlantView(database, controller, tabelPaneel.getGeselecteerdItem());
 			break;
 		case BESTELREGEL:
-			new BestelregelView(database, controller, tabelPaneel.getGeselecteerdItem());
+			new BestelregelView(database, controller, tabelPaneel.getGeselecteerdItem(), tabelPaneel.getArtikelId());
 			break;
 		}
 	}

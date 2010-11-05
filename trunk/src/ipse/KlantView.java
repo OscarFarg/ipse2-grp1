@@ -79,31 +79,30 @@ public class KlantView extends View
 	public void opslaan()
 	{
 		System.out.println("Opslaanknop ingedrukt.");
-		String id = idVeld.getText();
-		int idNr = 0;
 		try
 		{
-			idNr = Integer.parseInt(id);
+			String id = idVeld.getText();
+			int idNr = Integer.parseInt(id);
+			String voornaam = voornaamVeld.getText();
+			String tussenvoegsel = tussenvoegselVeld.getText();
+			String achternaam = achternaamVeld.getText();
+			String rekeningNr = rekeningVeld.getText();
+			String betaalStatus = (String) betaalStatusBox.getSelectedItem();
+			Klant klant = new Klant(idNr, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, "Actief");
+			if (updateMode)
+			{
+				System.out.println("update");
+				database.updateKlant(klant);
+			}
+			else
+			{
+				System.out.println("insert");
+				database.insertKlant(klant);
+			}
 		}
 		catch (Exception e)
 		{
 			System.out.println(e);
-		}
-		String voornaam = voornaamVeld.getText();
-		String tussenvoegsel = tussenvoegselVeld.getText();
-		String achternaam = achternaamVeld.getText();
-		String rekeningNr = rekeningVeld.getText();
-		String betaalStatus = (String) betaalStatusBox.getSelectedItem();
-		Klant klant = new Klant(idNr, voornaam, tussenvoegsel, achternaam, rekeningNr, betaalStatus, "Actief");
-		if (updateMode)
-		{
-			System.out.println("update");
-			database.updateKlant(klant);
-		}
-		else
-		{
-			System.out.println("insert");
-			database.insertKlant(klant);
 		}
 	}
 }
