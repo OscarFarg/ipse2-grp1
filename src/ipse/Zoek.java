@@ -154,8 +154,7 @@ public class Zoek extends JFrame implements ActionListener
 			{
 				try
 				{
-					ResultSet resultSet = database.zoekArtikel(this);
-					System.out.println("You are the King");
+					ResultSet resultSet = database.zoekMedewerker(this);
 					while(resultSet.next())
 					{
 						System.out.println( resultSet.getInt(1));
