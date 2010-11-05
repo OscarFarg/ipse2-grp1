@@ -47,7 +47,7 @@ public class BestelregelView extends View
 		totaalLabel.setBounds(40, 210, 120, 20);
 
 		vulBox();
-		
+
 		mainPanel.add(bestelnrLabel);
 		mainPanel.add(bestelnrVeld);
 		mainPanel.add(artikelLabel);
@@ -81,7 +81,7 @@ public class BestelregelView extends View
 		aantalVeld.setText(bestelregel.getAantal() + "");
 		totaalVeld.setText(bestelregel.getTotaalPrijs() + "");
 	}
-	
+
 	public void vulBox()
 	{
 		artikelLijst = new ArrayList<Artikel>();
@@ -105,7 +105,7 @@ public class BestelregelView extends View
 			artikelBox.addItem(temp.getArtikelid() + ", " + temp.getArtikelnaam());
 		}
 	}
-	
+
 	public void opslaan()
 	{
 		try
@@ -132,6 +132,11 @@ public class BestelregelView extends View
 		catch (Exception e)
 		{
 			System.out.println(e);
+		}
+
+		finally
+		{
+			super.opslaan();
 		}
 	}
 

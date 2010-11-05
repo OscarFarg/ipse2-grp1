@@ -83,34 +83,44 @@ public class MedewerkerView extends View
 	@Override
 	public void opslaan() {
 		Medewerker m = new Medewerker();
-
-		String voornaam = voornaamVeld.getText();
-		String tussenvoegsel = tussenvoegselVeld.getText();
-		String achternaam = achternaamVeld.getText();
-		String functie = functieVeld.getText();
-		m.setVoornaam(voornaam);
-		m.setTussenvoegsel(tussenvoegsel);
-		m.setAchternaam(achternaam);
-		m.setFunctie(functie);
-		try {
-			int chefId = Integer.parseInt(chefidVeld.getText());
-			m.setChefId(chefId);
-		}
-		catch (NumberFormatException nfe){
-			m.setChefId(0);
-		}
-		m.setMwStatus("Actief");
-
-		if (updateMode)
+		try
 		{
-			m.setId(Integer.parseInt(idVeld.getText()));
-			database.updateMedewerker(m);
-		}
-		else
-		{
-			database.insertMedewerker(m);
-		}
+			String voornaam = voornaamVeld.getText();
+			String tussenvoegsel = tussenvoegselVeld.getText();
+			String achternaam = achternaamVeld.getText();
+			String functie = functieVeld.getText();
+			m.setVoornaam(voornaam);
+			m.setTussenvoegsel(tussenvoegsel);
+			m.setAchternaam(achternaam);
+			m.setFunctie(functie);
+			try {
+				int chefId = Integer.parseInt(chefidVeld.getText());
+				m.setChefId(chefId);
+			}
+			catch (NumberFormatException nfe){
+				m.setChefId(0);
+			}
+			m.setMwStatus("Actief");
 
+			if (updateMode)
+			{
+				m.setId(Integer.parseInt(idVeld.getText()));
+				database.updateMedewerker(m);
+			}
+			else
+			{
+				database.insertMedewerker(m);
+			}
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
+		finally
+		{
+			super.opslaan();
+		}
 	}
+	
 
 }
