@@ -143,7 +143,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		switch (viewEnum) 
 		{
 		case BESTELLING:
-			database.selectBestelling(tabelPaneel.getGeselecteerdItem());	
+			new BestellingView(database, controller, tabelPaneel.getGeselecteerdItem());
 			break;
 		case ARTIKEL:
 			new ArtikelView(database, controller, tabelPaneel.getGeselecteerdItem());
