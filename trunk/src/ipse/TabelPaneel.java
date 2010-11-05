@@ -25,7 +25,6 @@ public class TabelPaneel extends JPanel
 		this.setSize(800,300);
 		maakLijst();
 		add(new JScrollPane(contentTabel));
-
 	}
 
 	public void maakLijst()//haal de resultaten uit de db, maak de vectoren en vul de bestellingentabel
@@ -46,6 +45,9 @@ public class TabelPaneel extends JPanel
 				break;
 			case KLANT:
 				resultSet = database.getKlanten();
+				break;
+			case BESTELREGEL:
+				resultSet = database.getBestelregels(getGeselecteerdItem());
 				break;
 			}
 
@@ -106,17 +108,29 @@ public class TabelPaneel extends JPanel
 	
 	public int getGeselecteerdItem()
 	{
-		int bestelnr = 0;
+		int id = 0;
 		try
 		{
-			bestelnr = Integer.parseInt(contentTabel.getValueAt(contentTabel.getSelectedRow(), 0).toString());
+			id = Integer.parseInt(contentTabel.getValueAt(contentTabel.getSelectedRow(), 0).toString());
 		}
-		catch (IndexOutOfBoundsException e)
+		catch (Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);;
+			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
-		return bestelnr;
+		return id;
 	}
 
-
+	public int getArtikelId()
+	{
+		int id = 0;
+		try
+		{
+			id = Integer.parseInt(contentTabel.getValueAt(contentTabel.getSelectedRow(), 1).toString());
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);
+		}
+		return id;
+	}
 }

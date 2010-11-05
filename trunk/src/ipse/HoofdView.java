@@ -8,9 +8,9 @@ public class HoofdView extends JPanel implements ActionListener {
 
 	private JButton bestellingKnop, artikelKnop, medewerkerKnop, klantenKnop,
 	zoekKnop, uitlogKnop, nieuwKnop, bewerkKnop, verwijderKnop,
-	meerInfoKnop, huidigeKnop;
+	openBestellingKnop, huidigeKnop;
 	private JLabel logoLabel;
-
+	private int bestelnr = 0;
 	private TabelPaneel tabelPaneel;
 	private ArtikelView atView;
 
@@ -90,9 +90,9 @@ public class HoofdView extends JPanel implements ActionListener {
 		verwijderKnop.addActionListener(this);
 		verwijderKnop.setBounds(10, 310, 100, 30);
 
-		meerInfoKnop = new JButton("Meer Info");
-		meerInfoKnop.addActionListener(this);
-		meerInfoKnop.setBounds(10, 360, 100, 30);
+		openBestellingKnop = new JButton("Open bestelling");
+		openBestellingKnop.addActionListener(this);
+		openBestellingKnop.setBounds(10, 360, 100, 30);
 
 		huidigeKnop = nieuwKnop;
 
@@ -106,7 +106,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		add(nieuwKnop);
 		add(bewerkKnop);
 		add(verwijderKnop);
-		add(meerInfoKnop);
+		add(openBestellingKnop);
 		add(tabelPaneel);
 		// add( huidigeView );
 	}
@@ -131,6 +131,10 @@ public class HoofdView extends JPanel implements ActionListener {
 			database.deleteKlant(tabelPaneel.getGeselecteerdItem());
 			tabelPaneel.herlaad();
 			break;
+		case BESTELREGEL:
+			database.deleteBestelregel(tabelPaneel.getGeselecteerdItem(), tabelPaneel.getArtikelId());
+			tabelPaneel.herlaad();
+			break;
 		}
 	}
 
@@ -149,6 +153,9 @@ public class HoofdView extends JPanel implements ActionListener {
 			break;
 		case KLANT:
 			new KlantView(database, controller, tabelPaneel.getGeselecteerdItem());
+			break;
+		case BESTELREGEL:
+			new BestelregelView(database, controller, tabelPaneel.getGeselecteerdItem());
 			break;
 		}
 	}
@@ -169,6 +176,9 @@ public class HoofdView extends JPanel implements ActionListener {
 		case KLANT:
 			new KlantView( database, controller );
 			break;
+		case BESTELREGEL:
+			new BestelregelView(database, controller, bestelnr);
+			break;
 		}
 	}
 
@@ -181,24 +191,28 @@ public class HoofdView extends JPanel implements ActionListener {
 		{
 			viewEnum = ViewsEnum.BESTELLING;
 			tabelPaneel.veranderView(viewEnum);
+			add(openBestellingKnop);
 		}
 
 		if (e.getSource() == artikelKnop) 
 		{
 			viewEnum = ViewsEnum.ARTIKEL;
 			tabelPaneel.veranderView(viewEnum);
+			remove(openBestellingKnop);
 		}
 
 		if (e.getSource() == medewerkerKnop) 
 		{
 			viewEnum = ViewsEnum.MEDEWERKER;
 			tabelPaneel.veranderView(viewEnum);
+			remove(openBestellingKnop);
 		}
 
 		if (e.getSource() == klantenKnop) 
 		{
 			viewEnum = ViewsEnum.KLANT;
 			tabelPaneel.veranderView(viewEnum);
+			remove(openBestellingKnop);
 		}
 
 		// Data aanpassen 
@@ -226,5 +240,16 @@ public class HoofdView extends JPanel implements ActionListener {
 
 			}
 		}
+		if (e.getSource() == openBestellingKnop)
+		{
+			bestelnr = tabelPaneel.getGeselecteerdItem();
+			if (bestelnr > 0)
+			{
+				viewEnum = ViewsEnum.BESTELREGEL;
+				tabelPaneel.veranderView(viewEnum);	
+				remove(openBestellingKnop);
+			}
+		}
+		repaint();
 	}
 }
