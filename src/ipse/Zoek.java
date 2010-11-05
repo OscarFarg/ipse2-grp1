@@ -148,6 +148,24 @@ public class Zoek extends JFrame implements ActionListener
 		
 		if(e.getSource() == zoekKnop )
 		{
+			if( zoekSegment == medewerkerString)
+			{
+				System.out.println( database.zoekArtikel(this));
+			}
+			
+			if( zoekSegment == klantString)
+			{
+				System.out.println( database.zoekArtikel(this));
+			}
+			if( zoekSegment == artikelString)
+			{
+				System.out.println( database.zoekArtikel(this));
+			}
+			if( zoekSegment == bestellingString)
+			{
+				System.out.println(database.zoekBestelling(this));
+			}
+			
 			
 			
 		}
