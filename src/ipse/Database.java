@@ -110,13 +110,13 @@ public class Database
 			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id, achternaam from medewerker");
 
 			//bestelregels
-			selectBestelregels = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", a.artikel_naam \"Artikel\", " + 
-					" b.prijs \"Prijs\", b.aantal \"Aantal\", b.totaal_prijs \"Totaal\" " + 
+			selectBestelregels = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", a.artikelid \"Artikelid\", " + 
+					"a.artikel_naam \"Artikel\", b.prijs \"Prijs\", b.aantal \"Aantal\", b.totaal_prijs \"Totaal\" " + 
 					"from bestelregel b, artikel a where bestelnr = ? and b.artikelid = a.artikelid");
 			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
-				"prijs = ?, aantal = ?, totaal_prijs = ?");
+				"prijs = ?, aantal = ?, totaal_prijs = ? where bestelnr = ? and artikelid = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
 			//Zoek
@@ -553,20 +553,34 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet selectBestelregel(int bestelnr, int artikelid)
+	public Bestelregel selectBestelregel(int bestelnr, int artikelid)
 	{
-		ResultSet resultSet = null;
+		Bestelregel bestelregel = null;
+		int bestelnummer = 0;
+		int artikelnummer = 0;
+		double prijs = 0.0;
+		int aantal = 0;
+		double totaal = 0.0;
 		try
 		{
 			selectBestelregel.setInt(1, bestelnr);
 			selectBestelregel.setInt(2, artikelid);
-			resultSet = selectBestelregel.executeQuery();
+			ResultSet resultSet = selectBestelregel.executeQuery();
+			while (resultSet.next())
+			{
+				bestelnummer = resultSet.getInt(1);
+				artikelnummer = resultSet.getInt(2);
+				prijs = resultSet.getDouble(3);
+				aantal = resultSet.getInt(4);
+				totaal = resultSet.getDouble(5);
+			}
+			bestelregel = new Bestelregel(bestelnummer, artikelnummer, prijs, aantal, totaal);
 		}
 		catch (SQLException e)
 		{
 			System.out.println(e);
 		}
-		return resultSet;
+		return bestelregel;
 	}
 
 	public ResultSet selectKlantBestelling()
@@ -609,6 +623,8 @@ public class Database
 			updateBestelregel.setDouble(3, b.getPrijs());
 			updateBestelregel.setInt(4, b.getAantal());
 			updateBestelregel.setDouble(5, b.getTotaalPrijs());
+			updateBestelregel.setInt(6, b.getBestelnr());
+			updateBestelregel.setInt(7, b.getArtikelid());
 			updateBestelregel.executeUpdate();
 		}
 		catch (SQLException e)
