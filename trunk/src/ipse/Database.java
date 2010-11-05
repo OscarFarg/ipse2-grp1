@@ -637,7 +637,7 @@ public class Database
 		{
 			zoekKlant.setString(1, z.getZoekKolom());
 			zoekKlant.setString(2, z.getZoekVeld());
-			zoekKlant.executeUpdate();
+			zoekKlant.executeQuery();
 		}
 		catch (SQLException e)
 		{
@@ -653,7 +653,7 @@ public class Database
 		{
 			zoekMedewerker.setString(1, z.getZoekKolom());
 			zoekMedewerker.setString(2, z.getZoekVeld());
-			zoekMedewerker.executeUpdate();
+			zoekMedewerker.executeQuery();
 		}
 		catch (SQLException e)
 		{
@@ -669,7 +669,7 @@ public class Database
 		{
 			zoekBestelling.setString(1, z.getZoekKolom());
 			zoekBestelling.setString(2, z.getZoekVeld());
-			zoekBestelling.executeUpdate();
+			zoekBestelling.executeQuery();
 		}
 		catch (SQLException e)
 		{
@@ -685,7 +685,7 @@ public class Database
 		{
 			zoekArtikel.setString(1, z.getZoekKolom());
 			zoekArtikel.setString(2, z.getZoekVeld());
-			zoekArtikel.executeUpdate();
+			zoekArtikel.executeQuery();
 		}
 		catch (SQLException e)
 		{
