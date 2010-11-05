@@ -1,9 +1,11 @@
 package ipse;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
 
 public class Zoek extends JFrame implements ActionListener
 {
@@ -11,94 +13,94 @@ public class Zoek extends JFrame implements ActionListener
 	private JRadioButton bestellingRadio;
 	private JRadioButton klantRadio;
 	private JRadioButton medewerkerRadio;
-	
+
 	private JButton zoekKnop;
-	
+
 	private Database database;
-	
+
 	private JTextField zoekVeld;
 	private JComboBox kolomBox;
 	private String artikelString = "artikel";
 	private String bestellingString = "besteling";
 	private String klantString = "klant";
 	private String medewerkerString = "medewerker";
-	
+
 	private String zoekSegment = "artikel"; // Bepaald waarop wordt gezocht
 	private String zoekKolom = "";  // Kolom waarop word gezocht
-	
-	 String[] kolomStrings = {"", "", ""};
-	 String[] klantStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "rekeningnr", "betaal_status", "klant_status"};
-	 String[] medewerkerStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "functie", "chefid", "medewerker_status"};
-	 String[] bestellingStrings = { "bestelnr", "bestel_datum", "lever_datum", "betaal_datum", "klantid", "medewerkerid"};
-	 String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
 
-	
+	String[] kolomStrings = {"", "", ""};
+	String[] klantStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "rekeningnr", "betaal_status", "klant_status"};
+	String[] medewerkerStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "functie", "chefid", "medewerker_status"};
+	String[] bestellingStrings = { "bestelnr", "bestel_datum", "lever_datum", "betaal_datum", "klantid", "medewerkerid"};
+	String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
+
+
 
 	public Zoek( Database database)
 	{	
 		this.database = database;
 		JPanel contentPane = new JPanel();	
-			
+
 		JFrame venster = new JFrame();
 		venster.setSize(400,320); 
 		venster.setResizable(false);
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
 		venster.setContentPane(contentPane);
-		
-		
+
+
 		artikelRadio = new JRadioButton(artikelString);
 		bestellingRadio = new JRadioButton(bestellingString);
 		klantRadio = new JRadioButton(klantString);
 		medewerkerRadio = new JRadioButton(medewerkerString);
-		kolomBox = new JComboBox(klantStrings );
-			
+		kolomBox = new JComboBox(artikelStrings );
+
 		artikelRadio.setSelected(true);
-		
+
 		zoekKnop = new JButton("Zoek");
-		
+
 		zoekVeld = new JTextField("zoekwoord", 20);
-	
+
 		JPanel radiocontentPane = new JPanel(new GridLayout(0,1));
 		radiocontentPane.add(artikelRadio);
 		radiocontentPane.add(bestellingRadio);
 		radiocontentPane.add(klantRadio);
 		radiocontentPane.add(medewerkerRadio);
-		
+
 		contentPane.add(new JLabel( new ImageIcon("src/ipse/Images/logo.png")));
 		contentPane.add(new JLabel("Kies hier uw zoekoptie:"));
 		contentPane.add(radiocontentPane);
 		contentPane.add(kolomBox);
 		contentPane.add( zoekVeld);
 		contentPane.add(zoekKnop);		
-		
-	
+
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(artikelRadio);
 		group.add(bestellingRadio);
 		group.add(klantRadio);
 		group.add(medewerkerRadio);
-		
+
 		artikelRadio.addActionListener(this);
 		bestellingRadio.addActionListener(this);
 		klantRadio.addActionListener(this);
 		medewerkerRadio.addActionListener(this);
 		zoekKnop.addActionListener(this);
-		
+
 		venster.setVisible(true);
-		
+
 	}
-	
+
 	public String getZoekSegment() 
 	{
 		return zoekSegment;
 	}
-	
+
 	public String getZoekVeld()
 	{
 		return( zoekVeld.getText());
 	}
-	
+
 	public String getZoekKolom() 
 	{
 		return zoekKolom;
@@ -115,7 +117,7 @@ public class Zoek extends JFrame implements ActionListener
 				kolomBox.addItem(artikelStrings[i]);
 			}
 		}
-		
+
 		if(e.getSource() == bestellingRadio )
 		{
 			zoekSegment = bestellingString;
@@ -125,7 +127,7 @@ public class Zoek extends JFrame implements ActionListener
 				kolomBox.addItem(bestellingStrings[i]);
 			}
 		}
-		
+
 		if(e.getSource() == klantRadio )
 		{
 			zoekSegment = klantString;
@@ -135,7 +137,7 @@ public class Zoek extends JFrame implements ActionListener
 				kolomBox.addItem(klantStrings[i]);
 			}
 		}
-		
+
 		if(e.getSource() == medewerkerRadio )
 		{
 			zoekSegment = medewerkerString;
@@ -145,14 +147,25 @@ public class Zoek extends JFrame implements ActionListener
 				kolomBox.addItem(medewerkerStrings[i]);
 			}
 		}
-		
+
 		if(e.getSource() == zoekKnop )
 		{
 			if( zoekSegment == medewerkerString)
 			{
-				System.out.println( database.zoekArtikel(this));
+				try
+				{
+					ResultSet resultSet = database.zoekArtikel(this);
+					while(resultSet.next())
+					{
+						System.out.println( resultSet.getInt(1));
+					}
+				}
+				catch(SQLException sq)
+				{
+					System.out.println(sq);
+				}
 			}
-			
+
 			if( zoekSegment == klantString)
 			{
 				System.out.println( database.zoekArtikel(this));
@@ -165,12 +178,12 @@ public class Zoek extends JFrame implements ActionListener
 			{
 				System.out.println(database.zoekBestelling(this));
 			}
-			
-			
-			
+
+
+
 		}
-		
-		
+
+
 	}
-	
+
 }
