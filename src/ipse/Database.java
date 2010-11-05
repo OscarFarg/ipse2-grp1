@@ -630,8 +630,9 @@ public class Database
 	}
 
 	//Zoek Methodes
-	public void zoekKlant (Zoek z)
+	public ResultSet zoekKlant (Zoek z)
 	{
+		ResultSet resultSet = null;
 		try
 		{
 			zoekKlant.setString(1, z.getZoekKolom());
@@ -642,10 +643,12 @@ public class Database
 		{
 			System.out.println(e);
 		}
+		return resultSet;
 	}
 
-	public void zoekMedewerker (Zoek z)
+	public ResultSet zoekMedewerker (Zoek z)
 	{
+		ResultSet resultSet = null;
 		try
 		{
 			zoekMedewerker.setString(1, z.getZoekKolom());
@@ -656,10 +659,12 @@ public class Database
 		{
 			System.out.println(e);
 		}
+		return resultSet;
 	}
 
-	public void zoekBestelling (Zoek z)
+	public ResultSet zoekBestelling (Zoek z)
 	{
+		ResultSet resultSet = null;
 		try
 		{
 			zoekBestelling.setString(1, z.getZoekKolom());
@@ -670,10 +675,12 @@ public class Database
 		{
 			System.out.println(e);
 		}
+		return resultSet;
 	}
 
-	public void zoekArtikel (Zoek z)
+	public ResultSet zoekArtikel (Zoek z)
 	{
+		ResultSet resultSet = null;
 		try
 		{
 			zoekArtikel.setString(1, z.getZoekKolom());
@@ -684,6 +691,7 @@ public class Database
 		{
 			System.out.println(e);
 		}
+		return resultSet;
 	}
 
 
