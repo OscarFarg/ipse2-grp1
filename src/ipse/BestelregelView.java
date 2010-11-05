@@ -11,7 +11,7 @@ public class BestelregelView extends View
 	private JComboBox artikelBox;
 	private ResultSet artikelSet;
 	private ArrayList<Artikel> artikelLijst;
-	
+
 	public BestelregelView(Database database, Controller controller, int bestelling)
 	{
 		super(database, controller);
@@ -22,13 +22,13 @@ public class BestelregelView extends View
 		bestelnrVeld.setBounds( 150, 110, 100, 20 );
 		JLabel bestelnrLabel = new JLabel("Bestelnummer");
 		bestelnrLabel.setBounds(40, 110, 120, 20);
-		
+
 		artikelBox = new JComboBox();
 		artikelBox.setBounds(150, 135, 150, 20);
 		artikelBox.addActionListener(this);
 		JLabel artikelLabel = new JLabel("Artikel");
 		artikelLabel.setBounds(40, 135, 120, 20);
-		
+
 		artikelLijst = new ArrayList<Artikel>();
 		try
 		{
@@ -43,13 +43,13 @@ public class BestelregelView extends View
 		{
 			System.out.println(e);
 		}
-		
+
 		for (int i = 0; i < artikelLijst.size(); i ++)
 		{
 			Artikel temp = (Artikel) artikelLijst.get(i);
 			artikelBox.addItem(temp.getArtikelid() + ", " + temp.getArtikelnaam());
 		}
-		
+
 		prijsVeld = new JTextField(10);
 		prijsVeld.setBounds(150, 160, 150, 20);
 		JLabel prijsLabel = new JLabel("Prijs p.s.");
@@ -65,7 +65,7 @@ public class BestelregelView extends View
 		totaalVeld.setBounds(150, 210, 150, 20);
 		JLabel totaalLabel = new JLabel("Totaal prijs");
 		totaalLabel.setBounds(40, 210, 120, 20);
-		
+
 		mainPanel.add(bestelnrLabel);
 		mainPanel.add(bestelnrVeld);
 		mainPanel.add(artikelLabel);
@@ -76,15 +76,30 @@ public class BestelregelView extends View
 		mainPanel.add(aantalVeld);
 		mainPanel.add(totaalLabel);
 		mainPanel.add(totaalVeld);
-		
+
 		this.setVisible(true);
 	}
-	
+
 	public void opslaan()
 	{
-		
+		try
+		{
+			int bestelnr = Integer.parseInt(bestelnrVeld.getText());
+			String selected = (String) artikelBox.getSelectedItem();
+			Scanner s = new Scanner(selected).useDelimiter("\\,");
+			int artikelid = Integer.parseInt(s.next());
+			double prijs = Double.parseDouble(prijsVeld.getText());
+			int aantal = Integer.parseInt(aantalVeld.getText());
+			double totaalprijs = Double.parseDouble(totaalVeld.getText());
+			Bestelregel bestelregel = new Bestelregel(bestelnr, artikelid, prijs, aantal, totaalprijs);
+			database.insertBestelregel(bestelregel);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e);
+		}
 	}
-	
+
 	public void prijsInstellen(int id)
 	{
 		for (int i = 0; i < artikelLijst.size(); i ++)
@@ -103,11 +118,11 @@ public class BestelregelView extends View
 			}
 		}
 	}
-	
+
 	public void actionPerformed(ActionEvent ae)
 	{
 		super.actionPerformed(ae);
-		
+
 		if (ae.getSource() == artikelBox)
 		{
 			String selected = (String) artikelBox.getSelectedItem();
