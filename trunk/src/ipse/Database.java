@@ -112,11 +112,11 @@ public class Database
 			//bestelregels
 			selectBestelregels = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", a.artikelid \"Artikelid\", " + 
 					"a.artikel_naam \"Artikel\", b.prijs \"Prijs\", b.aantal \"Aantal\", b.totaal_prijs \"Totaal\" " + 
-					"from bestelregel b, artikel a where bestelnr = ? and b.artikelid = a.artikelid");
+			"from bestelregel b, artikel a where bestelnr = ? and b.artikelid = a.artikelid");
 			selectBestelregel = dbConnectie.prepareStatement("select * from bestelregel where bestelnr = ? and artikelid = ?");
 			insertBestelregel = dbConnectie.prepareStatement("insert into bestelregel values(?, ?, ?, ?, ?)");
 			updateBestelregel = dbConnectie.prepareStatement("update bestelregel set bestelnr = ?, artikelid = ?, " + 
-				"prijs = ?, aantal = ?, totaal_prijs = ? where bestelnr = ? and artikelid = ?");
+			"prijs = ?, aantal = ?, totaal_prijs = ? where bestelnr = ? and artikelid = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
 			//Zoek
@@ -172,7 +172,7 @@ public class Database
 		}
 		return m;
 	}
-	
+
 	public ResultSet selectMedewerkerBestelling()
 	{
 		ResultSet resultSet = null;
@@ -445,9 +445,9 @@ public class Database
 	{
 		Bestelling bestelling = null;
 		int bestelNr = 0;
-		Date bestel_datum = null;
-		Date lever_datum = null;
-		Date betaal_datum = null;
+		java.sql.Date bestel_datum = null;
+		java.sql.Date lever_datum = null;
+		java.sql.Date betaal_datum = null;
 		int klant_id = 0;
 		int medewerker_id = 0;
 		try
@@ -459,15 +459,16 @@ public class Database
 				bestelNr = resultSet.getInt(1);
 				bestel_datum = resultSet.getDate(2);
 				lever_datum = resultSet.getDate(3);
-				betaal_datum = resultSet.getDate(5);
-				klant_id = resultSet.getInt(6);
-				medewerker_id = resultSet.getInt(7);
+				betaal_datum = resultSet.getDate(4);
+				klant_id = resultSet.getInt(5);
+				medewerker_id = resultSet.getInt(6);
 			}
 			bestelling = new Bestelling( bestelNr, bestel_datum, lever_datum, betaal_datum, klant_id, medewerker_id );
 		}
 		catch (SQLException e)
 		{
-			System.out.println(e);
+			System.out.println(e + "\n");
+			e.printStackTrace();
 		}
 		return bestelling;
 	}
@@ -476,9 +477,22 @@ public class Database
 	{
 		try
 		{
-			insertBestelling.setDate(1, (Date) b.getBestelDatum());
-			insertBestelling.setDate(2, (Date) b.getLeverDatum());
-			insertBestelling.setDate(3, (Date) b.getBetaalDatum());
+
+			if (b.getBestelDatum() != null)
+				insertBestelling.setDate(1, new Date(b.getBestelDatum().getTime()));
+			else
+				insertBestelling.setString(1, null);
+			
+			if (b.getLeverDatum() != null)
+				insertBestelling.setDate(2, new Date(b.getLeverDatum().getTime()));
+			else
+				insertBestelling.setString(2, null);
+			
+			if (b.getBetaalDatum() != null)
+				insertBestelling.setDate(3, new Date(b.getBetaalDatum().getTime()));
+			else
+				insertBestelling.setString(3, null);
+			
 			insertBestelling.setInt(4, b.getKlantid());
 			insertBestelling.setInt(5, b.getMedewerkerid());
 			insertBestelling.executeUpdate();
@@ -486,6 +500,7 @@ public class Database
 		catch (SQLException e)
 		{
 			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -493,13 +508,24 @@ public class Database
 	{
 		try
 		{
-			updateBestelling.setDate(1, (Date) b.getBestelDatum());
-			updateBestelling.setDate(2, (Date) b.getLeverDatum());
-			updateBestelling.setDate(3, (Date) b.getBetaalDatum());
+			if (b.getBestelDatum() != null)
+				updateBestelling.setDate(1, new Date(b.getBestelDatum().getTime()));
+			else
+				updateBestelling.setString(1, null);
+			
+			if (b.getLeverDatum() != null)
+				updateBestelling.setDate(2, new Date(b.getLeverDatum().getTime()));
+			else
+				updateBestelling.setString(2, null);
+			
+			if (b.getBetaalDatum() != null)
+				updateBestelling.setDate(3, new Date(b.getBetaalDatum().getTime()));
+			else
+				updateBestelling.setString(3, null);
 			updateBestelling.setInt(4, b.getKlantid());
 			updateBestelling.setInt(5, b.getMedewerkerid());
 			updateBestelling.setInt(6, b.getBestelnr());
-			updateBestelling.executeQuery();
+			updateBestelling.executeUpdate();
 		}
 		catch (SQLException e)
 		{
