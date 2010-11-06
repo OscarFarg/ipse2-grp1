@@ -16,12 +16,12 @@ public class TabelPaneel extends JPanel
 	private Database database;
 	private JTable contentTabel;
 	private ViewsEnum view;
+	private int bestelnr;
 
 	public TabelPaneel(Database database, ViewsEnum view)
 	{
 		this.database = database;
 		this.view = view;	
-		//this.setLayout(null);
 		this.setSize(800,300);
 		maakLijst();
 		add(new JScrollPane(contentTabel));
@@ -47,7 +47,7 @@ public class TabelPaneel extends JPanel
 				resultSet = database.getKlanten();
 				break;
 			case BESTELREGEL:
-				resultSet = database.getBestelregels(getGeselecteerdItem());
+				resultSet = database.getBestelregels(bestelnr);
 				break;
 			}
 
@@ -120,6 +120,7 @@ public class TabelPaneel extends JPanel
 		return id;
 	}
 
+	
 	public int getArtikelId()
 	{
 		int id = 0;
@@ -132,5 +133,13 @@ public class TabelPaneel extends JPanel
 			JOptionPane.showMessageDialog(null, "Er is geen regel geselecteerd.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 		return id;
+	}
+
+	public void setBestelnr(int bestelnr) {
+		this.bestelnr = bestelnr;
+	}
+
+	public int getBestelnr() {
+		return bestelnr;
 	}
 }
