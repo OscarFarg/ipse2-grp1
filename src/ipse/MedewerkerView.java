@@ -1,6 +1,7 @@
 package ipse;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 
@@ -114,6 +115,7 @@ public class MedewerkerView extends View
 		catch (Exception e)
 		{
 			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Er is iets fout gegaan, probeer het opnieuw", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 		finally
 		{
