@@ -11,15 +11,15 @@ public class ZoekView extends JFrame implements ActionListener
 	private JRadioButton bestellingRadio;
 	private JRadioButton klantRadio;
 	private JRadioButton medewerkerRadio;
+	private ViewsEnum view;
 
 	private JButton zoekKnop;
-
 	private Database database;
 
 	private JTextField zoekVeld;
 	private JComboBox kolomBox;
 	private String artikelString = "artikel";
-	private String bestellingString = "besteling";
+	private String bestellingString = "bestelling";
 	private String klantString = "klant";
 	private String medewerkerString = "medewerker";
 	private ButtonGroup group;
@@ -31,18 +31,19 @@ public class ZoekView extends JFrame implements ActionListener
 	String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
 
 	private String tabelNaam = artikelString;
+	private TabelPaneel tabelPaneel;
 
-	public ZoekView( Database database)
+	public ZoekView(Database database, TabelPaneel tabelPaneel)
 	{	
 		this.database = database;
 		JPanel contentPane = new JPanel();	
+		this.tabelPaneel = tabelPaneel;
 
-		JFrame venster = new JFrame();
-		venster.setSize(400,320); 
-		venster.setResizable(false);
-		venster.setTitle("ZoekVenster");
-		venster.setLocation(300,300);
-		venster.setContentPane(contentPane);
+		setSize(400,320); 
+		setResizable(false);
+		setTitle("ZoekVenster");
+		setLocation(300,300);
+		setContentPane(contentPane);
 
 		artikelRadio = new JRadioButton(artikelString);
 		bestellingRadio = new JRadioButton(bestellingString);
@@ -51,6 +52,7 @@ public class ZoekView extends JFrame implements ActionListener
 		kolomBox = new JComboBox(artikelStrings );
 
 		artikelRadio.setSelected(true);
+		view = ViewsEnum.ARTIKEL;
 
 		zoekKnop = new JButton("Zoek");
 
@@ -82,8 +84,7 @@ public class ZoekView extends JFrame implements ActionListener
 		medewerkerRadio.addActionListener(this);
 		zoekKnop.addActionListener(this);
 
-		venster.setVisible(true);
-
+		setVisible(true);
 	}
 
 	@Override
@@ -91,6 +92,7 @@ public class ZoekView extends JFrame implements ActionListener
 	{
 		if(e.getSource() == artikelRadio )
 		{
+			view = ViewsEnum.ARTIKEL;
 			tabelNaam = artikelString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < artikelStrings.length; i++)
@@ -101,6 +103,8 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == bestellingRadio )
 		{
+			view = ViewsEnum.BESTELLING;
+
 			tabelNaam = bestellingString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < bestellingStrings.length; i++)
@@ -111,6 +115,8 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == klantRadio )
 		{
+			view = ViewsEnum.KLANT;
+
 			tabelNaam = klantString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < klantStrings.length; i++)
@@ -121,6 +127,8 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == medewerkerRadio )
 		{
+			view = ViewsEnum.MEDEWERKER;
+
 			tabelNaam = medewerkerString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < medewerkerStrings.length; i++)
@@ -131,8 +139,8 @@ public class ZoekView extends JFrame implements ActionListener
 		
 		if (e.getSource() == zoekKnop)
 		{
-			System.out.println("Zoeken naar: " + kolomBox.getSelectedItem() + " in " + tabelNaam);
-			database.zoeken(tabelNaam, kolomBox.getSelectedItem().toString(), zoekVeld.getText());
+			tabelPaneel.veranderView(database.zoeken(tabelNaam, kolomBox.getSelectedItem().toString(), zoekVeld.getText()), view);
+			this.dispose();
 		}
 	}
 }

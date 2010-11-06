@@ -672,7 +672,6 @@ public class Database
 		try
 		{
 			Statement s = dbConnectie.createStatement();
-			System.out.println(kolomnaam);
 			String query = "select * from " + tabelnaam + " where " + kolomnaam + " like \'" + zoekwaarde + "\'";
 			resultSet = s.executeQuery(query);
 		}

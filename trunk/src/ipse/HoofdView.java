@@ -27,7 +27,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		
 		viewEnum = ViewsEnum.BESTELLING;
 
-		tabelPaneel = new TabelPaneel(database, viewEnum);
+		tabelPaneel = new TabelPaneel(database, this);
 		tabelPaneel.setBounds(110, 120, 550, 350);
 
 		logoLabel = new JLabel(new ImageIcon("src/ipse/images/logo.png"));
@@ -203,7 +203,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		}
 
 		if (e.getSource() == zoekKnop)
-			new ZoekView(database);
+			new ZoekView(database, tabelPaneel);
 
 		if (e.getSource() == verwijderKnop) 
 		{	
@@ -237,5 +237,13 @@ public class HoofdView extends JPanel implements ActionListener {
 	public void reportChange()
 	{
 		tabelPaneel.herlaad();
+	}
+
+	public void setViewEnum(ViewsEnum viewEnum) {
+		this.viewEnum = viewEnum;
+	}
+
+	public ViewsEnum getViewEnum() {
+		return viewEnum;
 	}
 }
