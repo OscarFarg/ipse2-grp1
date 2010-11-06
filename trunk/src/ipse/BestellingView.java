@@ -3,14 +3,11 @@ package ipse;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
 
 public class BestellingView extends View
 {

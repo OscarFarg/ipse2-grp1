@@ -2,10 +2,12 @@ package ipse;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
-public class View extends JFrame implements ActionListener
+public class View extends JFrame implements ActionListener, WindowListener
 {
 	//protected zodat die in alle subklasses gebruikt kan worden.
 	protected JPanel mainPanel;
@@ -20,7 +22,9 @@ public class View extends JFrame implements ActionListener
 	{
 		this.database = database;
 		this.controller = controller;
-
+		this.addWindowListener(this);
+		controller.addListener(this);
+		
 		ImageIcon logoIcon = new ImageIcon("src/ipse/images/logo.png");
 		JLabel imageLabel = new JLabel( logoIcon );
 		imageLabel.setBounds( 150, 10, 300, 100 );
@@ -67,5 +71,50 @@ public class View extends JFrame implements ActionListener
 			opslaan();
 		else if (e.getSource() == annulerenKnop)
 			annuleren();
+		controller.reportChange();
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		controller.removeListener(this);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void reportChange() {
 	}
 }

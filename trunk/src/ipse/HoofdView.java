@@ -8,44 +8,21 @@ public class HoofdView extends JPanel implements ActionListener {
 
 	private JButton bestellingKnop, artikelKnop, medewerkerKnop, klantenKnop,
 	zoekKnop, uitlogKnop, nieuwKnop, bewerkKnop, verwijderKnop,
-	openBestellingKnop, huidigeKnop;
+	openBestellingKnop;
 	private JLabel logoLabel;
 	private int bestelnr = 0;
 	private TabelPaneel tabelPaneel;
-	private ArtikelView atView;
 
 	Database database;
 	Controller controller;
-	
-	public HoofdView( Controller controller, Database database, ArtikelView atView)
-	{
-		this.controller = controller;
-		this.database = database;
-		this.atView = atView;
-	}
 
 	public HoofdView(Controller controller, Database database) {
 		this.controller = controller;
 		this.database = database;
+		
+		controller.setHoofdView(this);
 		setLayout(null);
 		
-		/*
-		 * mwView = new MedewerkerView( database, controller );
-		 * mwView.setBounds( 110, 120, 550, 350 );
-		 * 
-		 * atView = new ArtikelView( database, controller ); atView.setBounds(
-		 * 110, 120, 550, 350 );
-		 * 
-		 * bsView = new BestellingView( database, controller );
-		 * bsView.setBounds( 110, 120, 550, 350 );
-		 * 
-		 * brView = new BestelregelView(database, controller);
-		 * brView.setBounds(110, 120, 550, 350);
-		 * 
-		 * klView = new KlantView( database, controller ); klView.setBounds(
-		 * 110, 120, 550, 350 );
-		 */
-
 		viewEnum = ViewsEnum.BESTELLING;
 
 		tabelPaneel = new TabelPaneel(database, viewEnum);
@@ -94,8 +71,6 @@ public class HoofdView extends JPanel implements ActionListener {
 		openBestellingKnop.addActionListener(this);
 		openBestellingKnop.setBounds(10, 360, 100, 30);
 
-		huidigeKnop = nieuwKnop;
-
 		add(logoLabel);
 		add(bestellingKnop);
 		add(artikelKnop);
@@ -108,7 +83,6 @@ public class HoofdView extends JPanel implements ActionListener {
 		add(verwijderKnop);
 		add(openBestellingKnop);
 		add(tabelPaneel);
-		// add( huidigeView );
 	}
 
 	public void verwijderObject() 
@@ -182,7 +156,6 @@ public class HoofdView extends JPanel implements ActionListener {
 		}
 	}
 
-
 	public void actionPerformed(ActionEvent e) 
 	{
 		//Switchen tussen de views
@@ -251,5 +224,10 @@ public class HoofdView extends JPanel implements ActionListener {
 			}
 		}
 		repaint();
+	}
+
+	public void reportChange()
+	{
+		tabelPaneel.herlaad();
 	}
 }

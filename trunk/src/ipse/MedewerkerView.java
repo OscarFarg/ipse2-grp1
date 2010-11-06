@@ -1,6 +1,5 @@
 package ipse;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
