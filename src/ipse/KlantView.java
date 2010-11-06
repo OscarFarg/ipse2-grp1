@@ -82,7 +82,16 @@ public class KlantView extends View
 		try
 		{
 			String id = idVeld.getText();
-			int idNr = Integer.parseInt(id);
+			int idNr = 0;
+			try
+			{
+				idNr = Integer.parseInt(id);
+			
+			}
+			catch (Exception e)
+			{
+				System.out.println("hoi " + e);
+			}
 			String voornaam = voornaamVeld.getText();
 			String tussenvoegsel = tussenvoegselVeld.getText();
 			String achternaam = achternaamVeld.getText();
