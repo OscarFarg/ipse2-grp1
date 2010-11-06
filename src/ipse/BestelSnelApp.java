@@ -23,7 +23,7 @@ public class BestelSnelApp extends JFrame implements WindowListener
 		this.setTitle( "BestelSnel Groep1" );
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		
-		HoofdView knopView = new HoofdView( controller, database);
+		HoofdView knopView = new HoofdView( controller, database, this);
 		this.add(knopView);
 		
 		this.setVisible( true );
@@ -31,7 +31,8 @@ public class BestelSnelApp extends JFrame implements WindowListener
 	
 	public static void main( String[]args )
 	{
-		new BestelSnelApp();
+		//new BestelSnelApp();
+		new LoginView();
 	}
 
 
