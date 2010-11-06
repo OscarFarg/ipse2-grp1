@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Zoek extends JFrame implements ActionListener
+public class ZoekView extends JFrame implements ActionListener
 {
 	private JRadioButton artikelRadio;
 	private JRadioButton bestellingRadio;
@@ -33,9 +33,7 @@ public class Zoek extends JFrame implements ActionListener
 	String[] bestellingStrings = { "bestelnr", "bestel_datum", "lever_datum", "betaal_datum", "klantid", "medewerkerid"};
 	String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
 
-
-
-	public Zoek( Database database)
+	public ZoekView( Database database)
 	{	
 		this.database = database;
 		JPanel contentPane = new JPanel();	

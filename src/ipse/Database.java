@@ -666,7 +666,7 @@ public class Database
 	}
 
 	//Zoek Methodes
-	public ResultSet zoekKlant (Zoek z)
+	public ResultSet zoekKlant (ZoekView z)
 	{
 		ResultSet resultSet = null;
 		try
@@ -698,7 +698,7 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet zoekBestelling (Zoek z)
+	public ResultSet zoekBestelling (ZoekView z)
 	{
 		ResultSet resultSet = null;
 		try
@@ -714,7 +714,7 @@ public class Database
 		return resultSet;
 	}
 
-	public ResultSet zoekArtikel (Zoek z)
+	public ResultSet zoekArtikel (ZoekView z)
 	{
 		ResultSet resultSet = null;
 		try
