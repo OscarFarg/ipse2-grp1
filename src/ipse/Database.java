@@ -1,8 +1,6 @@
 package ipse;
 
 import java.sql.*;
-import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 public class Database 
@@ -15,11 +13,6 @@ public class Database
 	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling, selectKlantBestelling, selectMedewerkerBestelling;
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
 	private PreparedStatement zoekKlant, zoekMedewerker, zoekBestelling, zoekArtikel;
-
-	private ArrayList<Klant> klantLijst;
-	private ArrayList<Medewerker> medewerkerLijst;
-	private ArrayList<Artikel> artikelLijst;
-	private ArrayList<Bestelling> bestellingLijst;
 
 	private final String USERNAME = "ipse";
 	private final String PASSWORD = "ipse2";
@@ -68,16 +61,16 @@ public class Database
 		try
 		{
 			//medewerkers
-			selectMedewerkers = dbConnectie.prepareStatement("select * from medewerker");
+			selectMedewerkers = dbConnectie.prepareStatement("select id, voornaam, tussenvoegsel, achternaam, functie, chefid from medewerker where status = 'Actief'");
 			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
 			"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
 			updateMedewerker = dbConnectie.prepareStatement("update medewerker set voornaam = ?, tussenvoegsel = ?, " + 
 			"achternaam = ?, functie = ?, chefid = ?, status = ? where id = ?");
-			deleteMedewerker = dbConnectie.prepareStatement("delete from medewerker where id = ?");
+			deleteMedewerker = dbConnectie.prepareStatement("update medewerker set status = 'Niet actief' where id = ?");
 
 			//klanten
-			selectKlanten = dbConnectie.prepareStatement("select * from klant where status = 'Actief'");
+			selectKlanten = dbConnectie.prepareStatement("select id, voornaam, tussenvoegsel, achternaam, rekeningnr, betaal_status from klant where status = 'Actief'");
 			selectKlant = dbConnectie.prepareStatement( "select * from klant where id = ?" );
 			insertKlant = dbConnectie.prepareStatement("insert into klant (voornaam, tussenvoegsel, achternaam, rekeningnr, " + 
 			"betaal_status, status)values (?, ?, ?, ?, ?, ?)");
@@ -105,8 +98,8 @@ public class Database
 			"betaal_datum = ?, klantid = ?, medewerkerid = ? where bestelnr = ?");
 			deleteBestelling = dbConnectie.prepareStatement("delete from bestelling where bestelnr = ?");
 			totaalPrijsBestelling = dbConnectie.prepareStatement("select sum(totaal_prijs) from bestelregel where bestelnr = ?");
-			selectKlantBestelling = dbConnectie.prepareStatement("select id, achternaam from klant");
-			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id, achternaam from medewerker");
+			selectKlantBestelling = dbConnectie.prepareStatement("select id, achternaam from klant where status = 'Actief'");
+			selectMedewerkerBestelling = dbConnectie.prepareStatement("select id, achternaam from medewerker where status = 'Actief'");
 
 			//bestelregels
 			selectBestelregels = dbConnectie.prepareStatement("select b.bestelnr \"Bestelnummer\", a.artikelid \"Artikelid\", " + 

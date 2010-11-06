@@ -2,11 +2,10 @@ package ipse;
 
 import java.util.ArrayList;
 
-import bankapplicatie.View;
-
 public class Controller {
 	// De klasse View is de superklasse van de views (behalve de HoofdView)
 	private ArrayList<View> viewListeners;
+	private HoofdView hoofdView;
 	
 	public Controller()
 	{
@@ -16,16 +15,22 @@ public class Controller {
 	public void reportChange()
 	{
 		for (View v : viewListeners)
-		  v.reportChange();		
+		  v.reportChange();
+		if (hoofdView != null)
+			hoofdView.reportChange();
 	}
 	
-	public void addListener (View v)
+	public void addListener (View view)
 	{
-		viewListeners.add (v);
+		viewListeners.add (view);
 	}
 	
 	public void removeListener (View v)
 	{
 		viewListeners.remove (v);
-	}	
+	}
+
+	public void setHoofdView(HoofdView hoofdView) {
+		this.hoofdView = hoofdView;
+	}
 }
