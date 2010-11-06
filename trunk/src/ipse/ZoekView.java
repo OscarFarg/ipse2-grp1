@@ -1,10 +1,9 @@
 package ipse;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class ZoekView extends JFrame implements ActionListener
 {
@@ -23,15 +22,15 @@ public class ZoekView extends JFrame implements ActionListener
 	private String bestellingString = "besteling";
 	private String klantString = "klant";
 	private String medewerkerString = "medewerker";
-
-	private String zoekSegment = "artikel"; // Bepaald waarop wordt gezocht
-	private String zoekKolom = "";  // Kolom waarop word gezocht
+	private ButtonGroup group;
 
 	String[] kolomStrings = {"", "", ""};
 	String[] klantStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "rekeningnr", "betaal_status", "klant_status"};
 	String[] medewerkerStrings = { "id", "voornaam", "tussenvoegsel", "achternaam", "functie", "chefid", "medewerker_status"};
 	String[] bestellingStrings = { "bestelnr", "bestel_datum", "lever_datum", "betaal_datum", "klantid", "medewerkerid"};
 	String[] artikelStrings = { "artikelid", "artikel_naam", "prijs"};
+
+	private String tabelNaam = artikelString;
 
 	public ZoekView( Database database)
 	{	
@@ -44,7 +43,6 @@ public class ZoekView extends JFrame implements ActionListener
 		venster.setTitle("ZoekVenster");
 		venster.setLocation(300,300);
 		venster.setContentPane(contentPane);
-
 
 		artikelRadio = new JRadioButton(artikelString);
 		bestellingRadio = new JRadioButton(bestellingString);
@@ -68,11 +66,11 @@ public class ZoekView extends JFrame implements ActionListener
 		contentPane.add(new JLabel("Kies hier uw zoekoptie:"));
 		contentPane.add(radiocontentPane);
 		contentPane.add(kolomBox);
-		contentPane.add( zoekVeld);
+		contentPane.add(zoekVeld);
 		contentPane.add(zoekKnop);		
 
 
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 		group.add(artikelRadio);
 		group.add(bestellingRadio);
 		group.add(klantRadio);
@@ -88,27 +86,12 @@ public class ZoekView extends JFrame implements ActionListener
 
 	}
 
-	public String getZoekSegment() 
-	{
-		return zoekSegment;
-	}
-
-	public String getZoekVeld()
-	{
-		return( zoekVeld.getText());
-	}
-
-	public String getZoekKolom() 
-	{
-		zoekKolom = (String)kolomBox.getSelectedItem();
-		return zoekKolom;
-	}
-
+	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getSource() == artikelRadio )
 		{
-			zoekSegment = artikelString;
+			tabelNaam = artikelString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < artikelStrings.length; i++)
 			{
@@ -118,7 +101,7 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == bestellingRadio )
 		{
-			zoekSegment = bestellingString;
+			tabelNaam = bestellingString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < bestellingStrings.length; i++)
 			{
@@ -128,7 +111,7 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == klantRadio )
 		{
-			zoekSegment = klantString;
+			tabelNaam = klantString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < klantStrings.length; i++)
 			{
@@ -138,87 +121,18 @@ public class ZoekView extends JFrame implements ActionListener
 
 		if(e.getSource() == medewerkerRadio )
 		{
-			zoekSegment = medewerkerString;
+			tabelNaam = medewerkerString;
 			kolomBox.removeAllItems();
 			for(int i = 0; i < medewerkerStrings.length; i++)
 			{
 				kolomBox.addItem(medewerkerStrings[i]);
 			}
 		}
-
-		if(e.getSource() == zoekKnop )
+		
+		if (e.getSource() == zoekKnop)
 		{
-			if( zoekSegment.equals(medewerkerString))
-			{
-				try
-				{
-					ResultSet resultSet = database.zoekMedewerker(getZoekKolom(), getZoekVeld());
-					while(resultSet.next())
-					{
-						System.out.println( resultSet.getString(1));
-						System.out.println("Halloo");
-					}
-				}
-				catch(SQLException sq)
-				{
-					System.out.println(sq);
-				}
-			}
-
-			if( zoekSegment == klantString)
-			{
-				try
-				{
-					ResultSet resultSet = database.zoekKlant(this);
-					while(resultSet.next())
-					{
-						System.out.println( resultSet.getInt(1));
-						System.out.println("Halloo");
-					}
-				}
-				catch(SQLException sq)
-				{
-					System.out.println(sq);
-				}
-			}
-			if( zoekSegment == artikelString)
-			{
-				try
-				{
-					ResultSet resultSet = database.zoekArtikel(this);
-					while(resultSet.next())
-					{
-						System.out.println( resultSet.getInt(1));
-						System.out.println("Halloo");
-					}
-				}
-				catch(SQLException sq)
-				{
-					System.out.println(sq);
-				}
-			}
-			if( zoekSegment == bestellingString)
-			{
-				try
-				{
-					ResultSet resultSet = database.zoekBestelling(this);
-					while(resultSet.next())
-					{
-						System.out.println( resultSet.getInt(1));
-						System.out.println("Halloo");
-					}
-				}
-				catch(SQLException sq)
-				{
-					System.out.println(sq);
-				}
-			}
-
-
-
+			System.out.println("Zoeken naar: " + kolomBox.getSelectedItem() + " in " + tabelNaam);
+			database.zoeken(tabelNaam, kolomBox.getSelectedItem().toString(), zoekVeld.getText());
 		}
-
-
 	}
-
 }
