@@ -12,7 +12,7 @@ public class Database
 	private PreparedStatement selectArtikelen, selectArtikel, insertArtikel, updateArtikel, deleteArtikel;
 	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling, selectKlantBestelling, selectMedewerkerBestelling;
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
-	private PreparedStatement zoekKlant, zoekMedewerker, zoekBestelling, zoekArtikel;
+	//private PreparedStatement zoeken;
 
 	private final String USERNAME = "ipse";
 	private final String PASSWORD = "ipse2";
@@ -111,11 +111,12 @@ public class Database
 			"prijs = ?, aantal = ?, totaal_prijs = ? where bestelnr = ? and artikelid = ?");
 			deleteBestelregel = dbConnectie.prepareStatement("delete from bestelregel where bestelnr = ? and artikelid = ?");
 
-			//Zoek
+/*			//Zoek
 			zoekKlant = dbConnectie.prepareStatement("select * from klant where ? like ?");
 			zoekMedewerker = dbConnectie.prepareStatement("select * from medewerker where voornaam like ?");
 			zoekBestelling = dbConnectie.prepareStatement("select * from bestelling where ? like ?");
-			zoekArtikel = dbConnectie.prepareStatement("select * from artikel where ? like ?");
+			zoekArtikel = dbConnectie.prepareStatement("select * from artikel where ? like ?");*/
+			//zoeken = dbConnectie.prepareStatement("select * from ? where ? like ?");
 
 		}
 		catch (Exception ex)
@@ -665,15 +666,15 @@ public class Database
 		}
 	}
 
-	//Zoek Methodes
-	public ResultSet zoekKlant (ZoekView z)
+	public ResultSet zoeken (String tabelnaam, String kolomnaam, String zoekwaarde)
 	{
 		ResultSet resultSet = null;
 		try
 		{
-			zoekKlant.setString(1, z.getZoekKolom());
-			zoekKlant.setString(2, z.getZoekVeld());
-			resultSet = zoekKlant.executeQuery();
+			Statement s = dbConnectie.createStatement();
+			System.out.println(kolomnaam);
+			String query = "select * from " + tabelnaam + " where " + kolomnaam + " like \'" + zoekwaarde + "\'";
+			resultSet = s.executeQuery(query);
 		}
 		catch (SQLException e)
 		{
@@ -681,55 +682,6 @@ public class Database
 		}
 		return resultSet;
 	}
-
-	public ResultSet zoekMedewerker (String kolom, String zoekterm)
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			//zoekMedewerker.setString(1, kolom);
-			zoekMedewerker.setString(1, zoekterm);
-			resultSet = zoekMedewerker.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
-	public ResultSet zoekBestelling (ZoekView z)
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			zoekBestelling.setString(1, z.getZoekKolom());
-			zoekBestelling.setString(1, z.getZoekVeld());
-			resultSet = zoekBestelling.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
-	public ResultSet zoekArtikel (ZoekView z)
-	{
-		ResultSet resultSet = null;
-		try
-		{
-			zoekArtikel.setString(1, z.getZoekKolom());
-			zoekArtikel.setString(2, z.getZoekVeld());
-			resultSet = zoekArtikel.executeQuery();
-		}
-		catch (SQLException e)
-		{
-			System.out.println(e);
-		}
-		return resultSet;
-	}
-
 
 	// sluit alle PreparedStatements en 
 	// de database-connectie 
@@ -774,12 +726,6 @@ public class Database
 			insertBestelregel.close();
 			updateBestelregel.close();
 			deleteBestelregel.close();
-
-			//Zoek
-			zoekKlant.close();
-			zoekMedewerker.close();
-			zoekBestelling.close();
-			zoekArtikel.close();
 
 			dbConnectie.close();
 		}
