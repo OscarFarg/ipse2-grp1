@@ -221,6 +221,7 @@ public class HoofdView extends JPanel implements ActionListener {
 			if (bestelnr > 0)
 			{
 				viewEnum = ViewsEnum.BESTELREGEL;
+				tabelPaneel.setBestelnr(tabelPaneel.getGeselecteerdItem());
 				tabelPaneel.veranderView(viewEnum);	
 				remove(openBestellingKnop);
 			}

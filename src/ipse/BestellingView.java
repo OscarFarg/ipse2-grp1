@@ -146,7 +146,6 @@ public class BestellingView extends View
 	{
 		try
 		{
-			System.out.println("Opslaanknop ingedrukt.");
 			String id = bestellingNrVeld.getText();
 			int bestelNr = 0;
 			try
