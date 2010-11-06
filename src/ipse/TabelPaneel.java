@@ -16,12 +16,14 @@ public class TabelPaneel extends JPanel
 	private Database database;
 	private JTable contentTabel;
 	private ViewsEnum view;
+	private HoofdView hoofdView;
 	private int bestelnr;
 
-	public TabelPaneel(Database database, ViewsEnum view)
+	public TabelPaneel(Database database, HoofdView hoofdView)
 	{
 		this.database = database;
-		this.view = view;	
+		this.hoofdView = hoofdView;
+		this.view = hoofdView.getViewEnum();
 		this.setSize(800,300);
 		maakLijst();
 		add(new JScrollPane(contentTabel));
@@ -92,6 +94,48 @@ public class TabelPaneel extends JPanel
 		}
 	}
 
+	public void maakLijst(ResultSet rs)//haal de resultaten uit de db, maak de vectoren en vul de bestellingentabel
+	{
+		try
+		{
+			ResultSet resultSet = rs;
+
+			ResultSetMetaData metaData = resultSet.getMetaData();
+			int numberOfColumns = metaData.getColumnCount();
+
+			Vector<String> koppen = new Vector<String>();
+			for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+			{
+				koppen.add(metaData.getColumnName(kolom));
+			}
+			
+			Vector<Vector<String>> data = new Vector<Vector<String>>();
+			while (resultSet.next())
+			{
+				Vector<String> rij = new Vector<String>();
+				for (int kolom = 1; kolom <= numberOfColumns; kolom++)
+				{
+					rij.add(resultSet.getString(kolom));
+				}
+				data.add(rij);
+
+			}
+			contentTabel = new JTable(data, koppen)
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex)
+				{
+					return false;
+				}
+			};
+			contentTabel.setAutoCreateRowSorter(true);
+			contentTabel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		catch( SQLException se )
+		{
+			System.out.println( se );
+		}
+	}
+	
 	public void veranderView(ViewsEnum view)
 	{
 		this.view = view;
@@ -101,6 +145,16 @@ public class TabelPaneel extends JPanel
 		revalidate();
 	}
 
+	public void veranderView(ResultSet rs, ViewsEnum view)
+	{
+		this.view = view;
+		hoofdView.setViewEnum(view);
+		remove(this.getComponent(0));
+		maakLijst(rs);
+		add(new JScrollPane(contentTabel));
+		revalidate();
+	}
+	
 	public void herlaad()
 	{
 		veranderView(view);
