@@ -197,6 +197,7 @@ public class BestellingView extends View
 		catch( Exception e )
 		{
 			System.out.println(e);
+			JOptionPane.showMessageDialog(null, "Er is iets fout gegaan, probeer het opnieuw", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 		finally
 		{

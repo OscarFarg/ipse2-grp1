@@ -31,8 +31,8 @@ public class BestelSnelApp extends JFrame implements WindowListener
 	
 	public static void main( String[]args )
 	{
-		//new BestelSnelApp();
-		new LoginView();
+		new BestelSnelApp();
+		//new LoginView();
 	}
 
 
