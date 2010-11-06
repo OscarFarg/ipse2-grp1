@@ -2,6 +2,7 @@ package ipse;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class LoginView extends JFrame implements ActionListener
 {
@@ -10,6 +11,7 @@ public class LoginView extends JFrame implements ActionListener
 	private JPasswordField wwVeld;
 	private JLabel imageLabel, inlogLabel, wwLabel;
 	private ImageIcon login;
+	private char[] wachtwoord = {'1', '2', '3', '4'};
 	
 	public LoginView()
 	{
@@ -60,11 +62,12 @@ public class LoginView extends JFrame implements ActionListener
 	public void actionPerformed( ActionEvent ae )
 	{
 		String naam = inlogNaamVeld.getText();
-		String ww = wwVeld.getPassword().toString();
+		char[] ww = wwVeld.getPassword();
+		System.out.println(ww);
 		
 		if (ae.getSource() == okKnop)
 		{
-			if (naam.equals("medewerker") && ww.equals("1234"))
+			if (naam.equals("medewerker") && Arrays.equals(ww, wachtwoord))
 			{
 				new BestelSnelApp();
 				this.dispose();

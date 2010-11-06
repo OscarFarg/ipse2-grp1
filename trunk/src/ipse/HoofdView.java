@@ -12,13 +12,15 @@ public class HoofdView extends JPanel implements ActionListener {
 	private JLabel logoLabel;
 	private int bestelnr = 0;
 	private TabelPaneel tabelPaneel;
-
+	private BestelSnelApp app;
+	
 	Database database;
 	Controller controller;
 
-	public HoofdView(Controller controller, Database database) {
+	public HoofdView(Controller controller, Database database, BestelSnelApp app) {
 		this.controller = controller;
 		this.database = database;
+		this.app = app;
 		
 		controller.setHoofdView(this);
 		setLayout(null);
@@ -222,6 +224,11 @@ public class HoofdView extends JPanel implements ActionListener {
 				tabelPaneel.veranderView(viewEnum);	
 				remove(openBestellingKnop);
 			}
+		}
+		if (e.getSource() == uitlogKnop)
+		{
+			new LoginView();
+			app.dispose();
 		}
 		repaint();
 	}
