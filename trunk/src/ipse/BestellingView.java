@@ -92,8 +92,6 @@ public class BestellingView extends View
 		medewerkerBox.setBounds( 150, 310, 200, 20 );
 		medewerkerBox.addActionListener(this);
 
-
-
 		mainPanel.add( bsLabel );
 		mainPanel.add( bestellingNrVeld );
 		mainPanel.add( bestellingDatumVeld );
@@ -107,6 +105,9 @@ public class BestellingView extends View
 		mainPanel.add( medewerkerIdLabel );
 		mainPanel.add(klantBox);
 		mainPanel.add(medewerkerBox);
+		
+		bepaalKlant();
+		bepaalMedewerker();
 
 		setVisible( true );
 	}
@@ -204,23 +205,31 @@ public class BestellingView extends View
 		}
 	}
 
+	public void bepaalKlant()
+	{
+		String klSelected = (String) klantBox.getSelectedItem();
+		Scanner kl = new Scanner(klSelected).useDelimiter("\\,");
+		klantId = kl.nextInt();
+	}
+	
+	public void bepaalMedewerker()
+	{
+		String mwSelected = (String) medewerkerBox.getSelectedItem();
+		Scanner mw = new Scanner(mwSelected).useDelimiter("\\,");
+		mwId = mw.nextInt();
+	}
+	
 	public void actionPerformed(ActionEvent ae)
 	{
 		super.actionPerformed(ae);
 		if( ae.getSource() == klantBox )
 		{
-			String klSelected = (String) klantBox.getSelectedItem();
-			Scanner kl = new Scanner(klSelected).useDelimiter("\\,");
-			klantId = kl.nextInt();
+			bepaalKlant();
 		}
 
 		if( ae.getSource() == medewerkerBox )
 		{
-			String mwSelected = (String) medewerkerBox.getSelectedItem();
-			Scanner mw = new Scanner(mwSelected).useDelimiter("\\,");
-			mwId = mw.nextInt();
+			bepaalMedewerker();
 		}
-
 	}
-
 }
