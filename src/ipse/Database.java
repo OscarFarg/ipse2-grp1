@@ -8,7 +8,7 @@ public class Database
 	private Connection dbConnectie;
 
 	private PreparedStatement selectKlanten, selectKlant, insertKlant, updateKlant, deleteKlant;
-	private PreparedStatement selectMedewerkers, selectMedewerker, insertMedewerker, updateMedewerker, deleteMedewerker;
+	private PreparedStatement selectMedewerkersAll, selectMedewerkers, selectMedewerker, insertMedewerker, updateMedewerker, deleteMedewerker;
 	private PreparedStatement selectArtikelen, selectArtikel, insertArtikel, updateArtikel, deleteArtikel;
 	private PreparedStatement selectBestellingen, selectBestelling, insertBestelling, updateBestelling, deleteBestelling, totaalPrijsBestelling, selectKlantBestelling, selectMedewerkerBestelling;
 	private PreparedStatement selectBestelregels, selectBestelregel, insertBestelregel, updateBestelregel, deleteBestelregel;
@@ -61,6 +61,7 @@ public class Database
 		try
 		{
 			//medewerkers
+			selectMedewerkersAll = dbConnectie.prepareStatement("select * from medewerker where status = 'Actief'");
 			selectMedewerkers = dbConnectie.prepareStatement("select m.id \"Medewerker id\", m.voornaam \"Voornaam\", " + 
 					"m.tussenvoegsel \"Tussenvoegsel\", m.achternaam \"Achternaam\", m.functie \"Functie\", " + 
 					"n.achternaam || ', ' || n.voornaam || ' ' || coalesce(n.tussenvoegsel, '') \"Chef\" from medewerker m " + 
@@ -130,6 +131,20 @@ public class Database
 	}
 
 	//medewerker
+	public ResultSet getMedewerkersAll()
+	{
+		ResultSet resultSet = null;
+		try
+		{
+			resultSet = selectMedewerkersAll.executeQuery();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+		return resultSet;
+	}
+	
 	public ResultSet getMedewerkers()
 	{
 		ResultSet resultSet = null;

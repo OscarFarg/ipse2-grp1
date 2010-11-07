@@ -1,13 +1,17 @@
 package ipse;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
+import javax.swing.*;
 
 public class MedewerkerView extends View
 {
-	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, functieVeld, chefidVeld;
+	private JTextField idVeld, voornaamVeld, tussenvoegselVeld, achternaamVeld, functieVeld;
+	private JComboBox chefBox;
+	private ArrayList<Medewerker> medewerkerLijst;
+	private ResultSet medewerkerSet;
 
 	public MedewerkerView(Database database, Controller controller)
 	{
@@ -42,11 +46,15 @@ public class MedewerkerView extends View
 		JLabel functieLabel = new JLabel("Functie");
 		functieLabel.setBounds(40, 210, 120, 20);
 
-		chefidVeld = new JTextField();
-		chefidVeld.setBounds(150, 235, 150, 20);
-		JLabel chefidLabel = new JLabel("Chef ID");
+		chefBox = new JComboBox();
+		chefBox.setBounds(150, 235, 150, 20);
+		chefBox.addItem("");
+		chefBox.addActionListener(this);
+		JLabel chefidLabel = new JLabel("Chef");
 		chefidLabel.setBounds(40, 235, 120, 20);
 
+		vulBox();
+		
 		mainPanel.add(idLabel);
 		mainPanel.add(idVeld);
 		mainPanel.add(voornaamLabel);
@@ -58,7 +66,7 @@ public class MedewerkerView extends View
 		mainPanel.add(functieLabel);
 		mainPanel.add(functieVeld);
 		mainPanel.add(chefidLabel);
-		mainPanel.add(chefidVeld);
+		mainPanel.add(chefBox);
 		setVisible(true);
 	}
 
@@ -67,7 +75,7 @@ public class MedewerkerView extends View
 	{
 		this(database, controller);
 		updateMode = true; //Boolean in super klasse view. Op true zetten bij update.
-
+		vulBox();
 		//Hier kan je dus doen wat er nodig is om de velden te vullen.
 		Medewerker m = database.selectMedewerker(id);
 		idVeld.setText(m.getId() + "");
@@ -77,7 +85,40 @@ public class MedewerkerView extends View
 		functieVeld.setText(m.getFunctie());
 		int chefId = m.getChefId();
 		if (chefId != 0)
-			chefidVeld.setText("" + chefId);
+			for (int i = 0; i < medewerkerLijst.size(); i ++)
+			{
+				Medewerker temp = (Medewerker) medewerkerLijst.get(i);
+				if (temp.getId() == chefId)
+				{
+					chefBox.setSelectedItem(temp.getId() + ", " + temp.getAchternaam());
+				}
+			}
+	}
+	
+	public void vulBox()
+	{
+		medewerkerLijst = new ArrayList<Medewerker>();
+		try
+		{
+			medewerkerSet = database.getMedewerkersAll();
+			while(medewerkerSet.next())
+			{
+				Medewerker m = new Medewerker(medewerkerSet.getInt(1), medewerkerSet.getString(2), 
+						medewerkerSet.getString(3), medewerkerSet.getString(4), medewerkerSet.getString(5), 
+						medewerkerSet.getInt(6), medewerkerSet.getString(7));
+				medewerkerLijst.add(m);
+			}
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+
+		for (int i = 0; i < medewerkerLijst.size(); i ++)
+		{
+			Medewerker temp = (Medewerker) medewerkerLijst.get(i);
+			chefBox.addItem(temp.getId() + ", " + temp.getAchternaam());
+		}
 	}
 
 	@Override
@@ -94,10 +135,12 @@ public class MedewerkerView extends View
 			m.setAchternaam(achternaam);
 			m.setFunctie(functie);
 			try {
-				int chefId = Integer.parseInt(chefidVeld.getText());
+				String selected = (String) chefBox.getSelectedItem();
+				Scanner s = new Scanner(selected).useDelimiter("\\,");
+				int chefId = Integer.parseInt(s.next());
 				m.setChefId(chefId);
 			}
-			catch (NumberFormatException nfe){
+			catch (Exception e){
 				m.setChefId(0);
 			}
 			m.setMwStatus("Actief");
@@ -115,13 +158,11 @@ public class MedewerkerView extends View
 		catch (Exception e)
 		{
 			System.out.println(e);
-			JOptionPane.showMessageDialog(null, "Er is iets fout gegaan, probeer het opnieuw", "Fout", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Er is iets fout gegaan, probeer het opnieuw.", "Fout", JOptionPane.ERROR_MESSAGE);
 		}
 		finally
 		{
 			super.opslaan();
 		}
 	}
-	
-
 }
