@@ -669,10 +669,11 @@ public class Database
 	public ResultSet zoeken (String tabelnaam, String kolomnaam, String zoekwaarde)
 	{
 		ResultSet resultSet = null;
+		String zoekterm = "%" + zoekwaarde + "%";
 		try
 		{
 			Statement s = dbConnectie.createStatement();
-			String query = "select * from " + tabelnaam + " where " + kolomnaam + " like \'" + zoekwaarde + "\'";
+			String query = "select * from " + tabelnaam + " where lower(" + kolomnaam + ") like lower(\'" + zoekterm + "\')";
 			resultSet = s.executeQuery(query);
 		}
 		catch (SQLException e)
