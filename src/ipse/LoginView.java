@@ -63,7 +63,7 @@ public class LoginView extends JFrame implements ActionListener
 	{
 		String naam = inlogNaamVeld.getText();
 		char[] ww = wwVeld.getPassword();
-		System.out.println(ww);
+		//System.out.println(ww);
 		
 		if (ae.getSource() == okKnop)
 		{
