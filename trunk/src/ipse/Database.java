@@ -61,7 +61,10 @@ public class Database
 		try
 		{
 			//medewerkers
-			selectMedewerkers = dbConnectie.prepareStatement("select id, voornaam, tussenvoegsel, achternaam, functie, chefid from medewerker where status = 'Actief'");
+			selectMedewerkers = dbConnectie.prepareStatement("select m.id \"Medewerker id\", m.voornaam \"Voornaam\", " + 
+					"m.tussenvoegsel \"Tussenvoegsel\", m.achternaam \"Achternaam\", m.functie \"Functie\", " + 
+					"n.achternaam || ', ' || n.voornaam || ' ' || coalesce(n.tussenvoegsel, '') \"Chef\" from medewerker m " + 
+					"left outer join medewerker n on (m.chefid = n.id) where m.status = 'Actief'");
 			selectMedewerker = dbConnectie.prepareStatement( "select * from medewerker where id = ?" );
 			insertMedewerker = dbConnectie.prepareStatement("insert into medewerker (voornaam, tussenvoegsel, achternaam, " + 
 					"functie, chefid, status) values (?, ?, ?, ?, ?, ?)");
