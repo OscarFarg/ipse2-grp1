@@ -73,7 +73,7 @@ public class TabelPaneel extends JPanel
 					rij.add(resultSet.getString(kolom));
 				}
 				if (view.equals(ViewsEnum.BESTELLING))
-					rij.add(database.getTotaalPrijs(resultSet.getInt(1)));
+					rij.add("€ " + database.getTotaalPrijs(resultSet.getInt(1)));
 
 				data.add(rij);
 
