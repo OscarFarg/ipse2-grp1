@@ -722,6 +722,7 @@ public class Database
 		try
 		{
 			//medewerkers
+			selectMedewerkersAll.close();
 			selectMedewerkers.close();
 			selectMedewerker.close();
 			insertMedewerker.close();

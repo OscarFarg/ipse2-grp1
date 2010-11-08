@@ -48,7 +48,6 @@ public class MedewerkerView extends View
 
 		chefBox = new JComboBox();
 		chefBox.setBounds(150, 235, 150, 20);
-		chefBox.addItem("");
 		chefBox.addActionListener(this);
 		JLabel chefidLabel = new JLabel("Chef");
 		chefidLabel.setBounds(40, 235, 120, 20);
@@ -98,6 +97,8 @@ public class MedewerkerView extends View
 	public void vulBox()
 	{
 		medewerkerLijst = new ArrayList<Medewerker>();
+		chefBox.removeAllItems();
+		chefBox.addItem("");
 		try
 		{
 			medewerkerSet = database.getMedewerkersAll();
@@ -121,6 +122,11 @@ public class MedewerkerView extends View
 		}
 	}
 
+	public void reportChange()
+	{
+		vulBox();
+	}
+	
 	@Override
 	public void opslaan() {
 		Medewerker m = new Medewerker();

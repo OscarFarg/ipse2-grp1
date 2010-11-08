@@ -85,6 +85,7 @@ public class BestelregelView extends View
 	public void vulBox()
 	{
 		artikelLijst = new ArrayList<Artikel>();
+		artikelBox.removeAllItems();
 		try
 		{
 			artikelSet = database.getArtikelen();
@@ -158,6 +159,11 @@ public class BestelregelView extends View
 				}
 			}
 		}
+	}
+	
+	public void reportChange()
+	{
+		vulBox();
 	}
 
 	public void actionPerformed(ActionEvent ae)

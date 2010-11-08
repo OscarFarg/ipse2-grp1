@@ -13,7 +13,7 @@ public class HoofdView extends JPanel implements ActionListener {
 	private int bestelnr = 0;
 	private TabelPaneel tabelPaneel;
 	private BestelSnelApp app;
-	
+
 	Database database;
 	Controller controller;
 
@@ -21,10 +21,10 @@ public class HoofdView extends JPanel implements ActionListener {
 		this.controller = controller;
 		this.database = database;
 		this.app = app;
-		
+
 		controller.setHoofdView(this);
 		setLayout(null);
-		
+
 		viewEnum = ViewsEnum.BESTELLING;
 
 		tabelPaneel = new TabelPaneel(database, this);
@@ -116,23 +116,31 @@ public class HoofdView extends JPanel implements ActionListener {
 
 	public void bewerkObject()
 	{
-		switch (viewEnum) 
+		int item = tabelPaneel.getGeselecteerdItem();
+		if (item == 0)
 		{
-		case BESTELLING:
-			new BestellingView(database, controller, tabelPaneel.getGeselecteerdItem());
-			break;
-		case ARTIKEL:
-			new ArtikelView(database, controller, tabelPaneel.getGeselecteerdItem());
-			break;
-		case MEDEWERKER:
-			new MedewerkerView(database, controller, tabelPaneel.getGeselecteerdItem());
-			break;
-		case KLANT:
-			new KlantView(database, controller, tabelPaneel.getGeselecteerdItem());
-			break;
-		case BESTELREGEL:
-			new BestelregelView(database, controller, tabelPaneel.getGeselecteerdItem(), tabelPaneel.getArtikelId());
-			break;
+			//geen regel geselecteerd, dus niets doen.
+		}
+		else
+		{
+			switch (viewEnum) 
+			{
+			case BESTELLING:
+				new BestellingView(database, controller, item);
+				break;
+			case ARTIKEL:
+				new ArtikelView(database, controller, item);
+				break;
+			case MEDEWERKER:
+				new MedewerkerView(database, controller, item);
+				break;
+			case KLANT:
+				new KlantView(database, controller, item);
+				break;
+			case BESTELREGEL:
+				new BestelregelView(database, controller, item, tabelPaneel.getArtikelId());
+				break;
+			}
 		}
 	}
 
@@ -196,7 +204,7 @@ public class HoofdView extends JPanel implements ActionListener {
 		{
 			voegObjectToe();
 		}
-		
+
 		if( e.getSource() == bewerkKnop )
 		{
 			bewerkObject();
