@@ -90,7 +90,7 @@ public class KlantView extends View
 			}
 			catch (Exception e)
 			{
-				System.out.println("hoi " + e);
+				System.out.println(e);
 			}
 			String voornaam = voornaamVeld.getText();
 			String tussenvoegsel = tussenvoegselVeld.getText();
